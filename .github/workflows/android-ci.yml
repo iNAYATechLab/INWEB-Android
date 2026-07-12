@@ -27,7 +27,7 @@ jobs:
   build:
     name: 🔨 Build Debug APK
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       # 1️⃣ Checkout source
@@ -56,21 +56,27 @@ jobs:
       - name: 🔧 Make gradlew executable
         run: chmod +x ./gradlew
 
-      # 5️⃣ Placeholder native binaries (real ones come from fetch_binaries.sh)
-      # This lets the build succeed without the actual Nginx/PHP binaries
-      - name: 📦 Create placeholder binaries
+      # 5️⃣ Fetch REAL native binaries from Termux (nginx, php-fpm, mariadb, etc.)
+      # These are ARM64 binaries — actual working web server stack.
+      - name: 📦 Fetch native binaries from Termux
         run: |
-          mkdir -p app/src/main/assets/server_env/bin
-          mkdir -p app/src/main/assets/server_env/tunnel
-          mkdir -p app/src/main/assets/server_env/phpmyadmin
-          # placeholder .gitkeep-style files (real binaries fetched at runtime by user)
-          for b in nginx apache2 php-fpm mariadbd caddy node; do
-            echo "#!/bin/sh" > "app/src/main/assets/server_env/bin/$b"
-            echo "echo 'Placeholder — run scripts/fetch_binaries.sh to install real binary'" >> "app/src/main/assets/server_env/bin/$b"
-            chmod +x "app/src/main/assets/server_env/bin/$b"
-          done
-          echo "// placeholder — supply your own aarch64 build" > app/src/main/assets/server_env/tunnel/cloudflared
-          echo "<!DOCTYPE html><h1>Placeholder</h1>" > app/src/main/assets/server_env/phpmyadmin/index.html
+          # Install unpacking tools
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq dpkg xz-utils unzip curl
+          # Run our fetcher (downloads ~150MB of .deb files from packages.termux.dev)
+          chmod +x scripts/fetch_binaries.sh
+          bash scripts/fetch_binaries.sh
+          echo ""
+          echo "═══════════════════════════════════════════"
+          echo "  📊 Fetched binaries"
+          echo "═══════════════════════════════════════════"
+          ls -lh app/src/main/assets/server_env/bin/ || true
+          echo ""
+          echo "  Tunnel:"
+          ls -lh app/src/main/assets/server_env/tunnel/ || true
+          echo ""
+          echo "  phpMyAdmin size:"
+          du -sh app/src/main/assets/server_env/phpmyadmin/ 2>/dev/null || echo "  (missing)"
 
       # 6️⃣ Lint check
       - name: 🔍 Run Lint
@@ -116,7 +122,7 @@ jobs:
     needs: build
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     permissions:
       contents: write  # needed for gh release create
 
@@ -141,14 +147,12 @@ jobs:
       - name: 🔧 Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: 📦 Create placeholder binaries
+      - name: 📦 Fetch native binaries from Termux
         run: |
-          mkdir -p app/src/main/assets/server_env/bin app/src/main/assets/server_env/tunnel app/src/main/assets/server_env/phpmyadmin
-          for b in nginx apache2 php-fpm mariadbd caddy node; do
-            echo "#!/bin/sh" > "app/src/main/assets/server_env/bin/$b"; chmod +x "app/src/main/assets/server_env/bin/$b"
-          done
-          echo "placeholder" > app/src/main/assets/server_env/tunnel/cloudflared
-          echo "placeholder" > app/src/main/assets/server_env/phpmyadmin/index.html
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq dpkg xz-utils unzip curl
+          chmod +x scripts/fetch_binaries.sh
+          bash scripts/fetch_binaries.sh
 
       - name: 🔨 Assemble Release APK (unsigned)
         run: ./gradlew assembleRelease --no-daemon
@@ -159,15 +163,25 @@ jobs:
           🎉 **INWEB** — A Powerful Web Server that fits in your Pocket.
 
           ## 📥 Download
-          Grab the APK from the assets below.
+          Grab the APK from the assets below. It's a **fully functional** build
+          with real ARM64 binaries bundled:
 
-          ## ⚠️ Native binaries
-          This APK is built with **placeholder** native binaries. Before installing:
-          1. Clone repo
-          2. Run `bash scripts/fetch_binaries.sh`
-          3. Rebuild: `./gradlew assembleRelease`
+          - Nginx · Apache · Caddy · Node.js
+          - PHP 8.x (CLI + FPM)
+          - MariaDB (server + client + phpMyAdmin)
+          - Cloudflare Tunnel client
 
-          Or use this APK for **UI/API testing only** — server start will fail without real binaries.
+          ## 📱 Install
+          1. Download the APK below
+          2. Enable "Install from unknown sources" on your Android device
+          3. Install and open INWEB
+          4. Tap **START** on the dashboard
+
+          ## 🕌 Islamic developer features
+          - Prayer times API (Karachi method, offline)
+          - Qibla direction
+          - Hijri date calculator
+          - Zakat calculator
           EOF
 
       - name: 📤 Create GitHub Release
