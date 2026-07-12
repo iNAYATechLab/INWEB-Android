@@ -8,6 +8,14 @@
         <item name="android:navigationBarColor">@color/surface</item>
     </style>
 
+    <!--
+      Base namespace style — empty, but REQUIRED so that dot-notation
+      children like "INWEB.SectionLabel" can implicitly inherit from it.
+      Without this base, AAPT fails with:
+        error: resource style/INWEB (aka com.inweb.app:style/INWEB) not found.
+    -->
+    <style name="INWEB" />
+
     <!-- Small letter-spaced ALL-CAPS label above every section. -->
     <style name="INWEB.SectionLabel">
         <item name="android:textColor">@color/text_secondary</item>
