@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">INWEB</string>
+    <string name="app_tagline">পকেটে থাকা একটি শক্তিশালী ওয়েব সার্ভার।</string>
+
+    <string name="status_running">সার্ভার চালু আছে</string>
+    <string name="status_stopped">সার্ভার বন্ধ</string>
+
+    <string name="start_server">সার্ভার চালু করুন</string>
+    <string name="stop_server">সার্ভার বন্ধ করুন</string>
+
+    <string name="doc_root_hint">ওয়েব রুট:\n%1$s</string>
+    <string name="copy_path">পাথ কপি করুন</string>
+    <string name="copied">পাথ ক্লিপবোর্ডে কপি হয়েছে</string>
+
+    <string name="tap_url_hint">ব্রাউজারে খুলতে URL-এ ট্যাপ করুন</string>
+
+    <!-- Dashboard buttons -->
+    <string name="btn_files">ফাইলসমূহ</string>
+    <string name="btn_logs">লগ</string>
+    <string name="btn_share">শেয়ার &amp; QR</string>
+    <string name="btn_settings">সেটিংস</string>
+    <string name="btn_services">সার্ভিস</string>
+    <string name="btn_frameworks">ফ্রেমওয়ার্ক</string>
+
+    <!-- Network / Share screen -->
+    <string name="share_title">শেয়ার &amp; QR কোড</string>
+    <string name="from_this_device">এই ডিভাইস থেকে</string>
+    <string name="from_lan_devices">নেটওয়ার্কে অন্য ডিভাইস থেকে</string>
+    <string name="network">নেটওয়ার্ক</string>
+    <string name="qr_scan_hint">একই Wi-Fi-তে থাকা যেকোনো ডিভাইস দিয়ে স্ক্যান করুন</string>
+    <string name="copy">কপি</string>
+    <string name="share_url_btn">URL শেয়ার</string>
+    <string name="share_qr_btn">QR শেয়ার</string>
+    <string name="share_url">URL শেয়ার</string>
+    <string name="share_qr">QR ছবি শেয়ার</string>
+    <string name="no_browser">কোনো ব্রাউজার ইনস্টল নেই</string>
+    <string name="copied_url">%1$s কপি হয়েছে</string>
+    <string name="no_network">কোনো Wi-Fi / LAN খুঁজে পাওয়া যায়নি</string>
+    <string name="bind_localhost_hint">সেটিংস-এ \"LAN access দিন\" অন করলে অন্য ডিভাইস থেকে সার্ভারে পৌঁছানো যাবে।</string>
+    <string name="lan_open_hint">ব্রাউজারে টেস্ট করতে ট্যাপ করুন</string>
+    <string name="ssid_unavailable">SSID পাওয়া যায়নি</string>
+    <string name="bind_warning">⚠️ সার্ভার শুধুমাত্র localhost-এ bind আছে। Wi-Fi-র অন্য ডিভাইস পৌঁছাতে পারবে না। সেটিংস-এ \"LAN access দিন\" অন করুন।</string>
+
+    <!-- Settings -->
+    <string name="settings_title">সেটিংস</string>
+    <string name="network_section">নেটওয়ার্ক</string>
+    <string name="bind_lan_title">LAN access দিন</string>
+    <string name="bind_lan_desc">0.0.0.0-তে bind করবে যাতে Wi-Fi-র অন্য ডিভাইস সার্ভার ব্যবহার করতে পারে। বন্ধ থাকলে শুধু এই ডিভাইস (127.0.0.1)।</string>
+    <string name="http_port_title">HTTP পোর্ট</string>
+    <string name="http_port_desc">Nginx যে পোর্টে listen করবে। ডিফল্ট 8080।</string>
+    <string name="http_port_dialog_title">HTTP পোর্ট</string>
+    <string name="http_port_dialog_msg">1024 থেকে 65535-এর মধ্যে পোর্ট দিন। 1024-এর নিচে privileged, Android-এ কাজ করবে না।</string>
+    <string name="save">সেভ</string>
+    <string name="port_range_error">পোর্ট 1024-65535-এর মধ্যে হতে হবে।</string>
+    <string name="restart_hint">⏵ পরিবর্তন কার্যকর করতে সার্ভার পুনরায় চালু করুন।</string>
+
+    <!-- Services -->
+    <string name="services_title">সার্ভিসসমূহ</string>
+    <string name="services_subtitle">প্রতিটি সার্ভিস আলাদাভাবে শুরু, বন্ধ ও মনিটর করুন।</string>
+    <string name="services_footer_hint">💡 টিপ: Nginx বন্ধ থাকলে PHP-FPM-ও চালু হয়। ডেটাবেস দরকার হলে MariaDB চালু করুন।</string>
+    <string name="start_all">সব চালু করুন</string>
+    <string name="stop_all">সব বন্ধ করুন</string>
+    <string name="start">চালু</string>
+    <string name="stop">বন্ধ</string>
+    <string name="svc_running">চালু আছে</string>
+    <string name="svc_stopped">বন্ধ</string>
+    <string name="svc_starting">চালু হচ্ছে…</string>
+    <string name="svc_stopping">বন্ধ হচ্ছে…</string>
+    <string name="svc_error">ত্রুটি</string>
+    <string name="svc_check_logs">বিস্তারিত জানতে Logs দেখুন।</string>
+
+    <!-- Database -->
+    <string name="db_section">ডেটাবেস</string>
+    <string name="db_enable_title">MariaDB চালু রাখুন</string>
+    <string name="db_enable_desc">\"সব চালু করুন\" চাপলে MariaDB শুরু হবে। ডেটাবেস দরকার না হলে বন্ধ রাখুন।</string>
+    <string name="db_port_title">MariaDB পোর্ট</string>
+    <string name="db_port_desc">MariaDB যে পোর্টে listen করবে। ডিফল্ট 3306।</string>
+    <string name="db_root_title">MySQL root পাসওয়ার্ড</string>
+    <string name="db_root_desc">প্রথম চালু হলে অটো-জেনারেট। দেখতে বা কপি করতে ট্যাপ করুন।</string>
+    <string name="db_root_dialog_title">MySQL root পাসওয়ার্ড</string>
+    <string name="db_root_not_ready">এখনো সেট হয়নি — একবার MariaDB চালু করুন।</string>
+    <string name="db_copy_pw">পাসওয়ার্ড কপি</string>
+    <string name="db_password_copied">পাসওয়ার্ড কপি হয়েছে</string>
+    <string name="db_regenerate">পুনরায় তৈরি করুন</string>
+    <string name="db_regenerate_confirm_title">পাসওয়ার্ড রিসেট?</string>
+    <string name="db_regenerate_confirm_msg">সংরক্ষিত পাসওয়ার্ড মুছে যাবে। MySQL client দিয়ে ম্যানুয়ালি রিসেট করতে হবে।</string>
+    <string name="db_regenerate_done">পাসওয়ার্ড পুনরায় তৈরি হয়েছে। MariaDB রিস্টার্ট করুন।</string>
+    <string name="db_open_pma">phpMyAdmin খুলুন</string>
+    <string name="db_pma_not_running">phpMyAdmin খুলতে Nginx চালু করুন।</string>
+
+    <!-- General -->
+    <string name="general_section">সাধারণ</string>
+    <string name="theme_title">থিম</string>
+    <string name="theme_desc">সিস্টেম অনুসরণ, নাকি লাইট / ডার্ক মোড ফোর্স।</string>
+    <string name="theme_dialog_title">থিম নির্বাচন করুন</string>
+    <string name="autostart_title">Boot-এ অটো চালু</string>
+    <string name="autostart_desc">ডিভাইস boot হলে INWEB অটোমেটিক চালু। কিছু OEM-এ আলাদা \"অটো-স্টার্ট\" অনুমতি লাগে।</string>
+
+    <!-- Tile / Widget -->
+    <string name="tile_running">INWEB চালু</string>
+    <string name="tile_stopped">INWEB বন্ধ</string>
+    <string name="tile_subtitle_running">বন্ধ করতে ট্যাপ করুন</string>
+    <string name="tile_subtitle_stopped">চালু করতে ট্যাপ করুন</string>
+    <string name="widget_description">এক ট্যাপে INWEB চালু/বন্ধ করুন।</string>
+    <string name="widget_label">INWEB সার্ভার</string>
+    <string name="shortcut_start_short">চালু</string>
+    <string name="shortcut_start_long">INWEB চালু করুন</string>
+    <string name="shortcut_stop_short">বন্ধ</string>
+    <string name="shortcut_stop_long">INWEB বন্ধ করুন</string>
+
+    <!-- Onboarding -->
+    <string name="onboard_skip">স্কিপ</string>
+    <string name="onboard_next">পরবর্তী</string>
+    <string name="onboard_grant">অনুমতি দিন</string>
+    <string name="onboard_finish">শুরু করি!</string>
+    <string name="onboard_welcome_title">INWEB-এ স্বাগতম</string>
+    <string name="onboard_welcome_body">সম্পূর্ণ লোকাল ওয়েব স্ট্যাক — Nginx, PHP, MariaDB — আপনার Android ডিভাইসে চালু।\n\nচলার পথে PHP ডেভেলপমেন্টের জন্য পারফেক্ট।</string>
+    <string name="onboard_perm_title">চালু থাকা জানুন</string>
+    <string name="onboard_perm_body">সার্ভার চলাকালীন একটা persistent notification দেখাতে INWEB-এর অনুমতি লাগবে।\n\nএটি silent এবং যেকোনো জায়গা থেকে এক ট্যাপে সার্ভার বন্ধ করা যাবে।</string>
+    <string name="onboard_ready_title">সব প্রস্তুত</string>
+    <string name="onboard_ready_body">✓ Nginx + PHP চালু করতে START SERVER ট্যাপ করুন\n✓ MariaDB যোগ করতে Services ট্যাব ব্যবহার করুন\n✓ QR কোড দিয়ে URL শেয়ার করুন\n✓ ওয়েব রুটে PHP ফাইল রাখুন\n\nHappy hacking!</string>
+
+    <!-- Editor Pro -->
+    <string name="editor_save">সেভ</string>
+    <string name="editor_find">খুঁজুন &amp; বদলান</string>
+    <string name="editor_reload">ডিস্ক থেকে রিলোড</string>
+    <string name="editor_theme">রঙের থিম…</string>
+    <string name="editor_language">ভাষা…</string>
+    <string name="editor_font_bigger">ফন্ট বড়</string>
+    <string name="editor_font_smaller">ফন্ট ছোট</string>
+    <string name="editor_theme_title">এডিটর রঙের থিম</string>
+    <string name="editor_lang_title">সিনট্যাক্স ভাষা</string>
+
+    <!-- Frameworks -->
+    <string name="frameworks_title">ফ্রেমওয়ার্ক</string>
+    <string name="frameworks_subtitle">এক ক্লিকে জনপ্রিয় ফ্রেমওয়ার্ক ইনস্টল। ফাইল ওয়েব রুটে চলে যাবে।</string>
+    <string name="fw_install_btn">ইনস্টল</string>
+    <string name="fw_install_confirm_title">%1$s ইনস্টল করবেন?</string>
+    <string name="fw_installing">%1$s ইনস্টল হচ্ছে…</string>
+    <string name="fw_done_title">%1$s ইনস্টল হয়েছে 🎉</string>
+    <string name="fw_done_msg">ব্রাউজারে খুলুন:\n%1$s</string>
+    <string name="fw_open">খুলুন</string>
+    <string name="fw_failed_title">%1$s ইনস্টল ব্যর্থ</string>
+
+    <!-- HTTPS -->
+    <string name="https_section">HTTPS ও SSL</string>
+    <string name="https_enable_title">HTTPS চালু</string>
+    <string name="https_enable_desc">নিজে-স্বাক্ষরিত সার্টিফিকেট দিয়ে আলাদা পোর্টে TLS চালু। প্রথমবার ব্রাউজার সতর্কতা দেখাবে — এটা স্বাভাবিক।</string>
+    <string name="https_port_title">HTTPS পোর্ট</string>
+    <string name="https_port_desc">Nginx TLS-এর জন্য যে পোর্টে listen করবে। ডিফল্ট 8443।</string>
+    <string name="https_port_dialog">HTTPS পোর্ট</string>
+    <string name="https_fp_title">সার্টিফিকেট ফিঙ্গারপ্রিন্ট</string>
+    <string name="https_fp_none">এখনো তৈরি হয়নি</string>
+    <string name="https_fp_none_long">কোনো সার্টিফিকেট তৈরি হয়নি। উপরের \"HTTPS চালু\" অন করুন; পরের বার শুরু হওয়ার সময় তৈরি হবে।</string>
+    <string name="https_fp_msg">SHA-256:\n\n%1$s</string>
+    <string name="https_regenerate">পুনরায় তৈরি করুন</string>
+    <string name="https_regenerated">সার্টিফিকেট মুছে গেছে। নতুন তৈরি করতে সার্ভার রিস্টার্ট করুন।</string>
+    <string name="https_cert_will_generate">পরের বার শুরু হওয়ার সময় নিজে-স্বাক্ষরিত সার্টিফিকেট তৈরি হবে।</string>
+
+    <!-- Tunnel -->
+    <string name="btn_tunnel">Public URL</string>
+    <string name="tunnel_title">পাবলিক টানেল</string>
+    <string name="tunnel_subtitle">Cloudflare Tunnel বা ngrok দিয়ে ইন্টারনেটে আপনার লোকাল সার্ভার শেয়ার করুন।</string>
+    <string name="tunnel_provider">টানেল প্রোভাইডার</string>
+    <string name="tunnel_provider_cf">Cloudflare Tunnel (অ্যাকাউন্ট লাগবে না)</string>
+    <string name="tunnel_provider_ngrok">ngrok (অ্যাকাউন্ট লাগতে পারে)</string>
+    <string name="tunnel_stopped">টানেল বন্ধ</string>
+    <string name="tunnel_starting">টানেল শুরু হচ্ছে…</string>
+    <string name="tunnel_running">টানেল চালু — নিচের URL পাবলিক</string>
+    <string name="tunnel_hint">💡 বিল্ডের আগে assets/server_env/tunnel/-এ cloudflared বা ngrok ARM64 বাইনারি রাখুন।</string>
+    <string name="tunnel_open_btn">🌐 ইন্টারনেটে শেয়ার করুন (টানেল)</string>
+
+    <!-- Dashboard 2.0 -->
+    <string name="assalamu_alaikum">আসসালামু আলাইকুম · স্বাগতম</string>
+    <string name="prayer_next_prefix">পরবর্তী · %1$s</string>
+    <string name="server_status_label">সার্ভার স্ট্যাটাস</string>
+    <string name="status_operational">চালু আছে</string>
+    <string name="status_offline">বন্ধ আছে</string>
+    <string name="status_subtitle_running">%1$s · %2$s</string>
+    <string name="status_subtitle_stopped">START চাপুন Nginx + PHP চালু করতে</string>
+    <string name="server_control">সার্ভার নিয়ন্ত্রণ</string>
+    <string name="start_server_short">চালু</string>
+    <string name="stop_server_short">বন্ধ</string>
+    <string name="tap_start_first">আগে সার্ভার চালু করুন।</string>
+    <string name="stat_cpu">CPU ব্যবহার</string>
+    <string name="stat_ram">RAM ব্যবহার</string>
+    <string name="stat_network">নেটওয়ার্ক</string>
+    <string name="stat_storage">স্টোরেজ</string>
+    <string name="ram_format">%1$s / %2$s</string>
+    <string name="storage_format">খালি %1$s / %2$s</string>
+    <string name="active_sites">সক্রিয় সাইট</string>
+    <string name="manage_files">ফাইল ম্যানেজ ›</string>
+    <string name="site_www_title">ওয়েব রুট</string>
+    <string name="site_www_meta">/ · পোর্ট 8080 · localhost</string>
+    <string name="site_pma_title">phpMyAdmin</string>
+    <string name="site_pma_meta">/phpmyadmin/ · MariaDB প্রয়োজন</string>
+    <string name="site_api_title">ইসলামিক APIs</string>
+    <string name="site_api_meta">/api/ · অফলাইন JSON</string>
+    <string name="system_info">সিস্টেম তথ্য</string>
+    <string name="ip_local_label">লোকাল IP</string>
+    <string name="ip_public_label">পাবলিক IP</string>
+    <string name="ip_no_network">LAN নেই</string>
+    <string name="ip_public_hint">পাবলিক URL-এর জন্য Cloudflare Tunnel চালু করুন</string>
+    <string name="copied_generic">%1$s কপি হয়েছে</string>
+    <string name="nav_home">হোম</string>
+    <string name="nav_services">সার্ভিস</string>
+    <string name="nav_logs">লগ</string>
+    <string name="nav_share">শেয়ার</string>
+    <string name="nav_more">আরো</string>
+    <string name="more_title">আরো</string>
+    <string name="perm_denied_notif">নোটিফিকেশন বন্ধ। সার্ভার চলতে পারবে, কিন্তু status bar-এ দেখাবে না।</string>
+    <string name="notif_placeholder">এখনো কোনো নোটিফিকেশন নেই।</string>
+
+    <!-- Web server engine -->
+    <string name="web_server_section">ওয়েব সার্ভার</string>
+    <string name="web_server_title">HTTP ইঞ্জিন</string>
+    <string name="web_server_desc">৫টা ইঞ্জিন থেকে বেছে নিন: Nginx · Apache · OpenLiteSpeed · Caddy · Node.js — সবগুলো PHP-FPM ব্যাক-এন্ড শেয়ার করে।</string>
+    <string name="web_server_dialog_title">ওয়েব সার্ভার বেছে নিন</string>
+    <string name="web_server_no_php_warning">%1$s শুধু static — PHP ফাইল রান হবে না। HTML/JS সাইটের জন্য পারফেক্ট।</string>
+
+    <!-- Live Code Editor -->
+    <string name="btn_livecode">লাইভ কোড</string>
+    <string name="livecode_title">লাইভ কোড এডিটর &amp; প্রিভিউ</string>
+    <string name="livecode_rename">ফাইলের নাম বদলান</string>
+    <string name="livecode_save">সেভ</string>
+    <string name="livecode_open_url">URL সিস্টেম ব্রাউজারে খুলুন</string>
+    <string name="livecode_copy_content">কোড কপি করুন</string>
+    <string name="livecode_reload_disk">ডিস্ক থেকে রিলোড</string>
+
+    <!-- Server Cluster Dashboard -->
+    <string name="cluster_title">সার্ভার ক্লাস্টার ড্যাশবোর্ড</string>
+    <string name="cluster_view_more_logs">আরো লগ দেখুন</string>
+
+    <!-- Dynamic DNS -->
+    <string name="btn_ddns">ডাইনামিক DNS</string>
+    <string name="ddns_title">ডাইনামিক DNS</string>
+    <string name="ddns_subtitle">একটা স্থায়ী, সহজে মনে রাখা URL পান — public IP বদলালেও আপনার ফোনে-ই পৌঁছাবে।</string>
+    <string name="ddns_section_status">স্ট্যাটাস</string>
+    <string name="ddns_section_provider">প্রোভাইডার</string>
+    <string name="ddns_section_domain">হোস্টনেম ও ক্রেডেনশিয়াল</string>
+    <string name="ddns_section_sync">সিংক শিডিউল</string>
+    <string name="ddns_section_last">সর্বশেষ আপডেট</string>
+    <string name="ddns_enable_title">ডাইনামিক DNS চালু</string>
+    <string name="ddns_status_off">বন্ধ — কোনো DNS আপডেট চলবে না</string>
+    <string name="ddns_status_incomplete">চালু কিন্তু incomplete — নিচের ঘরগুলো পূরণ করুন</string>
+    <string name="ddns_status_active">✓ সক্রিয় · নিয়মিত আপডেট চালু</string>
+    <string name="ddns_provider_label">সার্ভিস</string>
+    <string name="ddns_provider_dialog">DDNS প্রোভাইডার বেছে নিন</string>
+    <string name="ddns_hostname">হোস্টনেম</string>
+    <string name="ddns_hostname_dialog">সাবডোমেইন লিখুন (যেমন myapp)</string>
+    <string name="ddns_cred_dialog">%1$s লিখুন</string>
+    <string name="ddns_cf_zone_dialog">Cloudflare Zone ID</string>
+    <string name="ddns_username_label">ইউজারনেম / Zone ID</string>
+    <string name="ddns_username_dialog">ইউজারনেম লিখুন</string>
+    <string name="ddns_not_set">সেট করা হয়নি</string>
+    <string name="ddns_interval">আপডেট প্রতি</string>
+    <string name="ddns_interval_dialog">DNS record কতক্ষণ পরপর refresh হবে?</string>
+    <string name="ddns_update_now">⚡ এখনই আপডেট</string>
+    <string name="ddns_open_url">🌐 পাবলিক URL খুলুন</string>
+    <string name="ddns_copy_url">URL কপি</string>
+    <string name="ddns_push_enqueued">আপডেট queue হয়েছে — একটু পরে চেক হবে…</string>
+    <string name="ddns_incomplete">আগে hostname ও credentials পূরণ করুন।</string>
+    <string name="ddns_last_none">এখনো কোনো আপডেট হয়নি — ⚡ Update Now চাপুন।</string>
+</resources>

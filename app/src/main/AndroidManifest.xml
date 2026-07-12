@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Core networking / server permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Foreground service (Android 9+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- Special-use foreground service for hosting a local web server (Android 14+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- Runtime notification permission for Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Auto-start on boot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Quick Settings tile binding -->
+    <uses-permission android:name="android.permission.BIND_QUICK_SETTINGS_TILE" tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".ServerApp"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:localeConfig="@xml/locales_config"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/Theme.INWEB"
+        tools:targetApi="35">
+
+        <!-- ============ Activities ============ -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Launcher shortcuts trigger these actions on launch. -->
+            <intent-filter>
+                <action android:name="com.inweb.app.LAUNCH_START" />
+                <action android:name="com.inweb.app.LAUNCH_STOP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.onboarding.OnboardingActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.INWEB"/>
+
+        <activity
+            android:name=".ui.files.FilesActivity"
+            android:exported="false"
+            android:label="Files"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.editor.EditorActivity"
+            android:exported="false"
+            android:label="Editor"
+            android:parentActivityName=".ui.files.FilesActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.logs.LogsActivity"
+            android:exported="false"
+            android:label="Logs"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.share.NetworkInfoActivity"
+            android:exported="false"
+            android:label="@string/share_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.share.SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.services.ServicesActivity"
+            android:exported="false"
+            android:label="@string/services_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.services.ServerClusterActivity"
+            android:exported="false"
+            android:label="@string/cluster_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.framework.FrameworksActivity"
+            android:exported="false"
+            android:label="@string/frameworks_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.tunnel.TunnelActivity"
+            android:exported="false"
+            android:label="@string/tunnel_title"
+            android:parentActivityName=".ui.share.NetworkInfoActivity"/>
+
+        <activity
+            android:name=".ui.islamic.IslamicApisActivity"
+            android:exported="false"
+            android:label="@string/islamic_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.security.SecurityActivity"
+            android:exported="false"
+            android:label="@string/security_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.ddns.DdnsActivity"
+            android:exported="false"
+            android:label="@string/ddns_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.vhost.SitesActivity"
+            android:exported="false"
+            android:label="@string/sites_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.vhost.VHostEditorActivity"
+            android:exported="false"
+            android:label="@string/vhost_new_title"
+            android:parentActivityName=".ui.vhost.SitesActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.dns.HostsActivity"
+            android:exported="false"
+            android:label="@string/dns_hosts_title"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".ui.dns.HostEditorActivity"
+            android:exported="false"
+            android:label="@string/dns_new_title"
+            android:parentActivityName=".ui.dns.HostsActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <!-- ═════ Local DNS VPN service (Stage 2 — root-free custom DNS) ═════ -->
+        <service
+            android:name=".dns.InwebVpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Intercepts DNS queries to resolve user-defined local hostnames"/>
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".ui.preview.PreviewActivity"
+            android:exported="false"
+            android:label="@string/preview_title"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.livecode.LiveCodeActivity"
+            android:exported="false"
+            android:label="@string/livecode_title"
+            android:parentActivityName=".ui.files.FilesActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <!-- ============ FileProvider ============ -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+        <!-- ============ Foreground service ============ -->
+        <service
+            android:name=".ServerService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Runs a local Nginx/PHP/MariaDB web server on this device for developer testing" />
+        </service>
+
+        <!-- ============ Quick Settings tile (Android 7+) ============ -->
+        <service
+            android:name=".tile.ServerTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_stat_server"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+        </service>
+
+        <!-- ============ Home-screen widget ============ -->
+        <receiver
+            android:name=".widget.ServerWidgetProvider"
+            android:exported="true"
+            android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.inweb.app.WIDGET_TOGGLE" />
+                <action android:name="com.inweb.app.WIDGET_REFRESH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_server_info" />
+        </receiver>
+
+        <!-- ============ Boot receiver ============ -->
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

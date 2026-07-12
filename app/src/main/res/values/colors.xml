@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- INWEB light palette (used when the user picks Light or system is Light) -->
+<resources>
+    <color name="bg">#F7FAF9</color>              <!-- very light mint -->
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#0B1410</color>
+    <color name="text_secondary">#4B5B55</color>
+
+    <color name="status_running">#059669</color>  <!-- emerald 600 -->
+    <color name="status_stopped">#DC2626</color>
+    <color name="status_warn">#D97706</color>
+
+    <color name="btn_start">#10B981</color>
+    <color name="btn_stop">#EF4444</color>
+
+    <color name="accent">#0F766E</color>          <!-- teal 700 -->
+    <color name="accent_dark">#134E4A</color>
+</resources>

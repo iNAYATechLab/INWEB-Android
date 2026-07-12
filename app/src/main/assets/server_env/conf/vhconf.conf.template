@@ -1,0 +1,33 @@
+## INWEB — LiteSpeed virtual-host configuration
+## Placeholders: __DOCROOT__ __LSWS_LOGDIR__ __LSWS_TMPDIR__
+
+docRoot                   __DOCROOT__/
+enableGzip                1
+
+errorlog __LSWS_LOGDIR__/vh_error.log {
+    useServer             0
+    logLevel              INFO
+    rollingSize           10M
+}
+
+accesslog __LSWS_LOGDIR__/vh_access.log {
+    useServer             0
+    rollingSize           10M
+    keepDays              14
+}
+
+index {
+    useServer             0
+    indexFiles            index.php, index.html, index.htm
+    autoIndex             0
+}
+
+scripthandler {
+    add                   fcgi:phpfpm php
+}
+
+rewrite {
+    enable                1
+    autoLoadHtaccess      1
+    logLevel              0
+}

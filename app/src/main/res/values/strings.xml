@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">INWEB</string>
+    <string name="app_tagline">A Powerful Web Server that fits in your Pocket.</string>
+
+    <string name="status_running">Server Running</string>
+    <string name="status_stopped">Server Stopped</string>
+
+    <string name="start_server">START SERVER</string>
+    <string name="stop_server">STOP SERVER</string>
+
+    <string name="doc_root_hint">Web root:\n%1$s</string>
+    <string name="copy_path">Copy path</string>
+    <string name="copied">Path copied to clipboard</string>
+
+    <string name="tap_url_hint">Tap the URL to open in browser</string>
+
+    <!-- Dashboard buttons -->
+    <string name="btn_files">Files</string>
+    <string name="btn_logs">Logs</string>
+    <string name="btn_share">Share &amp; QR</string>
+    <string name="btn_settings">Settings</string>
+
+    <!-- Network / Share screen -->
+    <string name="share_title">Share &amp; QR</string>
+    <string name="from_this_device">FROM THIS DEVICE</string>
+    <string name="from_lan_devices">FROM OTHER DEVICES ON THIS NETWORK</string>
+    <string name="network">NETWORK</string>
+    <string name="qr_scan_hint">Scan with any device on the same Wi-Fi</string>
+    <string name="copy">Copy</string>
+    <string name="share_url_btn">Share URL</string>
+    <string name="share_qr_btn">Share QR</string>
+    <string name="share_url">Share URL</string>
+    <string name="share_qr">Share QR image</string>
+    <string name="no_browser">No browser installed</string>
+    <string name="copied_url">Copied %1$s</string>
+    <string name="no_network">No Wi-Fi / LAN detected</string>
+    <string name="bind_localhost_hint">Enable \"Allow LAN access\" in Settings to reach the server from other devices.</string>
+    <string name="lan_open_hint">Tap to test in browser</string>
+    <string name="ssid_unavailable">SSID not available</string>
+    <string name="bind_warning">⚠️ Server is bound to localhost only. Other devices on your Wi-Fi cannot reach it. Enable \"Allow LAN access\" in Settings to change this.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="network_section">NETWORK</string>
+    <string name="bind_lan_title">Allow LAN access</string>
+    <string name="bind_lan_desc">Bind to 0.0.0.0 so other devices on your Wi-Fi can reach the server. If off, only this device can use it (127.0.0.1).</string>
+    <string name="http_port_title">HTTP port</string>
+    <string name="http_port_desc">Port Nginx listens on. Default is 8080.</string>
+    <string name="http_port_dialog_title">HTTP port</string>
+    <string name="http_port_dialog_msg">Enter a port between 1024 and 65535. Ports below 1024 are privileged and won\'t work on Android.</string>
+    <string name="save">Save</string>
+    <string name="port_range_error">Port must be between 1024 and 65535.</string>
+    <string name="restart_hint">⏵ Restart the server for these changes to take effect.</string>
+
+    <!-- Services dashboard -->
+    <string name="btn_services">Services</string>
+    <string name="services_title">Services</string>
+    <string name="services_subtitle">Start, stop and monitor each service independently.</string>
+    <string name="services_footer_hint">💡 Tip: Nginx auto-starts PHP-FPM if it isn\'t already running. Toggle MariaDB when you need database support (phpMyAdmin, WordPress, etc.).</string>
+    <string name="start_all">START ALL</string>
+    <string name="stop_all">STOP ALL</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+
+    <string name="svc_running">Running</string>
+    <string name="svc_stopped">Stopped</string>
+    <string name="svc_starting">Starting…</string>
+    <string name="svc_stopping">Stopping…</string>
+    <string name="svc_error">Error</string>
+    <string name="svc_check_logs">Check Logs tab for details.</string>
+
+    <!-- Database section in Settings -->
+    <string name="db_section">DATABASE</string>
+    <string name="db_enable_title">Enable MariaDB</string>
+    <string name="db_enable_desc">Start MariaDB when you press \"Start All\". Turn off if you don\'t need a database.</string>
+    <string name="db_port_title">MariaDB port</string>
+    <string name="db_port_desc">Port MariaDB listens on. Default is 3306.</string>
+    <string name="db_root_title">MySQL root password</string>
+    <string name="db_root_desc">Auto-generated at first launch. Tap to view or copy.</string>
+    <string name="db_root_dialog_title">MySQL root password</string>
+    <string name="db_root_not_ready">Not set yet — start MariaDB once to generate.</string>
+    <string name="db_copy_pw">Copy password</string>
+    <string name="db_password_copied">Password copied</string>
+    <string name="db_regenerate">Regenerate</string>
+    <string name="db_regenerate_confirm_title">Regenerate password?</string>
+    <string name="db_regenerate_confirm_msg">This clears the saved password. You\'ll need to reset it manually via mysql client or reinitialise the data directory.</string>
+    <string name="db_regenerate_done">Password regenerated. Restart MariaDB to apply.</string>
+    <string name="db_open_pma">Open phpMyAdmin</string>
+    <string name="db_pma_not_running">Start Nginx first to open phpMyAdmin.</string>
+
+    <!-- General section -->
+    <string name="general_section">GENERAL</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_desc">Follow system, or force light / dark mode.</string>
+    <string name="theme_dialog_title">Choose theme</string>
+    <string name="autostart_title">Auto-start on boot</string>
+    <string name="autostart_desc">Automatically start INWEB services when the device finishes booting. Some OEMs require enabling \"Auto-start\" for INWEB in system settings.</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_running">INWEB On</string>
+    <string name="tile_stopped">INWEB Off</string>
+    <string name="tile_subtitle_running">Tap to stop</string>
+    <string name="tile_subtitle_stopped">Tap to start</string>
+
+    <!-- Widget -->
+    <string name="widget_description">Toggle INWEB local server with a single tap.</string>
+    <string name="widget_label">INWEB Server</string>
+
+    <!-- Launcher shortcuts -->
+    <string name="shortcut_start_short">Start</string>
+    <string name="shortcut_start_long">Start INWEB server</string>
+    <string name="shortcut_stop_short">Stop</string>
+    <string name="shortcut_stop_long">Stop INWEB server</string>
+
+    <!-- Onboarding -->
+    <string name="onboard_skip">Skip</string>
+    <string name="onboard_next">Next</string>
+    <string name="onboard_grant">Grant</string>
+    <string name="onboard_finish">Let\'s go</string>
+    <string name="onboard_welcome_title">Welcome to INWEB</string>
+    <string name="onboard_welcome_body">A full local web stack — Nginx, PHP, and MariaDB — running right on your Android device.\n\nPerfect for on-the-go PHP development.</string>
+    <string name="onboard_perm_title">Stay in the loop</string>
+    <string name="onboard_perm_body">INWEB needs permission to post an ongoing notification while the server is running.\n\nThis notification is silent and lets you stop the server with one tap from anywhere.</string>
+    <string name="onboard_ready_title">You\'re all set</string>
+    <string name="onboard_ready_body">✓ Tap START SERVER to launch Nginx + PHP\n✓ Use the Services tab to add MariaDB\n✓ Share your local URL by QR code\n✓ Drop your PHP files in the shown web root\n\nHappy hacking!</string>
+
+    <!-- Editor Pro (Stage 5) -->
+    <string name="editor_save">Save</string>
+    <string name="editor_find">Find &amp; Replace</string>
+    <string name="editor_reload">Reload from disk</string>
+    <string name="editor_theme">Color theme…</string>
+    <string name="editor_language">Language…</string>
+    <string name="editor_font_bigger">Font size +</string>
+    <string name="editor_font_smaller">Font size −</string>
+    <string name="editor_preview">🔍 Preview in browser</string>
+    <string name="editor_theme_title">Editor color theme</string>
+    <string name="editor_lang_title">Syntax language</string>
+
+    <!-- Stage 6: Framework installer -->
+    <string name="btn_frameworks">Frameworks</string>
+    <string name="frameworks_title">Frameworks</string>
+    <string name="frameworks_subtitle">One-click install of popular web frameworks. Files land in your web root.</string>
+    <string name="fw_install_btn">Install</string>
+    <string name="fw_install_confirm_title">Install %1$s?</string>
+    <string name="fw_installing">Installing %1$s…</string>
+    <string name="fw_done_title">%1$s installed 🎉</string>
+    <string name="fw_done_msg">Open in browser:\n%1$s</string>
+    <string name="fw_open">Open</string>
+    <string name="fw_failed_title">%1$s install failed</string>
+
+    <!-- Stage 7: HTTPS / SSL -->
+    <string name="https_section">HTTPS &amp; SSL</string>
+    <string name="https_enable_title">Enable HTTPS</string>
+    <string name="https_enable_desc">Serve over TLS on a separate port with a self-signed certificate. Browsers will show a warning the first time — that\'s normal.</string>
+    <string name="https_port_title">HTTPS port</string>
+    <string name="https_port_desc">Nginx listens on this port for TLS. Default 8443 (Android forbids &lt;1024).</string>
+    <string name="https_port_dialog">HTTPS port</string>
+    <string name="https_fp_title">Certificate fingerprint</string>
+    <string name="https_fp_none">Not generated yet</string>
+    <string name="https_fp_none_long">No certificate has been generated. Turn on Enable HTTPS above; INWEB will make one on next start.</string>
+    <string name="https_fp_msg">SHA-256:\n\n%1$s</string>
+    <string name="https_regenerate">Regenerate</string>
+    <string name="https_regenerated">Certificate deleted. Restart the server to generate a new one.</string>
+    <string name="https_cert_will_generate">A self-signed certificate will be generated on next start.</string>
+
+    <!-- Stage 8: Public Tunnel -->
+    <string name="btn_tunnel">Public URL</string>
+    <string name="tunnel_title">Public Tunnel</string>
+    <string name="tunnel_subtitle">Expose your local server to the internet via Cloudflare Tunnel or ngrok. Perfect for demos and mobile testing.</string>
+    <string name="tunnel_provider">TUNNEL PROVIDER</string>
+    <string name="tunnel_provider_cf">Cloudflare Tunnel (no account)</string>
+    <string name="tunnel_provider_ngrok">ngrok (account may be required)</string>
+    <string name="tunnel_stopped">Tunnel Stopped</string>
+    <string name="tunnel_starting">Starting tunnel…</string>
+    <string name="tunnel_running">Tunnel Active — the URL below is public</string>
+    <string name="tunnel_hint">💡 Drop the `cloudflared` or `ngrok` ARM64 binary into assets/server_env/tunnel/ before building. The tunnel keeps running until you tap Stop.</string>
+    <string name="tunnel_open_btn">🌐 Expose to internet (Tunnel)</string>
+
+    <!-- Stage 9: Multi-language -->
+    <string name="language_title">Language</string>
+    <string name="language_desc">App language — bundled translations. Content in Files/Editor stays as-is.</string>
+    <string name="language_dialog_title">Choose language</string>
+
+    <!-- Stage 10: Islamic Developer Kit -->
+    <string name="btn_islamic">Islamic APIs</string>
+    <string name="islamic_title">Islamic Developer Kit</string>
+    <string name="islamic_subtitle">Offline, self-contained JSON endpoints — prayer times, Qibla, Hijri calendar, Zakat calculator. Perfect for Muslim developers.</string>
+    <string name="islamic_installed">✓ Installed under www/api/</string>
+    <string name="islamic_not_installed">Not installed yet</string>
+    <string name="islamic_install">Install</string>
+    <string name="islamic_reinstall">Reinstall</string>
+    <string name="islamic_uninstall_btn">Uninstall</string>
+    <string name="islamic_install_ok">Islamic APIs installed to www/api/</string>
+    <string name="islamic_uninstalled">Islamic APIs removed.</string>
+    <string name="islamic_open_landing">📖 Open API Landing Page</string>
+    <string name="islamic_endpoints">ENDPOINTS</string>
+    <string name="islamic_try">Try</string>
+    <string name="islamic_footer_hint">💡 All endpoints return JSON with CORS enabled so you can call them from any web page or mobile app.</string>
+
+    <!-- Dashboard 2.0 (redesigned) -->
+    <string name="assalamu_alaikum">السلام عليكم · Welcome back</string>
+    <string name="perm_denied_notif">Notifications disabled. The server can still run, but the status bar icon won\'t show.</string>
+    <string name="notif_placeholder">No notifications yet.</string>
+
+    <string name="prayer_next_prefix">Next · %1$s</string>
+
+    <string name="server_status_label">SERVER STATUS</string>
+    <string name="status_operational">OPERATIONAL</string>
+    <string name="status_offline">OFFLINE</string>
+    <string name="status_subtitle_running">%1$s · %2$s</string>
+    <string name="status_subtitle_stopped">Tap START to launch Nginx + PHP</string>
+    <string name="server_control">Server Control</string>
+    <string name="start_server_short">START</string>
+    <string name="stop_server_short">STOP</string>
+    <string name="tap_start_first">Start the server first.</string>
+
+    <string name="stat_cpu">CPU Usage</string>
+    <string name="stat_ram">RAM Usage</string>
+    <string name="stat_network">Network I/O</string>
+    <string name="stat_storage">Storage</string>
+    <string name="ram_format">%1$s / %2$s</string>
+    <string name="storage_format">Free %1$s / %2$s</string>
+
+    <string name="active_sites">Active Sites</string>
+    <string name="manage_files">Manage files ›</string>
+
+    <string name="site_www_title">Web Root</string>
+    <string name="site_www_meta">/ · Port 8080 · localhost</string>
+    <string name="site_pma_title">phpMyAdmin</string>
+    <string name="site_pma_meta">/phpmyadmin/ · needs MariaDB</string>
+    <string name="site_api_title">Islamic APIs</string>
+    <string name="site_api_meta">/api/ · offline JSON</string>
+
+    <string name="system_info">SYSTEM INFORMATION</string>
+    <string name="ip_local_label">Local IP</string>
+    <string name="ip_public_label">Public IP</string>
+    <string name="ip_no_network">no LAN</string>
+    <string name="ip_public_hint">Enable Cloudflare Tunnel to get a public URL</string>
+    <string name="copied_generic">Copied %1$s</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_services">Services</string>
+    <string name="nav_logs">Logs</string>
+    <string name="nav_share">Share</string>
+    <string name="nav_more">More</string>
+
+    <string name="more_title">More</string>
+
+    <!-- Section labels (used by INWEB.SectionLabel style) -->
+    <string name="services_master_label">Master Control</string>
+    <string name="services_individual_label">Individual Services</string>
+    <string name="qr_section">Scan to Connect</string>
+    <string name="urls_section">Server URLs</string>
+    <string name="fw_gallery_label">Available Frameworks</string>
+
+    <!-- Log page overflow actions -->
+    <string name="log_action_clear">Clear screen (keep file)</string>
+    <string name="log_action_truncate">Truncate log file</string>
+    <string name="log_action_copy">Copy visible text</string>
+
+    <!-- Web server engine picker -->
+    <string name="web_server_section">WEB SERVER</string>
+    <string name="web_server_title">HTTP engine</string>
+    <string name="web_server_desc">Pick from 5 engines: Nginx · Apache · OpenLiteSpeed · Caddy · Node.js. All share the same PHP-FPM backend.</string>
+    <string name="web_server_dialog_title">Choose web server</string>
+    <string name="web_server_no_php_warning">%1$s is static-only — PHP files won\'t execute. Great for HTML/JS-only sites.</string>
+
+    <!-- Security -->
+    <string name="btn_security">Security</string>
+    <string name="security_title">Security</string>
+    <string name="security_subtitle">Lock down your server with password protection, IP firewall, and rate limiting. All rules take effect on next server restart.</string>
+
+    <string name="sec_ba_section">HTTP BASIC AUTH</string>
+    <string name="sec_ba_enable">Enable Basic Auth</string>
+    <string name="sec_ba_user">Username</string>
+    <string name="sec_ba_pass">Password</string>
+    <string name="sec_ba_paths">Protected paths</string>
+    <string name="sec_ba_user_dialog">Basic Auth username</string>
+    <string name="sec_ba_pass_dialog">Basic Auth password</string>
+    <string name="sec_ba_pass_hint">Min 4 chars. Stored in app-private storage. Nginx hashes with APR1.</string>
+    <string name="sec_ba_pass_short">Password too short (min 4 chars).</string>
+    <string name="sec_ba_pass_clear">Clear</string>
+    <string name="sec_ba_pass_not_set">Not set</string>
+    <string name="sec_ba_paths_dialog">Protected paths (one per line)</string>
+    <string name="sec_ba_paths_hint">e.g.\n/admin\n/phpmyadmin/\n\nLeave empty to protect the whole site.</string>
+    <string name="sec_ba_paths_whole_site">Whole site</string>
+    <string name="sec_ba_status_off">Off</string>
+    <string name="sec_ba_status_no_pass">Enabled but no password set</string>
+    <string name="sec_ba_status_on">Protecting your server ✓</string>
+
+    <string name="sec_ip_section">IP FIREWALL</string>
+    <string name="sec_ip_mode">Mode</string>
+    <string name="sec_ip_mode_dialog">Firewall mode</string>
+    <string name="sec_ip_allow">Whitelist (allow)</string>
+    <string name="sec_ip_block">Blacklist (deny)</string>
+    <string name="sec_ip_allow_dialog">Allowed IPs / CIDR ranges</string>
+    <string name="sec_ip_block_dialog">Blocked IPs / CIDR ranges</string>
+    <string name="sec_ip_list_hint">One per line, e.g.\n192.168.1.42\n10.0.0.0/8\n2.3.4.5/32</string>
+    <string name="sec_ip_list_empty">(empty)</string>
+
+    <string name="sec_rl_section">RATE LIMIT</string>
+    <string name="sec_rl_enable">Enable rate limit</string>
+    <string name="sec_rl_desc">Throttle abusive clients. Uses Nginx\'s $binary_remote_addr key.</string>
+    <string name="sec_rl_rps">Requests per second</string>
+    <string name="sec_rl_burst">Burst allowance</string>
+    <string name="sec_rl_rps_dialog">Requests / second / client IP</string>
+    <string name="sec_rl_burst_dialog">Burst (extra requests before throttling)</string>
+
+    <string name="sec_number_range">Value must be between %1$d and %2$d.</string>
+
+    <!-- In-app WebView Preview -->
+    <string name="btn_preview">Preview</string>
+    <string name="preview_title">Preview</string>
+    <string name="preview_loading">Loading…</string>
+    <string name="preview_external_title">Open external site?</string>
+    <string name="preview_external_msg">This link points outside your local server:\n\n%1$s\n\nOpen it in the system browser?</string>
+    <string name="preview_external_open">Open in browser</string>
+    <string name="preview_action_copy_url">Copy URL</string>
+    <string name="preview_action_open_ext">Open in system browser</string>
+    <string name="preview_action_share">Share URL</string>
+    <string name="preview_action_desktop_ua">Switch to desktop view</string>
+    <string name="preview_action_mobile_ua">Switch to mobile view</string>
+    <string name="preview_action_clear_cache">Clear cache &amp; cookies</string>
+    <string name="preview_action_view_source">View page source</string>
+    <string name="preview_desktop_ua_on">Desktop User-Agent enabled</string>
+    <string name="preview_mobile_ua_on">Mobile User-Agent restored</string>
+    <string name="preview_cache_cleared">Cache and cookies cleared</string>
+
+    <!-- Live Reload -->
+    <string name="lr_section">LIVE RELOAD</string>
+    <string name="lr_title">Live Reload (Hot Reload)</string>
+    <string name="lr_desc">Auto-refresh the browser preview whenever you save a file. CSS hot-swaps without a full reload. Uses WebSocket on port 35729.</string>
+    <string name="lr_status_off">Off — pages won\'t auto-refresh</string>
+    <string name="lr_status_pending">Enabled — waiting for server start</string>
+    <string name="lr_status_running">Active · %1$d browser(s) connected</string>
+
+    <!-- Live Code Editor + Preview (combined screen) -->
+    <string name="btn_livecode">Live Code</string>
+    <string name="livecode_title">Live Code Editor &amp; Preview</string>
+    <string name="livecode_rename">Rename file</string>
+    <string name="livecode_save">Save</string>
+    <string name="livecode_open_url">Open URL in system browser</string>
+    <string name="livecode_copy_content">Copy file content</string>
+    <string name="livecode_reload_disk">Reload from disk</string>
+
+    <!-- Server Cluster Dashboard -->
+    <string name="cluster_title">SERVER CLUSTER DASHBOARD</string>
+    <string name="cluster_view_more_logs">View More Logs</string>
+
+    <!-- Dynamic DNS -->
+    <string name="btn_ddns">Dynamic DNS</string>
+    <string name="ddns_title">Dynamic DNS</string>
+    <string name="ddns_subtitle">Get a permanent, memorable URL that always points to your phone — even after your public IP changes.</string>
+
+    <string name="ddns_section_status">STATUS</string>
+    <string name="ddns_section_provider">PROVIDER</string>
+    <string name="ddns_section_domain">HOSTNAME &amp; CREDENTIALS</string>
+    <string name="ddns_section_sync">SYNC SCHEDULE</string>
+    <string name="ddns_section_last">LAST UPDATE</string>
+
+    <string name="ddns_enable_title">Enable Dynamic DNS</string>
+    <string name="ddns_status_off">Off — no DNS updates will run</string>
+    <string name="ddns_status_incomplete">On but incomplete — fill in the fields below</string>
+    <string name="ddns_status_active">✓ Active · periodic updates enabled</string>
+
+    <string name="ddns_provider_label">Service</string>
+    <string name="ddns_provider_dialog">Choose DDNS provider</string>
+
+    <string name="ddns_hostname">Hostname</string>
+    <string name="ddns_hostname_dialog">Enter subdomain (e.g. myapp)</string>
+    <string name="ddns_cred_dialog">Enter %1$s</string>
+    <string name="ddns_cf_zone_dialog">Cloudflare Zone ID</string>
+    <string name="ddns_username_label">Username / Zone ID</string>
+    <string name="ddns_username_dialog">Enter username</string>
+    <string name="ddns_not_set">Not set</string>
+
+    <string name="ddns_interval">Update every</string>
+    <string name="ddns_interval_dialog">How often to refresh the DNS record?</string>
+
+    <string name="ddns_update_now">⚡ Update Now</string>
+    <string name="ddns_open_url">🌐 Open Public URL</string>
+    <string name="ddns_copy_url">Copy URL</string>
+    <string name="ddns_push_enqueued">Update queued — checking in a moment…</string>
+    <string name="ddns_incomplete">Please fill hostname &amp; credentials first.</string>
+    <string name="ddns_last_none">No updates yet — tap ⚡ Update Now to test.</string>
+
+    <!-- Virtual hosts / Sites -->
+    <string name="btn_sites">Sites</string>
+    <string name="sites_title">Sites &amp; Domains</string>
+    <string name="sites_subtitle">Host multiple sites on one server — each with its own domain, folder, and PHP setting. Nginx routes by the Host header.</string>
+    <string name="sites_section">CONFIGURED SITES</string>
+    <string name="sites_empty_title">No sites yet</string>
+    <string name="sites_empty_msg">Add virtual hosts like wordpress.local or api.local, each mapped to its own folder.</string>
+    <string name="sites_add_first">+ Add first site</string>
+    <string name="sites_delete_title">Delete %1$s?</string>
+    <string name="sites_delete_msg">The virtual host will be removed. Files on disk are NOT deleted.</string>
+    <string name="sites_disabled_toast">Site is disabled — toggle it on first.</string>
+    <string name="sites_restart_hint">⏵ Restart the server to apply.</string>
+    <string name="delete">Delete</string>
+
+    <string name="vhost_new_title">New Site</string>
+    <string name="vhost_edit_title">Edit Site</string>
+    <string name="vhost_field_name">SERVER NAME (DOMAIN)</string>
+    <string name="vhost_field_label">FRIENDLY NAME (OPTIONAL)</string>
+    <string name="vhost_field_root">DOCUMENT ROOT</string>
+    <string name="vhost_field_php">PHP HANDLING</string>
+    <string name="vhost_label_hint">e.g. My Blog</string>
+    <string name="vhost_use_www">Use www/&lt;slug&gt;</string>
+    <string name="vhost_php_auto">Auto — serve .php via PHP-FPM</string>
+    <string name="vhost_php_static">Static only — .php returns 404</string>
+    <string name="vhost_bad_name">Server name may only contain letters, digits, dots, hyphens, and underscores.</string>
+    <string name="vhost_bad_root">Document root is required.</string>
+    <string name="vhost_mkdir_failed">Could not create document root directory.</string>
+    <string name="vhost_saved">Saved. Restart the server to apply.</string>
+    <string name="vhost_hint">💡 For domains like wordpress.local to resolve, add them to your device\'s Hosts file (Stage 2) or run INWEB\'s DNS server (Stage 3). For now, use them from Preview or after wiring your laptop\'s /etc/hosts.</string>
+
+    <!-- DNS / Local Hosts -->
+    <string name="btn_hosts">Local Hosts</string>
+    <string name="dns_hosts_title">Local Hosts / DNS</string>
+    <string name="dns_hosts_subtitle">Make any domain resolve to any IP without root. Uses a tiny VPN that only touches DNS traffic — everything else stays untouched.</string>
+
+    <string name="dns_vpn_section">DNS INTERCEPTOR</string>
+    <string name="dns_vpn_title">Enable Local DNS</string>
+    <string name="dns_vpn_desc">Starts a lightweight VPN that resolves your custom hosts on-device. Only DNS traffic goes through the tunnel.</string>
+    <string name="dns_vpn_status_on">✓ Active — INWEB is your DNS server</string>
+    <string name="dns_vpn_status_off">Off — using system DNS</string>
+    <string name="dns_vpn_session">INWEB DNS</string>
+    <string name="dns_vpn_notif_title">INWEB DNS running</string>
+    <string name="dns_vpn_notif_text">Custom hostnames now resolve on this device.</string>
+    <string name="dns_vpn_denied">VPN permission denied — INWEB cannot intercept DNS.</string>
+
+    <string name="dns_entries_section">CUSTOM MAPPINGS</string>
+    <string name="dns_empty_title">No custom hosts yet</string>
+    <string name="dns_empty_msg">Add mappings like wordpress.local → 127.0.0.1 or seed the common presets.</string>
+    <string name="dns_empty_add">+ Add mapping</string>
+    <string name="dns_empty_presets">Add presets</string>
+    <string name="dns_presets_added">4 preset mappings added.</string>
+    <string name="dns_delete_title">Delete %1$s?</string>
+    <string name="dns_no_note">(no note)</string>
+
+    <string name="dns_new_title">New Host Mapping</string>
+    <string name="dns_edit_title">Edit Host Mapping</string>
+    <string name="dns_field_host">HOSTNAME</string>
+    <string name="dns_field_ip">RESOLVES TO (IPv4)</string>
+    <string name="dns_field_note">NOTE (OPTIONAL)</string>
+    <string name="dns_note_hint">e.g. WordPress dev site</string>
+    <string name="dns_preview">PREVIEW</string>
+    <string name="dns_bad_hostname">Invalid hostname (letters, digits, dots, hyphens only).</string>
+    <string name="dns_bad_ip">Enter a valid IPv4 address (e.g. 127.0.0.1).</string>
+    <string name="dns_saved">Saved. Enable the DNS interceptor for it to take effect.</string>
+
+    <!-- Stage 3: standalone LAN DNS server -->
+    <string name="dns_server_section">LAN DNS SERVER (STAGE 3)</string>
+    <string name="dns_server_title">Serve DNS on the network</string>
+    <string name="dns_server_desc">Runs a DNS server other devices on your Wi-Fi can use. Point their DNS setting at this phone\'s IP to resolve your custom hosts.</string>
+    <string name="dns_server_off">Off — LAN devices can\'t query INWEB</string>
+    <string name="dns_server_on">✓ Running · point clients at %1$s:%2$d</string>
+
+    <!-- Sites Stage-1 refinements: templates + import/export -->
+    <string name="vhost_field_template">STARTER TEMPLATE</string>
+    <string name="vhost_template_dialog">Pick a starter template</string>
+    <string name="vhost_menu_title">Sites</string>
+    <string name="vhost_export_file">📤 Export to JSON file</string>
+    <string name="vhost_export_clip">📋 Copy JSON to clipboard</string>
+    <string name="vhost_export_clip_ok">JSON copied to clipboard</string>
+    <string name="vhost_import_file">📥 Import from JSON file</string>
+    <string name="vhost_export_ok">Exported successfully</string>
+    <string name="vhost_export_fail">Export failed</string>
+    <string name="vhost_import_read_fail">Could not read the selected file.</string>
+    <string name="vhost_import_ok">Imported %1$d site(s). Restart the server to apply.</string>
+    <string name="vhost_import_bad">Import failed: %1$s</string>
+
+    <!-- Web Dashboard / REST API for iOS + Web PWA clients -->
+    <string name="api_section">WEB DASHBOARD &amp; REMOTE API</string>
+    <string name="api_enable_title">Enable Web Dashboard API</string>
+    <string name="api_enable_desc">Starts a REST server (default port 8181) so the built-in PWA and future iOS app can manage INWEB remotely. All requests require a bearer token.</string>
+    <string name="api_status_off">Off — remote access disabled</string>
+    <string name="api_status_on">✓ Active on port %1$d</string>
+    <string name="api_url_title">Dashboard URL</string>
+    <string name="api_url_desc">Open this URL in any browser on your Wi-Fi.</string>
+    <string name="api_token_title">Bearer token</string>
+    <string name="api_token_desc">Copy into the login screen. Tap to regenerate (invalidates old sessions).</string>
+    <string name="api_token_copied">Token copied</string>
+    <string name="api_token_regen_confirm">Regenerate token? This will log out any connected clients.</string>
+    <string name="api_regenerate">Regenerate</string>
+</resources>

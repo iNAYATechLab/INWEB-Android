@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B1410">
+<title>INWEB Dashboard</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="app">
+    <!-- Login gate — shown when no valid token in localStorage -->
+    <div id="loginGate" class="gate hidden">
+        <div class="card gate-card">
+            <img src="favicon.svg" width="72" height="72" alt="INWEB">
+            <h1>INWEB Dashboard</h1>
+            <p class="muted">Enter the bearer token shown in your INWEB app<br>
+                (Settings → Web Dashboard).</p>
+            <input id="tokenInput" type="password" placeholder="Bearer token" autocomplete="off">
+            <input id="hostInput" type="text" placeholder="http://192.168.1.42:8181" autocomplete="off">
+            <button id="loginBtn" class="btn-primary">Connect</button>
+            <p id="loginError" class="error hidden"></p>
+        </div>
+    </div>
+
+    <!-- Main dashboard shell -->
+    <div id="dashboard" class="hidden">
+        <header class="topbar">
+            <div class="brand">🌐 INWEB Dashboard</div>
+            <div class="status-pill" id="statusPill">Connecting…</div>
+            <button id="logoutBtn" class="icon-btn" title="Logout">⏻</button>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="overview">📊 Overview</button>
+            <button class="tab" data-tab="sites">🌐 Sites</button>
+            <button class="tab" data-tab="hosts">🏠 Hosts</button>
+            <button class="tab" data-tab="logs">📄 Logs</button>
+            <button class="tab" data-tab="settings">⚙️ Settings</button>
+        </nav>
+
+        <!-- ─── Overview tab ─── -->
+        <section data-panel="overview" class="panel active">
+            <div class="grid-2">
+                <div class="card stat">
+                    <div class="stat-label">Web Server</div>
+                    <div class="stat-value" id="engineName">—</div>
+                    <div class="stat-sub" id="engineUrl">—</div>
+                </div>
+                <div class="card stat">
+                    <div class="stat-label">Local IP</div>
+                    <div class="stat-value" id="localIp">—</div>
+                    <div class="stat-sub" id="ssid">—</div>
+                </div>
+                <div class="card stat">
+                    <div class="stat-label">CPU</div>
+                    <div class="stat-value"><span id="cpuVal">—</span>%</div>
+                    <div class="bar"><span id="cpuBar" style="width:0%"></span></div>
+                </div>
+                <div class="card stat">
+                    <div class="stat-label">RAM</div>
+                    <div class="stat-value" id="ramVal">—</div>
+                    <div class="bar"><span id="ramBar" style="width:0%"></span></div>
+                </div>
+            </div>
+
+            <div class="card action-card">
+                <h3>⚡ Quick actions</h3>
+                <button class="btn-secondary" data-svc="nginx"   data-op="start">Start Web Server</button>
+                <button class="btn-secondary" data-svc="nginx"   data-op="stop">Stop Web Server</button>
+                <button class="btn-secondary" data-svc="mysql"   data-op="start">Start MariaDB</button>
+                <button class="btn-secondary" data-svc="mysql"   data-op="stop">Stop MariaDB</button>
+            </div>
+        </section>
+
+        <!-- ─── Sites tab ─── -->
+        <section data-panel="sites" class="panel">
+            <div class="section-header">
+                <h2>Virtual Hosts</h2>
+                <button class="btn-primary" id="addSiteBtn">+ New site</button>
+            </div>
+            <div id="sitesList" class="list"></div>
+        </section>
+
+        <!-- ─── Hosts tab ─── -->
+        <section data-panel="hosts" class="panel">
+            <div class="section-header">
+                <h2>Custom DNS Mappings</h2>
+                <button class="btn-primary" id="addHostBtn">+ New mapping</button>
+            </div>
+            <div id="hostsList" class="list"></div>
+        </section>
+
+        <!-- ─── Logs tab ─── -->
+        <section data-panel="logs" class="panel">
+            <div class="section-header">
+                <h2>Live Logs</h2>
+                <select id="logFile">
+                    <option value="access">access.log</option>
+                    <option value="error">error.log</option>
+                    <option value="php-fpm.error">php-fpm.error.log</option>
+                </select>
+            </div>
+            <pre id="logConsole"></pre>
+        </section>
+
+        <!-- ─── Settings tab ─── -->
+        <section data-panel="settings" class="panel">
+            <h2>Server Preferences</h2>
+            <div id="settingsForm" class="card"></div>
+        </section>
+    </div>
+</div>
+<script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>INWEB Islamic APIs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root { --bg:#0B1410; --card:#132821; --accent:#14B8A6; --text:#F5F7FA; --muted:#9AB5AA; }
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+       background: var(--bg); color: var(--text); margin: 0; padding: 2rem 1rem;
+       display: flex; flex-direction: column; align-items: center; }
+main { width: 100%; max-width: 720px; }
+h1 { font-size: 1.8rem; margin: 0 0 .25rem; }
+p.tag { color: var(--muted); margin: 0 0 2rem; }
+.card { background: var(--card); border-radius: 14px; padding: 1.25rem 1.25rem 1rem;
+        margin-bottom: 1rem; border: 1px solid rgba(255,255,255,.04); }
+.card h2 { margin: 0 0 .35rem; font-size: 1.1rem; color: var(--accent); }
+.card p  { margin: 0 0 .8rem; color: var(--muted); font-size: .92rem; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            background: rgba(20,184,166,.08); color: #B6F0B6;
+            padding: 2px 6px; border-radius: 4px; font-size: .85rem; }
+pre { padding: .75rem 1rem; border-radius: 8px; overflow-x: auto; margin: 0 0 .5rem; }
+.tryit { display: inline-block; background: var(--accent); color: white;
+         padding: .5rem 1rem; border-radius: 8px; text-decoration: none;
+         font-size: .9rem; font-weight: 600; margin-right: .5rem; }
+.footer { color: var(--muted); font-size: .8rem; text-align: center;
+          margin-top: 2rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>🕌 INWEB Islamic APIs</h1>
+  <p class="tag">Offline, self-contained JSON endpoints — no third-party service, no rate limit.</p>
+
+  <div class="card">
+    <h2>Prayer times</h2>
+    <p>Astronomical calculation of the five daily prayers plus sunrise. Supports 5 calculation methods.</p>
+    <pre>GET /api/prayer-times.php?lat=23.8103&amp;lng=90.4125&amp;method=1</pre>
+    <a class="tryit" href="prayer-times.php?lat=23.8103&lng=90.4125">Try it (Dhaka)</a>
+    <a class="tryit" href="prayer-times.php?lat=21.4225&lng=39.8262&method=4">Makkah (Umm al-Qura)</a>
+  </div>
+
+  <div class="card">
+    <h2>Qibla direction</h2>
+    <p>Great-circle bearing from your location to the Kaaba, plus distance in kilometers.</p>
+    <pre>GET /api/qibla.php?lat=23.8103&amp;lng=90.4125</pre>
+    <a class="tryit" href="qibla.php?lat=23.8103&lng=90.4125">Try it (Dhaka)</a>
+  </div>
+
+  <div class="card">
+    <h2>Hijri date</h2>
+    <p>Convert between Gregorian and Hijri (tabular Umm al-Qura style, ±1 day).</p>
+    <pre>GET /api/hijri-date.php?date=2026-07-12</pre>
+    <a class="tryit" href="hijri-date.php">Today</a>
+    <a class="tryit" href="hijri-date.php?hijri=1447-09-01">1 Ramadan 1447 →</a>
+  </div>
+
+  <div class="card">
+    <h2>Zakat calculator</h2>
+    <p>Compute Zakat due at 2.5% with configurable gold/silver prices.</p>
+    <pre>GET /api/zakat.php?cash=100000&amp;gold_g=50</pre>
+    <a class="tryit" href="zakat.php?cash=100000&gold_g=50&silver_g=200">Example</a>
+  </div>
+
+  <p class="footer">Served by INWEB · JSON, CORS-enabled · 🇧🇩 Made with 💚</p>
+</main>
+</body>
+</html>

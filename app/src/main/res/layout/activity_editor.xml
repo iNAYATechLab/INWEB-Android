@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/inweb_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- ============ Find & Replace overlay ============ -->
+    <LinearLayout
+        android:id="@+id/findBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <!-- Find row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/findInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Find"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="text"
+                android:maxLines="1"
+                android:fontFamily="monospace"
+                android:padding="8dp"
+                android:background="@color/bg"
+                android:importantForAutofill="no"/>
+
+            <TextView
+                android:id="@+id/findCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 / 0"
+                android:paddingHorizontal="8dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:fontFamily="monospace"/>
+
+            <ImageButton
+                android:id="@+id/findPrev"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/arrow_up_float"
+                android:contentDescription="Previous match"
+                app:tint="@color/accent"/>
+
+            <ImageButton
+                android:id="@+id/findNext"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/arrow_down_float"
+                android:contentDescription="Next match"
+                app:tint="@color/accent"/>
+
+            <ImageButton
+                android:id="@+id/findClose"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:contentDescription="Close find bar"
+                app:tint="@color/text_secondary"/>
+        </LinearLayout>
+
+        <!-- Replace row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <EditText
+                android:id="@+id/replaceInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Replace with"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="text"
+                android:maxLines="1"
+                android:fontFamily="monospace"
+                android:padding="8dp"
+                android:background="@color/bg"
+                android:importantForAutofill="no"/>
+
+            <Button
+                android:id="@+id/replaceBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Replace"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/surface"/>
+
+            <Button
+                android:id="@+id/replaceAllBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="All"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/accent"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ============ Code editor ============ -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
+            android:fillViewport="true">
+
+            <com.inweb.app.ui.editor.CodeEditorView
+                android:id="@+id/editor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="1000dp"
+                android:background="@color/bg"
+                android:textColor="@color/text_primary"
+                android:textCursorDrawable="@null"
+                android:gravity="top|start"
+                android:padding="16dp"
+                android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                android:hint="…"
+                android:textColorHint="@color/text_secondary"
+                android:importantForAutofill="no"/>
+        </HorizontalScrollView>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:padding="8dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:fontFamily="monospace"/>
+</LinearLayout>

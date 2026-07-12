@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Shared page header for every INWEB screen.
+  Include with:
+     <include layout="@layout/inweb_header"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+  Then in Kotlin:
+     findViewById<TextView>(R.id.headerTitle).text = "…"
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="14dp"
+    android:background="@color/bg">
+
+    <ImageButton
+        android:id="@+id/headerBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_arrow_back"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back"
+        app:tint="@color/text_primary"/>
+
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <ImageButton
+        android:id="@+id/headerAction"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_refresh"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Action"
+        android:visibility="gone"
+        app:tint="@color/accent"/>
+
+    <ImageButton
+        android:id="@+id/headerAction2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_more"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="More"
+        android:visibility="gone"
+        app:tint="@color/text_primary"/>
+</LinearLayout>

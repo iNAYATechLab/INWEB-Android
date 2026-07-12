@@ -1,0 +1,13 @@
+{
+    "name":             "INWEB Dashboard",
+    "short_name":       "INWEB",
+    "description":      "Remote control for your INWEB local web server.",
+    "start_url":        "./index.html",
+    "display":          "standalone",
+    "orientation":      "any",
+    "background_color": "#0B1410",
+    "theme_color":      "#0B1410",
+    "icons": [
+        { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    ]
+}

@@ -1,0 +1,52 @@
+## MariaDB / MySQL configuration for INWEB (Android)
+## Rendered at first-run by AssetInstaller — placeholders replaced with real paths.
+##
+## Placeholders: __MYSQL_BASEDIR__ __MYSQL_DATADIR__ __MYSQL_SOCKET__
+##               __MYSQL_PORT__ __MYSQL_BIND__ __LOGDIR__ __TMPDIR__
+
+[mysqld]
+basedir              = __MYSQL_BASEDIR__
+datadir              = __MYSQL_DATADIR__
+tmpdir               = __TMPDIR__
+socket               = __MYSQL_SOCKET__
+pid-file             = __TMPDIR__/mariadb.pid
+
+# Bind address & port
+bind-address         = __MYSQL_BIND__
+port                 = __MYSQL_PORT__
+
+# Small footprint — this is a mobile device.
+key_buffer_size      = 8M
+max_allowed_packet   = 16M
+table_open_cache     = 64
+sort_buffer_size     = 512K
+net_buffer_length    = 8K
+read_buffer_size     = 256K
+read_rnd_buffer_size = 512K
+myisam_sort_buffer_size = 8M
+max_connections      = 20
+
+# Logging
+log-error            = __LOGDIR__/mysql.err
+general_log_file     = __LOGDIR__/mysql.log
+slow_query_log_file  = __LOGDIR__/mysql-slow.log
+
+# Character set
+character-set-server = utf8mb4
+collation-server     = utf8mb4_unicode_ci
+
+# InnoDB: keep the buffer pool tiny on mobile.
+innodb_buffer_pool_size = 32M
+innodb_log_file_size    = 8M
+innodb_flush_log_at_trx_commit = 2
+innodb_file_per_table   = 1
+
+# Skip networking DNS lookups (LAN clients only).
+skip-name-resolve
+
+[client]
+socket = __MYSQL_SOCKET__
+port   = __MYSQL_PORT__
+
+[mysql]
+default-character-set = utf8mb4

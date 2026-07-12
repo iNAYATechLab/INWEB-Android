@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">INWEB</string>
+    <string name="app_tagline">आपकी जेब में समाने वाला शक्तिशाली वेब सर्वर।</string>
+
+    <string name="status_running">सर्वर चल रहा है</string>
+    <string name="status_stopped">सर्वर बंद है</string>
+
+    <string name="start_server">सर्वर शुरू करें</string>
+    <string name="stop_server">सर्वर बंद करें</string>
+
+    <string name="doc_root_hint">वेब रूट:\n%1$s</string>
+    <string name="copy_path">पथ कॉपी करें</string>
+    <string name="copied">पथ क्लिपबोर्ड में कॉपी हो गया</string>
+    <string name="tap_url_hint">ब्राउज़र में खोलने के लिए URL पर टैप करें</string>
+
+    <string name="btn_files">फ़ाइलें</string>
+    <string name="btn_logs">लॉग</string>
+    <string name="btn_share">शेयर &amp; QR</string>
+    <string name="btn_settings">सेटिंग्स</string>
+    <string name="btn_services">सर्विसेज़</string>
+    <string name="btn_frameworks">फ्रेमवर्क्स</string>
+    <string name="btn_tunnel">पब्लिक URL</string>
+
+    <string name="services_title">सर्विसेज़</string>
+    <string name="start_all">सब चालू करें</string>
+    <string name="stop_all">सब बंद करें</string>
+    <string name="start">चालू</string>
+    <string name="stop">बंद</string>
+    <string name="svc_running">चल रहा है</string>
+    <string name="svc_stopped">बंद</string>
+    <string name="svc_starting">शुरू हो रहा है…</string>
+    <string name="svc_stopping">बंद हो रहा है…</string>
+    <string name="svc_error">त्रुटि</string>
+
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="save">सहेजें</string>
+    <string name="onboard_welcome_title">INWEB में स्वागत है</string>
+    <string name="onboard_finish">चलो शुरू करें</string>
+</resources>

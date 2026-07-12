@@ -1,0 +1,52 @@
+# ═══════════════════════════════════════════
+# INWEB-Android · .gitignore
+# ═══════════════════════════════════════════
+
+# ─── Android / Gradle ─────────────────────
+*.iml
+.gradle/
+local.properties
+.idea/
+.DS_Store
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ─── Keystore / secrets (NEVER commit) ───
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+google-services.json
+release-key.properties
+
+# ─── Native binaries (fetched by script) ─
+# These are large & downloaded via scripts/fetch_binaries.sh
+app/src/main/assets/server_env/bin/*
+!app/src/main/assets/server_env/bin/.gitkeep
+app/src/main/assets/server_env/tunnel/cloudflared
+app/src/main/assets/server_env/phpmyadmin/**
+!app/src/main/assets/server_env/phpmyadmin/.gitkeep
+
+# ─── OS / editor cruft ────────────────────
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+*.log
+
+# ─── Python / node cruft (if any tooling) ─
+__pycache__/
+node_modules/
+.env
+.env.local
+
+# ─── Build outputs ────────────────────────
+app/release/
+app/debug/

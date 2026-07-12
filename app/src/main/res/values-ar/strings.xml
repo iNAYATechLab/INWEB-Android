@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">INWEB</string>
+    <string name="app_tagline">خادم ويب قوي يتّسع في جيبك.</string>
+
+    <string name="status_running">الخادم يعمل</string>
+    <string name="status_stopped">الخادم متوقف</string>
+
+    <string name="start_server">تشغيل الخادم</string>
+    <string name="stop_server">إيقاف الخادم</string>
+
+    <string name="doc_root_hint">جذر الويب:\n%1$s</string>
+    <string name="copy_path">نسخ المسار</string>
+    <string name="copied">تم نسخ المسار</string>
+
+    <string name="tap_url_hint">اضغط على الرابط لفتحه في المتصفح</string>
+
+    <string name="btn_files">الملفات</string>
+    <string name="btn_logs">السجلات</string>
+    <string name="btn_share">مشاركة و QR</string>
+    <string name="btn_settings">الإعدادات</string>
+    <string name="btn_services">الخدمات</string>
+    <string name="btn_frameworks">أُطر العمل</string>
+
+    <string name="share_title">مشاركة و QR</string>
+    <string name="from_this_device">من هذا الجهاز</string>
+    <string name="from_lan_devices">من الأجهزة الأخرى على الشبكة</string>
+    <string name="network">الشبكة</string>
+    <string name="qr_scan_hint">امسح باستخدام أي جهاز على نفس Wi-Fi</string>
+    <string name="copy">نسخ</string>
+    <string name="share_url_btn">مشاركة الرابط</string>
+    <string name="share_qr_btn">مشاركة QR</string>
+    <string name="share_url">مشاركة الرابط</string>
+    <string name="share_qr">مشاركة صورة QR</string>
+    <string name="no_browser">لا يوجد متصفح مثبت</string>
+    <string name="copied_url">تم نسخ %1$s</string>
+    <string name="no_network">لم يتم العثور على Wi-Fi</string>
+    <string name="bind_localhost_hint">فعّل \"السماح بالوصول عبر الشبكة\" في الإعدادات للوصول من أجهزة أخرى.</string>
+    <string name="lan_open_hint">اضغط للاختبار في المتصفح</string>
+    <string name="ssid_unavailable">SSID غير متوفر</string>
+    <string name="bind_warning">⚠️ الخادم مقيد بـ localhost فقط. لا يمكن للأجهزة الأخرى الوصول.</string>
+
+    <string name="settings_title">الإعدادات</string>
+    <string name="network_section">الشبكة</string>
+    <string name="bind_lan_title">السماح بالوصول عبر الشبكة</string>
+    <string name="bind_lan_desc">ربط بـ 0.0.0.0 لكي تتمكن الأجهزة الأخرى من الوصول.</string>
+    <string name="http_port_title">منفذ HTTP</string>
+    <string name="http_port_desc">المنفذ الذي يستمع عليه Nginx. الافتراضي 8080.</string>
+    <string name="http_port_dialog_title">منفذ HTTP</string>
+    <string name="http_port_dialog_msg">أدخل منفذاً بين 1024 و 65535.</string>
+    <string name="save">حفظ</string>
+    <string name="port_range_error">المنفذ يجب أن يكون بين 1024 و 65535.</string>
+    <string name="restart_hint">⏵ أعد تشغيل الخادم لتطبيق التغييرات.</string>
+
+    <string name="services_title">الخدمات</string>
+    <string name="services_subtitle">شغّل وأوقف وراقب كل خدمة بشكل مستقل.</string>
+    <string name="services_footer_hint">💡 نصيحة: Nginx يشغّل PHP-FPM تلقائياً.</string>
+    <string name="start_all">تشغيل الكل</string>
+    <string name="stop_all">إيقاف الكل</string>
+    <string name="start">تشغيل</string>
+    <string name="stop">إيقاف</string>
+    <string name="svc_running">يعمل</string>
+    <string name="svc_stopped">متوقف</string>
+    <string name="svc_starting">يبدأ…</string>
+    <string name="svc_stopping">يتوقف…</string>
+    <string name="svc_error">خطأ</string>
+    <string name="svc_check_logs">راجع السجلات للتفاصيل.</string>
+
+    <string name="db_section">قاعدة البيانات</string>
+    <string name="db_enable_title">تفعيل MariaDB</string>
+    <string name="db_enable_desc">شغّل MariaDB عند الضغط على \"تشغيل الكل\".</string>
+    <string name="db_port_title">منفذ MariaDB</string>
+    <string name="db_port_desc">منفذ MariaDB. الافتراضي 3306.</string>
+    <string name="db_root_title">كلمة مرور root لـ MySQL</string>
+    <string name="db_root_desc">تُولَّد تلقائياً في أول تشغيل. اضغط لعرضها أو نسخها.</string>
+    <string name="db_root_dialog_title">كلمة مرور root لـ MySQL</string>
+    <string name="db_root_not_ready">لم تُعيّن بعد — شغّل MariaDB مرة واحدة.</string>
+    <string name="db_copy_pw">نسخ كلمة المرور</string>
+    <string name="db_password_copied">تم نسخ كلمة المرور</string>
+    <string name="db_regenerate">إعادة التوليد</string>
+    <string name="db_regenerate_confirm_title">إعادة توليد كلمة المرور؟</string>
+    <string name="db_regenerate_confirm_msg">سيتم مسح كلمة المرور المحفوظة.</string>
+    <string name="db_regenerate_done">تم إعادة توليد كلمة المرور. أعد تشغيل MariaDB.</string>
+    <string name="db_open_pma">فتح phpMyAdmin</string>
+    <string name="db_pma_not_running">شغّل Nginx أولاً لفتح phpMyAdmin.</string>
+
+    <string name="general_section">عام</string>
+    <string name="theme_title">السمة</string>
+    <string name="theme_desc">اتبع النظام أو فرض الوضع الفاتح / الداكن.</string>
+    <string name="theme_dialog_title">اختر السمة</string>
+    <string name="autostart_title">التشغيل التلقائي عند الإقلاع</string>
+    <string name="autostart_desc">تشغيل خدمات INWEB تلقائياً عند إقلاع الجهاز.</string>
+
+    <string name="tile_running">INWEB مفعّل</string>
+    <string name="tile_stopped">INWEB متوقف</string>
+    <string name="tile_subtitle_running">اضغط للإيقاف</string>
+    <string name="tile_subtitle_stopped">اضغط للتشغيل</string>
+    <string name="widget_description">تشغيل/إيقاف INWEB بضغطة واحدة.</string>
+    <string name="widget_label">خادم INWEB</string>
+    <string name="shortcut_start_short">تشغيل</string>
+    <string name="shortcut_start_long">تشغيل خادم INWEB</string>
+    <string name="shortcut_stop_short">إيقاف</string>
+    <string name="shortcut_stop_long">إيقاف خادم INWEB</string>
+
+    <string name="onboard_skip">تخطي</string>
+    <string name="onboard_next">التالي</string>
+    <string name="onboard_grant">منح</string>
+    <string name="onboard_finish">هيا نبدأ</string>
+    <string name="onboard_welcome_title">مرحباً بك في INWEB</string>
+    <string name="onboard_welcome_body">حزمة ويب محلية كاملة — Nginx و PHP و MariaDB — على جهاز Android.\n\nمثالي لتطوير PHP أثناء التنقل.</string>
+    <string name="onboard_perm_title">ابقَ مطّلعاً</string>
+    <string name="onboard_perm_body">يحتاج INWEB إذناً لعرض إشعار مستمر أثناء تشغيل الخادم.</string>
+    <string name="onboard_ready_title">أنت جاهز</string>
+    <string name="onboard_ready_body">✓ اضغط تشغيل الخادم\n✓ استخدم علامة الخدمات لإضافة MariaDB\n✓ شارك الرابط عبر QR\n\nبرمجة سعيدة!</string>
+
+    <string name="editor_save">حفظ</string>
+    <string name="editor_find">بحث واستبدال</string>
+    <string name="editor_reload">إعادة تحميل من القرص</string>
+    <string name="editor_theme">سمة الألوان…</string>
+    <string name="editor_language">اللغة…</string>
+    <string name="editor_font_bigger">تكبير الخط</string>
+    <string name="editor_font_smaller">تصغير الخط</string>
+    <string name="editor_theme_title">سمة ألوان المحرر</string>
+    <string name="editor_lang_title">لغة البرمجة</string>
+
+    <string name="frameworks_title">أُطر العمل</string>
+    <string name="frameworks_subtitle">تثبيت أُطر عمل الويب الشائعة بضغطة واحدة.</string>
+    <string name="fw_install_btn">تثبيت</string>
+    <string name="fw_install_confirm_title">تثبيت %1$s؟</string>
+    <string name="fw_installing">جارٍ تثبيت %1$s…</string>
+    <string name="fw_done_title">تم تثبيت %1$s 🎉</string>
+    <string name="fw_done_msg">افتح في المتصفح:\n%1$s</string>
+    <string name="fw_open">فتح</string>
+    <string name="fw_failed_title">فشل تثبيت %1$s</string>
+
+    <string name="https_section">HTTPS و SSL</string>
+    <string name="https_enable_title">تفعيل HTTPS</string>
+    <string name="https_enable_desc">تقديم TLS على منفذ منفصل بشهادة موقّعة ذاتياً.</string>
+    <string name="https_port_title">منفذ HTTPS</string>
+    <string name="https_port_desc">المنفذ الذي يستمع عليه Nginx لـ TLS. الافتراضي 8443.</string>
+    <string name="https_port_dialog">منفذ HTTPS</string>
+    <string name="https_fp_title">بصمة الشهادة</string>
+    <string name="https_fp_none">لم تُولَّد بعد</string>
+    <string name="https_fp_none_long">لم تُولَّد أي شهادة بعد.</string>
+    <string name="https_fp_msg">SHA-256:\n\n%1$s</string>
+    <string name="https_regenerate">إعادة التوليد</string>
+    <string name="https_regenerated">تم حذف الشهادة. أعد التشغيل لتوليد شهادة جديدة.</string>
+    <string name="https_cert_will_generate">ستُولَّد شهادة موقّعة ذاتياً عند التشغيل التالي.</string>
+
+    <string name="btn_tunnel">رابط عام</string>
+    <string name="tunnel_title">النفق العام</string>
+    <string name="tunnel_subtitle">اعرض خادمك المحلي على الإنترنت عبر Cloudflare Tunnel أو ngrok.</string>
+    <string name="tunnel_provider">مزوّد النفق</string>
+    <string name="tunnel_provider_cf">Cloudflare Tunnel (بدون حساب)</string>
+    <string name="tunnel_provider_ngrok">ngrok (قد يلزم حساب)</string>
+    <string name="tunnel_stopped">النفق متوقف</string>
+    <string name="tunnel_starting">جارٍ بدء النفق…</string>
+    <string name="tunnel_running">النفق نشط — الرابط أدناه عام</string>
+    <string name="tunnel_hint">💡 ضع cloudflared أو ngrok ARM64 في assets/server_env/tunnel/ قبل البناء.</string>
+    <string name="tunnel_open_btn">🌐 عرض على الإنترنت (نفق)</string>
+</resources>
