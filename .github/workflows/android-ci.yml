@@ -153,23 +153,26 @@ jobs:
       - name: 🔨 Assemble Release APK (unsigned)
         run: ./gradlew assembleRelease --no-daemon
 
+      - name: 📝 Write release notes
+        run: |
+          cat > release_notes.md << 'EOF'
+          🎉 **INWEB** — A Powerful Web Server that fits in your Pocket.
+
+          ## 📥 Download
+          Grab the APK from the assets below.
+
+          ## ⚠️ Native binaries
+          This APK is built with **placeholder** native binaries. Before installing:
+          1. Clone repo
+          2. Run `bash scripts/fetch_binaries.sh`
+          3. Rebuild: `./gradlew assembleRelease`
+
+          Or use this APK for **UI/API testing only** — server start will fail without real binaries.
+          EOF
+
       - name: 📤 Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="${GITHUB_REF#refs/tags/}"
-          gh release create "$TAG" \
-            --title "INWEB $TAG" \
-            --notes "🎉 **INWEB $TAG** — A Powerful Web Server that fits in your Pocket.
-
-## 📥 Download
-Grab the APK from the assets below.
-
-## ⚠️ Native binaries
-This APK is built with **placeholder** native binaries. Before installing:
-1. Clone repo
-2. Run \`bash scripts/fetch_binaries.sh\`
-3. Rebuild: \`./gradlew assembleRelease\`
-
-Or use this APK for **UI/API testing only** — server start will fail without real binaries." \
-            app/build/outputs/apk/release/*.apk
+          gh release create "$TAG" --title "INWEB $TAG" --notes-file release_notes.md app/build/outputs/apk/release/*.apk
