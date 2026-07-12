@@ -1,0 +1,175 @@
+# ═══════════════════════════════════════════
+# INWEB-Android · Continuous Integration
+# ═══════════════════════════════════════════
+# - Runs on every push + PR to main
+# - Validates Gradle build
+# - Builds debug APK
+# - Uploads APK as workflow artifact (7 days)
+# - On tag push (v*): creates GitHub Release with APK
+# ═══════════════════════════════════════════
+
+name: 🤖 Android CI
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # allow manual trigger
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─── JOB 1 · Lint + Build validation ──────────────────
+  build:
+    name: 🔨 Build Debug APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # 1️⃣ Checkout source
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Set up JDK 17 (required for AGP 8.x)
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # 3️⃣ Cache Gradle to speed up rebuilds
+      - name: 💾 Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      # 4️⃣ Grant execute permission to wrapper
+      - name: 🔧 Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # 5️⃣ Placeholder native binaries (real ones come from fetch_binaries.sh)
+      # This lets the build succeed without the actual Nginx/PHP binaries
+      - name: 📦 Create placeholder binaries
+        run: |
+          mkdir -p app/src/main/assets/server_env/bin
+          mkdir -p app/src/main/assets/server_env/tunnel
+          mkdir -p app/src/main/assets/server_env/phpmyadmin
+          # placeholder .gitkeep-style files (real binaries fetched at runtime by user)
+          for b in nginx apache2 php-fpm mariadbd caddy node; do
+            echo "#!/bin/sh" > "app/src/main/assets/server_env/bin/$b"
+            echo "echo 'Placeholder — run scripts/fetch_binaries.sh to install real binary'" >> "app/src/main/assets/server_env/bin/$b"
+            chmod +x "app/src/main/assets/server_env/bin/$b"
+          done
+          echo "// placeholder — supply your own aarch64 build" > app/src/main/assets/server_env/tunnel/cloudflared
+          echo "<!DOCTYPE html><h1>Placeholder</h1>" > app/src/main/assets/server_env/phpmyadmin/index.html
+
+      # 6️⃣ Lint check
+      - name: 🔍 Run Lint
+        run: ./gradlew lint --no-daemon --stacktrace
+        continue-on-error: true  # don't fail build on lint warnings
+
+      # 7️⃣ Upload lint report even if failed
+      - name: 📄 Upload Lint report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-report
+          path: app/build/reports/lint-results-*.html
+          retention-days: 7
+
+      # 8️⃣ Build debug APK
+      - name: 🔨 Assemble Debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      # 9️⃣ Show APK info
+      - name: 📊 APK info
+        run: |
+          echo "═══════════════════════════════════════════"
+          echo "  ✅ Build successful"
+          echo "═══════════════════════════════════════════"
+          find app/build/outputs/apk -name "*.apk" -exec ls -lh {} \;
+          echo ""
+          echo "  Total APK size:"
+          find app/build/outputs/apk -name "*.apk" -exec du -sh {} \;
+
+      # 🔟 Upload APK as workflow artifact
+      - name: 📤 Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: INWEB-debug-${{ github.sha }}
+          path: app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+          if-no-files-found: error
+
+  # ─── JOB 2 · Release APK (only on tag push) ───────────
+  release:
+    name: 🚀 GitHub Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write  # needed for gh release create
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: 💾 Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: 🔧 Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: 📦 Create placeholder binaries
+        run: |
+          mkdir -p app/src/main/assets/server_env/bin app/src/main/assets/server_env/tunnel app/src/main/assets/server_env/phpmyadmin
+          for b in nginx apache2 php-fpm mariadbd caddy node; do
+            echo "#!/bin/sh" > "app/src/main/assets/server_env/bin/$b"; chmod +x "app/src/main/assets/server_env/bin/$b"
+          done
+          echo "placeholder" > app/src/main/assets/server_env/tunnel/cloudflared
+          echo "placeholder" > app/src/main/assets/server_env/phpmyadmin/index.html
+
+      - name: 🔨 Assemble Release APK (unsigned)
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: 📤 Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          gh release create "$TAG" \
+            --title "INWEB $TAG" \
+            --notes "🎉 **INWEB $TAG** — A Powerful Web Server that fits in your Pocket.
+
+## 📥 Download
+Grab the APK from the assets below.
+
+## ⚠️ Native binaries
+This APK is built with **placeholder** native binaries. Before installing:
+1. Clone repo
+2. Run \`bash scripts/fetch_binaries.sh\`
+3. Rebuild: \`./gradlew assembleRelease\`
+
+Or use this APK for **UI/API testing only** — server start will fail without real binaries." \
+            app/build/outputs/apk/release/*.apk

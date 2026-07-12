@@ -9,6 +9,7 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 ![Kotlin](https://img.shields.io/badge/kotlin-1.9-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-14B8A6?style=flat-square)
 ![Package](https://img.shields.io/badge/package-com.inweb.app-0F766E?style=flat-square)
+[![Android CI](https://github.com/InayaTechLabs/INWEB-Android/actions/workflows/android-ci.yml/badge.svg)](https://github.com/InayaTechLabs/INWEB-Android/actions/workflows/android-ci.yml)
 
 📖 [English](#-english) · [বাংলা](#-বাংলা) · [🍎 iOS App](../INWEB-iOS)
 
