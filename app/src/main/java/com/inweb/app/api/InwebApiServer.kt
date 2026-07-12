@@ -16,24 +16,25 @@ import java.util.concurrent.atomic.AtomicBoolean
  * A tiny REST + WebSocket-friendly HTTP server that exposes INWEB's
  * control plane to iOS apps and Web PWAs.
  *
- * All endpoints live under `/api/inweb/*` and return JSON. Zero external
- * dependencies — hand-rolled HTTP/1.1 handling (INWEB philosophy: tiny APK).
+ * All endpoints live under the api-inweb namespace and return JSON.
+ * Zero external dependencies — hand-rolled HTTP/1.1 handling (INWEB
+ * philosophy: tiny APK).
  *
  * Endpoints (v1):
  *
- *   GET  /api/inweb/status               → server + services state snapshot
- *   GET  /api/inweb/prefs                → all user preferences
- *   PUT  /api/inweb/prefs                → update preferences (JSON body)
- *   GET  /api/inweb/vhosts               → list virtual hosts
- *   POST /api/inweb/vhosts               → create / update vhost
- *   DELETE /api/inweb/vhosts/{id}        → remove vhost
- *   GET  /api/inweb/hosts                → list DNS host mappings
- *   POST /api/inweb/hosts                → create / update mapping
- *   DELETE /api/inweb/hosts/{id}         → remove mapping
- *   GET  /api/inweb/logs?file=access     → tail server logs
- *   POST /api/inweb/service/start        → { "service": "nginx" }
- *   POST /api/inweb/service/stop         → { "service": "nginx" }
- *   GET  /api/inweb/prayer-times?lat=&lng= → today's prayer times
+ *   GET     status               server + services state snapshot
+ *   GET     prefs                all user preferences
+ *   PUT     prefs                update preferences (JSON body)
+ *   GET     vhosts               list virtual hosts
+ *   POST    vhosts               create / update vhost
+ *   DELETE  vhosts/id            remove vhost
+ *   GET     hosts                list DNS host mappings
+ *   POST    hosts                create / update mapping
+ *   DELETE  hosts/id             remove mapping
+ *   GET     logs?file=access     tail server logs
+ *   POST    service/start        body: service=nginx
+ *   POST    service/stop         body: service=nginx
+ *   GET     prayer-times?lat=lng today's prayer times
  *
  * CORS is enabled globally — the PWA can be served from anywhere.
  */
@@ -208,3 +209,4 @@ class InwebApiServer(
 
 /** Immutable HTTP response returned by [ApiRouter]. */
 data class ApiResponse(val status: Int, val body: String, val contentType: String = "application/json")
+
