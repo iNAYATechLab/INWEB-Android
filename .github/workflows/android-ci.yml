@@ -154,8 +154,45 @@ jobs:
           chmod +x scripts/fetch_binaries.sh
           bash scripts/fetch_binaries.sh
 
-      - name: 🔨 Assemble Release APK (unsigned)
-        run: ./gradlew assembleRelease --no-daemon
+      # 🔐 Decode the release keystore from base64 secret
+      # If no secret is set, the release build will be unsigned (still works,
+      # just can't be installed without manual signing).
+      - name: 🔐 Decode release keystore
+        id: keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "  ⚠️ No KEYSTORE_BASE64 secret — release APK will be UNSIGNED."
+            echo "  See docs/SIGNING.md to configure signing."
+            echo "signed=false" >> $GITHUB_OUTPUT
+          else
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/inweb-release.jks"
+            echo "  ✅ Keystore decoded ($(wc -c < $RUNNER_TEMP/inweb-release.jks) bytes)"
+            echo "signed=true" >> $GITHUB_OUTPUT
+            echo "KEYSTORE_PATH=$RUNNER_TEMP/inweb-release.jks" >> $GITHUB_ENV
+          fi
+
+      - name: 🔨 Assemble Release APK ${{ steps.keystore.outputs.signed == 'true' && '(SIGNED)' || '(unsigned)' }}
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS:         ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD:      ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: 📊 Show APK signature status
+        run: |
+          APK=$(find app/build/outputs/apk/release -name "*.apk" | head -1)
+          echo "═══════════════════════════════════════════"
+          echo "  📦 Release APK: $APK"
+          echo "  📊 Size: $(du -h "$APK" | cut -f1)"
+          echo "═══════════════════════════════════════════"
+          # Detect if signed
+          if unzip -p "$APK" META-INF/MANIFEST.MF 2>/dev/null | grep -q "SHA"; then
+            echo "  🔐 Signature: ✅ SIGNED"
+          else
+            echo "  ⚠️ Signature: NOT SIGNED"
+          fi
 
       - name: 📝 Write release notes
         run: |

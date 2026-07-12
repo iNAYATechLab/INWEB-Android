@@ -3,6 +3,41 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+// ─── Load release signing config ─────────────────────────────────
+// Priority:
+//   1. Environment variables (used by CI — GitHub Actions secrets)
+//   2. keystore.properties file (used for local signed builds)
+//   3. If neither present, release APK will be unsigned (still builds).
+import java.util.Properties
+import java.io.FileInputStream
+
+val releaseSigning: Map<String, String>? = run {
+    val envStore = System.getenv("KEYSTORE_PATH")
+    val envPass  = System.getenv("KEYSTORE_PASSWORD")
+    val envAlias = System.getenv("KEY_ALIAS")
+    val envKey   = System.getenv("KEY_PASSWORD")
+    if (!envStore.isNullOrBlank() && !envPass.isNullOrBlank()
+        && !envAlias.isNullOrBlank() && !envKey.isNullOrBlank()) {
+        mapOf(
+            "storeFile"     to envStore,
+            "storePassword" to envPass,
+            "keyAlias"      to envAlias,
+            "keyPassword"   to envKey,
+        )
+    } else {
+        val f = rootProject.file("keystore.properties")
+        if (f.exists()) {
+            val p = Properties().apply { load(FileInputStream(f)) }
+            mapOf(
+                "storeFile"     to (p["storeFile"] as String),
+                "storePassword" to (p["storePassword"] as String),
+                "keyAlias"      to (p["keyAlias"] as String),
+                "keyPassword"   to (p["keyPassword"] as String),
+            )
+        } else null
+    }
+}
+
 android {
     // INWEB brand identifier — used consistently for Kotlin package,
     // Gradle namespace, and Play Store applicationId.
@@ -17,6 +52,17 @@ android {
         versionName = "1.0.0"
     }
 
+    signingConfigs {
+        releaseSigning?.let { sig ->
+            create("release") {
+                storeFile     = file(sig["storeFile"]!!)
+                storePassword = sig["storePassword"]
+                keyAlias      = sig["keyAlias"]
+                keyPassword   = sig["keyPassword"]
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -24,6 +70,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Only apply signing if credentials were found; otherwise
+            // release APK is built unsigned (must be signed later).
+            if (releaseSigning != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
