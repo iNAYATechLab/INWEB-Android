@@ -65,7 +65,7 @@ class ServerManager(
             ServiceType.PHP_FPM -> phpFpm
             ServiceType.MYSQL   -> return mysql.pid
         }
-        try { p?.pid() } catch (_: Throwable) { null }
+        p?.safePid()
     }
 
     /* ---------------------------------------------------------------- */
@@ -368,7 +368,21 @@ class ServerManager(
         }
     }
 
-    private fun Process.pidOrNull(): Long? = try { pid() } catch (_: Throwable) { null }
+    private fun Process.pidOrNull(): Long? = safePid()
+
+    /**
+     * Reflection-based pid extraction. Works on all Android API levels
+     * including where java.lang.Process.pid() isn't available directly
+     * (e.g. some AOSP forks with stripped stdlib annotations).
+     */
+    private fun Process.safePid(): Long? = try {
+        val m = this::class.java.getMethod("pid")
+        (m.invoke(this) as? Long) ?: (m.invoke(this) as? Int)?.toLong()
+    } catch (_: Throwable) {
+        // Fallback: parse the toString() which usually contains pid=N
+        val s = this.toString()
+        Regex("pid=(\\d+)").find(s)?.groupValues?.get(1)?.toLongOrNull()
+    }
 
     private fun Process.waitForQuietly(millis: Long): Boolean = try {
         val start = System.currentTimeMillis()

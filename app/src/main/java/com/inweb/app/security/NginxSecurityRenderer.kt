@@ -59,7 +59,7 @@ object NginxSecurityRenderer {
         if (!c.rateLimitEnabled) return "# rate limit disabled"
         return """
             # Rate limit zone: ${c.rateLimitRps} req/s per client IP
-            limit_req_zone \$binary_remote_addr zone=inweb_rl:10m rate=${c.rateLimitRps}r/s;
+            limit_req_zone ${'$'}binary_remote_addr zone=inweb_rl:10m rate=${c.rateLimitRps}r/s;
         """.trimIndent()
     }
 

@@ -38,7 +38,13 @@ class MysqlManager(
     val isRunning: Boolean get() = synchronized(lock) { process?.isAlive == true }
 
     val pid: Long? get() = synchronized(lock) {
-        try { process?.pid() } catch (_: Throwable) { null }
+        val p = process ?: return@synchronized null
+        try {
+            val m = p::class.java.getMethod("pid")
+            (m.invoke(p) as? Long) ?: (m.invoke(p) as? Int)?.toLong()
+        } catch (_: Throwable) {
+            Regex("pid=(\\d+)").find(p.toString())?.groupValues?.get(1)?.toLongOrNull()
+        }
     }
 
     /**
@@ -103,7 +109,7 @@ class MysqlManager(
         val p = process ?: return@synchronized
         if (!p.isAlive) { process = null; return@synchronized }
 
-        Log.i(TAG, "Stopping mariadbd (pid=${try { p.pid() } catch (_: Throwable) { -1 }})")
+        Log.i(TAG, "Stopping mariadbd (pid=${pid ?: -1})")
 
         // Prefer graceful shutdown via mysqladmin if available.
         val prefs = Prefs(context)
