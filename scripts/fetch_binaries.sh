@@ -34,15 +34,22 @@ echo "────────────────────────�
 
 # ---------------------------------------------------------------------------
 # Package list to fetch. Format: "pkgname:desc:target_folder:copy_globs"
+#
+# NOTE (2026): Termux packages ship files under
+#   data/data/com.termux/files/usr/bin/…
+# rather than plain usr/bin/… — the prefix is Termux's chroot layout.
 # ---------------------------------------------------------------------------
+TX="data/data/com.termux/files/usr"
+
 PACKAGES=(
-  "n/nginx:Nginx web server:$DEST_BIN:usr/bin/nginx"
-  "a/apache2:Apache HTTP Server:$DEST_BIN:usr/bin/httpd usr/bin/apachectl"
-  "c/caddy:Caddy web server (auto-HTTPS):$DEST_BIN:usr/bin/caddy"
-  "n/nodejs:Node.js runtime:$DEST_BIN:usr/bin/node usr/bin/npm"
-  "p/php:PHP CLI + FPM:$DEST_BIN:usr/bin/php usr/bin/php-fpm"
-  "m/mariadb:MariaDB server + client:$DEST_BIN:usr/bin/mariadbd usr/bin/mysql usr/bin/mysqladmin usr/bin/mysql_install_db"
-  "c/cloudflared:Cloudflare Tunnel:$DEST_TUNNEL:usr/bin/cloudflared"
+  "n/nginx:Nginx web server:$DEST_BIN:$TX/bin/nginx"
+  "a/apache2:Apache HTTP Server:$DEST_BIN:$TX/bin/httpd $TX/bin/apachectl"
+  "c/caddy:Caddy web server (auto-HTTPS):$DEST_BIN:$TX/bin/caddy"
+  "n/nodejs:Node.js runtime:$DEST_BIN:$TX/bin/node $TX/bin/npm"
+  "p/php:PHP CLI:$DEST_BIN:$TX/bin/php"
+  "p/php-fpm:PHP-FPM:$DEST_BIN:$TX/bin/php-fpm"
+  "m/mariadb:MariaDB server + client:$DEST_BIN:$TX/bin/mariadbd $TX/bin/mysql $TX/bin/mysqladmin $TX/bin/mysql_install_db"
+  "c/cloudflared:Cloudflare Tunnel:$DEST_TUNNEL:$TX/bin/cloudflared"
 )
 
 # OpenLiteSpeed isn't in Termux — user must supply their own aarch64 build.
@@ -104,21 +111,21 @@ fetch_one () {
   done
 
   # MariaDB extras: share/ (error messages, seed SQL)
-  if [ "$pkgname" = "mariadb" ] && [ -d "$unpack/usr/share/mariadb" ]; then
+  if [ "$pkgname" = "mariadb" ] && [ -d "$unpack/$TX/share/mariadb" ]; then
     echo "  📚 Copying MariaDB share/ →  $DEST_MYSQL_SHARE"
-    cp -r "$unpack/usr/share/mariadb/." "$DEST_MYSQL_SHARE/"
+    cp -r "$unpack/$TX/share/mariadb/." "$DEST_MYSQL_SHARE/"
   fi
 
   # Apache extras: modules/ (.so shared modules) + conf/mime.types
   if [ "$pkgname" = "apache2" ]; then
     mkdir -p "$DEST_APACHE_MODULES"
-    if [ -d "$unpack/usr/libexec/apache2" ]; then
+    if [ -d "$unpack/$TX/libexec/apache2" ]; then
       echo "  🧩 Copying Apache modules →  $DEST_APACHE_MODULES"
-      cp -r "$unpack/usr/libexec/apache2/." "$DEST_APACHE_MODULES/"
+      cp -r "$unpack/$TX/libexec/apache2/." "$DEST_APACHE_MODULES/"
     fi
-    if [ -f "$unpack/usr/etc/apache2/mime.types" ]; then
+    if [ -f "$unpack/$TX/etc/apache2/mime.types" ]; then
       mkdir -p "$ROOT/app/src/main/assets/server_env/apache/conf"
-      cp "$unpack/usr/etc/apache2/mime.types" \
+      cp "$unpack/$TX/etc/apache2/mime.types" \
          "$ROOT/app/src/main/assets/server_env/apache/conf/"
     fi
   fi
