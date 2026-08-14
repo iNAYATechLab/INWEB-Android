@@ -1,6 +1,6 @@
-# 🌐 INWEB
+# 🌐 iNWEB
 
-![INWEB logo](branding/inweb_logo.png)
+![iNWEB logo](branding/inweb_logo.png)
 
 **A Powerful Web Server that fits in your Pocket.**
 _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed / Caddy / Node + PHP + MariaDB সার্ভার_
@@ -9,15 +9,15 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 ![Kotlin](https://img.shields.io/badge/kotlin-1.9-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-14B8A6?style=flat-square)
 ![Package](https://img.shields.io/badge/package-com.inweb.app-0F766E?style=flat-square)
-[![Android CI](https://github.com/InayaTechLabs/INWEB-Android/actions/workflows/android-ci.yml/badge.svg)](https://github.com/InayaTechLabs/INWEB-Android/actions/workflows/android-ci.yml)
+[![Android CI](https://github.com/InayaTechLabs/iNWEB-Android/actions/workflows/android-ci.yml/badge.svg)](https://github.com/InayaTechLabs/iNWEB-Android/actions/workflows/android-ci.yml)
 
-📖 [English](#-english) · [বাংলা](#-বাংলা) · [🍎 iOS App](../INWEB-iOS)
+📖 [English](#-english) · [বাংলা](#-বাংলা) · [🍎 iOS App](../iNWEB-iOS)
 
 ---
 
 ## 🇬🇧 English
 
-### 💡 What is INWEB?
+### 💡 What is iNWEB?
 
 **INWEB** (from Arabic **إناية** *Inaya* — "care" — combined with *Web*) is a full-stack local web server that runs **natively on any Android phone**. No root, no VPS, no cloud bill. Spin up **Nginx + PHP-FPM + MariaDB + phpMyAdmin** in one tap and start building — anywhere, anytime, offline-first.
 
@@ -32,13 +32,13 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 | 🌍 | **Custom DNS system** | Virtual Hosts + Local Hosts VPN + LAN DNS (`mysite.local` works everywhere) |
 | 🔐 | **HTTPS + Security** | Self-signed SSL · HTTP Basic Auth · IP allow/deny · rate-limiting |
 | 🔥 | **Live Reload** | Pure-Kotlin WebSocket server (port 35729) + recursive file-watcher + auto script injection |
-| 🌐 | **Dynamic DNS** | DuckDNS · No-IP · Cloudflare · INAYA — auto-updated by WorkManager |
+| 🌐 | **Dynamic DNS** | DuckDNS · No-IP · Cloudflare · iNWEB — auto-updated by WorkManager |
 | 🕋 | **Islamic APIs** | Prayer times · Qibla direction · Hijri date · Zakat calc — all offline PHP endpoints |
 | 📝 | **Live code editor** | Split-view editor + preview, syntax highlighting, dirty-tracking |
 | 📊 | **Server cluster dashboard** | Per-engine sparklines (CPU/RAM), rich status cards, log preview |
 | 🔌 | **REST Control API** | Token-authenticated `/api/inweb/*` on port 8181 (used by Web PWA + iOS) |
 | 📲 | **Web PWA dashboard** | Zero-dep vanilla HTML/CSS/JS control panel served from the app |
-| 🍎 | **iOS companion app** | Native SwiftUI remote — see [`../INWEB-iOS`](../INWEB-iOS) |
+| 🍎 | **iOS companion app** | Native SwiftUI remote — see [`../iNWEB-iOS`](../iNWEB-iOS) |
 | 🌐 | **5 languages** | English · বাংলা · العربية · हिन्दी · اردو |
 | ♿ | **Zero external HTTP deps** | Pure Java stdlib — no OkHttp, no Retrofit — minimal APK size |
 
@@ -46,7 +46,7 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                       INWEB Android App                          │
+│                       iNWEB Android App                          │
 │                                                                  │
 │  ┌────────────┐   ┌──────────────┐   ┌──────────────┐            │
 │  │  Nginx /   │   │  PHP-FPM     │   │  MariaDB     │            │
@@ -75,8 +75,8 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-org/INWEB-Android.git
-cd INWEB-Android
+git clone https://github.com/InayaTechLabs/iNWEB-Android.git
+cd iNWEB-Android
 
 # 2. Fetch native binaries (nginx, apache, php-fpm, mariadb, ...)
 bash scripts/fetch_binaries.sh
@@ -87,7 +87,7 @@ bash scripts/fetch_binaries.sh
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-**On the phone:** open **INWEB** → tap **START** → visit `http://localhost:8080` in Chrome. Done. 🎉
+**On the phone:** open **iNWEB** → tap **START** → visit `http://localhost:8080` in Chrome. Done. 🎉
 
 ### 📁 Project structure
 
@@ -147,7 +147,7 @@ INWEB-Android/
 | Client | Path | Stack |
 |---|---|---|
 | 📲 **Web PWA** | Installed to `www/inweb-dashboard/` on the phone | vanilla HTML/CSS/JS |
-| 🍎 **iOS app** | [`../INWEB-iOS`](../INWEB-iOS) | SwiftUI, iOS 16+ |
+| 🍎 **iOS app** | [`../iNWEB-iOS`](../iNWEB-iOS) | SwiftUI, iOS 16+ |
 
 Both talk to the Android app's REST API on port **8181** using a Bearer token you copy from **Settings → API Access**.
 
@@ -201,7 +201,7 @@ MIT © INWEB — see [`LICENSE`](LICENSE).
 
 ```bash
 # ১. Repo clone করুন
-git clone https://github.com/your-org/INWEB-Android.git
+git clone https://github.com/InayaTechLabs/INWEB-Android.git
 cd INWEB-Android
 
 # ২. Native binary গুলা download করুন (nginx, apache, php-fpm ইত্যাদি)
@@ -213,7 +213,7 @@ bash scripts/fetch_binaries.sh
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-**ফোনে:** **INWEB** app খুলুন → **START** চাপুন → Chrome-এ `http://localhost:8080` লিখুন। শেষ! 🎉
+**ফোনে:** **iNWEB** app খুলুন → **START** চাপুন → Chrome-এ `http://localhost:8080` লিখুন। শেষ! 🎉
 
 ### 📱 কীভাবে ব্যবহার করবেন?
 
@@ -278,9 +278,9 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 
 ### 📞 Support
 
-কোনো সমস্যা? [Issues](https://github.com/your-org/INWEB-Android/issues) খুলুন অথবা email: **support@inweb.app**
+কোনো সমস্যা? [Issues](https://github.com/your-org/INWEB-Android/issues) খুলুন অথবা email: **support.inweb@InayaTechLab.com**
 
 ---
 
-Made with 💚 in Bangladesh · **INWEB** · *"A Powerful Web Server that fits in your Pocket."*
+Made with 💚 in Bangladesh · **iNWEB** · *"A Powerful Web Server that fits in your Pocket."*
 
