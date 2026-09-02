@@ -8,16 +8,18 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 ![Platform](https://img.shields.io/badge/platform-Android%208.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/kotlin-1.9-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-14B8A6?style=flat-square)
-[![Latest Release](https://img.shields.io/github/v/release/iNAYATechLab/INWEB-Android?style=flat-square&color=14B8A6&label=release)](https://github.com/iNAYATechLab/INWEB-Android/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/iNAYATechLab/INWEB-Android?style=flat-square&color=14B8A6&label=release&include_prereleases)](https://github.com/iNAYATechLab/INWEB-Android/releases)
 [![Android CI](https://github.com/iNAYATechLab/INWEB-Android/actions/workflows/android-ci.yml/badge.svg)](https://github.com/iNAYATechLab/INWEB-Android/actions/workflows/android-ci.yml)
+![Stage](https://img.shields.io/badge/stage-%F0%9F%A7%AA%20public%20beta-F59E0B?style=flat-square)
 
-📖 [English](#-english) · [বাংলা](#-বাংলা) · [🍎 iOS Companion](https://github.com/iNAYATechLab/INWEB-iOS)
+📖 [English](#-english) · [বাংলা](#-বাংলা)
 
 ### 🚀 Quick download
 
-📱 **[⬇ Download latest APK](https://github.com/iNAYATechLab/INWEB-Android/releases/latest)** — 91 MB · Full LAMP stack bundled · Android 8.0+
+📱 **[⬇ Download latest Beta APK](https://github.com/iNAYATechLab/INWEB-Android/releases)** — ~91 MB · Full LAMP stack bundled · Android 8.0+ · 🧪 **Public Beta**
 
-🍎 **[⬇ Download iOS IPA](https://github.com/iNAYATechLab/INWEB-iOS/releases/latest)** — 273 KB unsigned · iOS 16+ (see [INSTALL-NO-MAC guide](https://github.com/iNAYATechLab/INWEB-iOS/blob/main/docs/INSTALL-NO-MAC.md))
+> 🧪 **Beta notice:** INWEB এখন public beta পর্যায়ে। সব feature কাজ করে, কিন্তু সব device-এ test হয়নি। বাগ পেলে [Issue খুলুন](https://github.com/iNAYATechLab/INWEB-Android/issues) — আপনার report-ই আমাদের stable release-এর পথ! 💚
+> Versioning policy: [docs/VERSIONING.md](docs/VERSIONING.md)
 
 ---
 
@@ -42,9 +44,8 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 | 🕋 | **Islamic APIs** | Prayer times · Qibla direction · Hijri date · Zakat calc — all offline PHP endpoints |
 | 📝 | **Live code editor** | Split-view editor + preview, syntax highlighting, dirty-tracking |
 | 📊 | **Server cluster dashboard** | Per-engine sparklines (CPU/RAM), rich status cards, log preview |
-| 🔌 | **REST Control API** | Token-authenticated `/api/inweb/*` on port 8181 (used by Web PWA + iOS) |
+| 🔌 | **REST Control API** | Token-authenticated `/api/inweb/*` on port 8181 (powers the Web PWA + any custom client) |
 | 📲 | **Web PWA dashboard** | Zero-dep vanilla HTML/CSS/JS control panel served from the app |
-| 🍎 | **iOS companion app** | Native SwiftUI remote — [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) |
 | 🌐 | **5 languages** | English · বাংলা · العربية · हिन्दी · اردو |
 | ♿ | **Zero external HTTP deps** | Pure Java stdlib — no OkHttp, no Retrofit — minimal APK size |
 
@@ -72,8 +73,8 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
                         ┌─────────────────────┼─────────────────────┐
                         ▼                     ▼                     ▼
                  ┌─────────────┐     ┌─────────────┐        ┌─────────────┐
-                 │  Web PWA    │     │  iOS App    │        │  Any REST   │
-                 │  (browser)  │     │  (SwiftUI)  │        │  client     │
+                 │  Web PWA    │     │  Any REST   │        │  Termux /   │
+                 │  (browser)  │     │  client     │        │  curl CLI   │
                  └─────────────┘     └─────────────┘        └─────────────┘
 ```
 
@@ -81,7 +82,7 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-org/INWEB-Android.git
+git clone https://github.com/iNAYATechLab/INWEB-Android.git
 cd INWEB-Android
 
 # 2. Fetch native binaries (nginx, apache, php-fpm, mariadb, ...)
@@ -148,14 +149,13 @@ INWEB-Android/
 | **35729** | LiveReload | industry standard WebSocket |
 | **8181** | REST Control API | Bearer-token auth |
 
-### 🌐 Companion clients
+### 🌐 Companion client
 
 | Client | Path | Stack |
 |---|---|---|
 | 📲 **Web PWA** | Installed to `www/inweb-dashboard/` on the phone | vanilla HTML/CSS/JS |
-| 🍎 **iOS app** | [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) | SwiftUI, iOS 16+ |
 
-Both talk to the Android app's REST API on port **8181** using a Bearer token you copy from **Settings → API Access**.
+The PWA talks to the Android app's REST API on port **8181** using a Bearer token you copy from **Settings → API Access**. The same REST API is open to **any custom client** — Python, curl, Tasker, anything that speaks HTTP+JSON. 🔌
 
 ### 🎨 Brand palette
 
@@ -197,9 +197,8 @@ MIT © INWEB — see [`LICENSE`](LICENSE).
 | 🕋 | **Islamic APIs** | নামাজের সময় · কিবলা · হিজরি তারিখ · যাকাত ক্যালকুলেটর — সব offline PHP |
 | 📝 | **Live Code Editor** | Split-view editor + preview, syntax highlighting, dirty-tracking |
 | 📊 | **Server Cluster Dashboard** | প্রতিটা engine এর CPU/RAM sparkline, rich status card, log preview |
-| 🔌 | **REST Control API** | Token auth সহ `/api/inweb/*` port 8181-এ (Web PWA + iOS ব্যবহার করে) |
+| 🔌 | **REST Control API** | Token auth সহ `/api/inweb/*` port 8181-এ (Web PWA + যেকোনো custom client ব্যবহার করতে পারে) |
 | 📲 | **Web PWA dashboard** | Zero-dependency vanilla JS control panel — app এর ভেতর থেকেই serve হয় |
-| 🍎 | **iOS companion app** | Native SwiftUI remote — দেখুন [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) |
 | 🌐 | **৫টা ভাষা** | English · বাংলা · العربية · हिन्दी · اردو |
 | ♿ | **শূন্য external HTTP dependency** | শুধু Java stdlib — OkHttp/Retrofit নাই — APK size ছোট |
 
@@ -207,7 +206,7 @@ MIT © INWEB — see [`LICENSE`](LICENSE).
 
 ```bash
 # ১. Repo clone করুন
-git clone https://github.com/your-org/INWEB-Android.git
+git clone https://github.com/iNAYATechLab/INWEB-Android.git
 cd INWEB-Android
 
 # ২. Native binary গুলা download করুন (nginx, apache, php-fpm ইত্যাদি)
@@ -251,22 +250,22 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 
 **More menu:** Sites · Local Hosts · Files · Frameworks · Islamic APIs · Security · Dynamic DNS · Settings
 
-### 🏗 iOS + Web সাথে কীভাবে কাজ করে?
+### 🏗 Web PWA সাথে কীভাবে কাজ করে?
 
 ```
      Android ফোন (আসল সার্ভার)
            │
            ├── REST API :8181 (Bearer token)
            │
-     ┌─────┴──────┬──────────────┐
-     ▼            ▼              ▼
-   Web PWA     iOS App      অন্য যেকোনো
-  (browser)   (SwiftUI)    REST client
+     ┌─────┴──────────────┐
+     ▼                    ▼
+   Web PWA          অন্য যেকোনো
+  (browser)         REST client
 ```
 
 - Android app = **আসল web server host** (Nginx/PHP/MariaDB সব চালায়)
-- iOS + Web = **remote control** (শুধু REST API দিয়ে control করে)
-- iPhone-এ Nginx চলতে পারে না (App Store restriction) — তাই iOS শুধু client
+- Web PWA = **remote control panel** (শুধু REST API দিয়ে control করে)
+- একই API দিয়ে আপনি চাইলে নিজের client বানাতে পারেন — Python, curl, Tasker, যা খুশি! 🔌
 
 ### 🤝 Contributing
 

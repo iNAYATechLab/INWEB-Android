@@ -48,8 +48,16 @@ android {
         applicationId = "com.inweb.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        // ── INWEB Beta Versioning Scheme ─────────────────────────
+        // versionName format:  MAJOR.MINOR.PATCH-beta.N
+        //   → beta builds era: 1.0.0-beta.1, 1.0.0-beta.2, ...
+        //   → release candidate: 1.0.0-rc.1, ...
+        //   → stable:            1.0.0
+        // versionCode formula: MAJOR*10000 + MINOR*100 + PATCH (+ betaNo as offset of first beta)
+        //   → 1.0.0-beta.1 = 10000 ... 1.0.0-beta.2 = 10001 ... 1.0.0 stable = 10100
+        // See docs/VERSIONING.md for the full policy.
+        versionCode = 10000
+        versionName = "1.0.0-beta.1"
     }
 
     signingConfigs {

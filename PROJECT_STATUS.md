@@ -3,7 +3,7 @@
 ![INWEB logo](branding/inweb_logo.png)
 
 > এই ডকুমেন্টে INWEB প্রজেক্টে এখন পর্যন্ত যা যা হয়েছে তার পুরা তালিকা বাংলায় দেওয়া আছে।
-> সর্বশেষ আপডেট: **১২ জুলাই ২০২৬** — INWEB এখন **feature-complete** এবং **Play Store-ready** 💚
+> সর্বশেষ আপডেট: **২ সেপ্টেম্বর ২০২৬** — INWEB এখন **feature-complete** এবং **🧪 Public Beta** পর্যায়ে 💚
 
 ---
 
@@ -13,11 +13,12 @@
 |---|---|
 | 🏷 প্রজেক্টের নাম | **INWEB** (Inaya + Web — আরবি "যত্ন") |
 | 📦 Package name | `com.inweb.app` |
-| 📱 Platform | Android 8.0+ (API 26+), targetSdk 35 |
-| 🌐 Client apps | Web PWA + iOS (SwiftUI) — remote control |
+| 📱 Platform | Android 8.0+ (API 26+), targetSdk 35 — **Android-only** focus |
+| 🌐 Client | Web PWA (app-এর ভেতর থেকে serve হয়) + open REST API |
 | 🎨 Brand | Emerald + Teal (Islamic identity), deep forest green background |
 | 🌍 ভাষা | ৫টা — English, বাংলা, العربية, हिन्दी, اردو |
-| 📊 Status | ✅ Production-ready |
+| 📊 Status | 🧪 **Public Beta** (`1.0.0-beta.1`) — stable-এর পথে |
+| 🏷 Versioning | Beta scheme — দেখুন [docs/VERSIONING.md](docs/VERSIONING.md) |
 
 ---
 
@@ -51,7 +52,6 @@
 | 📊 **Server Cluster Dashboard** | প্রতিটা engine এর জন্য rich card — CPU/RAM sparkline, status, log preview |
 | 🔌 **REST Control API** | `/api/inweb/*` endpoints on port 8181, Bearer token authentication, CORS enabled |
 | 📲 **Web PWA Dashboard** | Zero-dependency vanilla HTML/CSS/JS — app-এর ভেতর থেকে serve হয় |
-| 🍎 **iOS Companion App** | Native SwiftUI (18 files, 1,627 lines), iOS 16+ — [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) **✅ v1.0.0 released** |
 | 🏗 **Site Templates** | ৫টা starter template — Blank, Static HTML, PHP Playground, JSON API, Islamic Starter |
 | 📤 **Import/Export** | Virtual host config JSON export/import |
 | 🎨 **নতুন Dashboard 2.0** | User mockup অনুযায়ী redesign — prayer strip, stat sparklines, active sites list |
@@ -248,18 +248,18 @@ BottomNavHelper.attach(this, BottomNavHelper.Tab.MORE)
               └──────────────┬──────────────┘
                              │
               ┌──────────────┼──────────────┐
-              ▼              ▼              ▼
-        ┌──────────┐   ┌──────────┐   ┌──────────┐
-        │ Web PWA  │   │ iOS App  │   │ যেকোনো   │
-        │ (browser)│   │ (SwiftUI)│   │ REST     │
-        │          │   │          │   │ client   │
-        └──────────┘   └──────────┘   └──────────┘
-             │              │              │
+              ▼              ▼              
+        ┌──────────┐   ┌──────────┐   
+        │ Web PWA  │   │ যেকোনো   │   
+        │ (browser)│   │ REST     │   
+        │          │   │ client   │   
+        └──────────┘   └──────────┘
+             │              │              
              └──────────── Bearer Token ────┘
                 (Settings → API Access)
 ```
 
-**গুরুত্বপূর্ণ:** iOS/Web ক্লায়েন্ট শুধু **remote control** — আসল সার্ভার (Nginx, PHP, MariaDB) সব Android device-এ চলে। iPhone-এ এইসব binary চালানো যায় না (App Store restriction)।
+**গুরুত্বপূর্ণ:** Web PWA ক্লায়েন্ট শুধু **remote control** — আসল সার্ভার (Nginx, PHP, MariaDB) সব Android device-এ চলে। REST API open — যে কেউ নিজের client বানাতে পারে।
 
 ---
 
@@ -302,10 +302,9 @@ Output: `app/build/outputs/bundle/release/app-release.aab`
 
 | বিষয় | বিবরণ |
 |---|---|
-| 📦 **Native binaries physical fetch হয়নি** | `fetch_binaries.sh` লেখা আছে কিন্তু আপনাকে নিজে run করতে হবে build এর আগে |
-| 🍎 **iOS Xcode project auto-generated** | ✅ Fixed — XcodeGen ব্যবহার করা হয়েছে, `project.yml` থেকে automatic Xcode project তৈরি হয়। CI-এ macOS runner-এ IPA build হয়। See [INWEB-iOS releases](https://github.com/iNAYATechLab/INWEB-iOS/releases/latest) |
-| 🧪 **iOS app physically compile/test হয়নি** | কোড লেখা শেষ কিন্তু build test হয়নি |
-| 🔑 **App signing keystore বানানো হয়নি** | Play Store upload এর আগে release keystore বানাতে হবে |
+| 📦 **Native binaries physical fetch হয়নি** | `fetch_binaries.sh` লেখা আছে কিন্তু আপনাকে নিজে run করতে হবে build এর আগে (CI-তে auto হয়) |
+| 🔑 **App signing keystore বানানো হয়নি** | Play Store upload এর আগে release keystore বানাতে হবে — দেখুন [docs/SIGNING.md](docs/SIGNING.md) |
+| 🧪 **Real device testing বাকি** | Beta APK সব feature নিয়ে ready — একাধিক Android device-এ test করে bug report চাই |
 
 ---
 
@@ -313,12 +312,11 @@ Output: `app/build/outputs/bundle/release/app-release.aab`
 
 | Path | ফিচার | Effort |
 |:---:|---|:---:|
-| **A** | 📲 iOS Home Screen Widget (WidgetKit + shared UserDefaults) | Medium |
-| **B** | ⚡ Live Activity — Dynamic Island up-time display (ActivityKit) | Medium |
-| **C** | ⌚ Apple Watch companion app | Large |
-| **D** | 🔄 Kotlin Multiplatform migration (15 pure-Kotlin files → `shared/` module) | Large |
-| **E** | 🎨 নতুন mockup upload করলে exact reproduction | Depends |
-| **F** | 🔔 Push notification (FCM) — server alerts | Medium |
+| **A** | 🧪 **Beta testing cycle** — বেশি device-এ চালিয়ে bug report সংগ্রহ (এখনকার মূল লক্ষ্য!) | Ongoing |
+| **B** | 🔐 **Release signing** — keystore বানিয়ে GitHub Secrets-এ দেওয়া, তারপর signed beta APK | Small |
+| **C** | 🔔 Push notification (FCM) — server alerts | Medium |
+| **D** | 🎨 নতুন mockup upload করলে exact reproduction | Depends |
+| **E** | 🚀 **Stable 1.0.0** — beta feedback শেষে Play Store-ready release | Big |
 
 ---
 
@@ -330,10 +328,12 @@ Output: `app/build/outputs/bundle/release/app-release.aab`
 - ✅ Custom DNS system (KSWEB-এ নাই)
 - ✅ Live Reload WebSocket server (KSWEB-এ নাই)
 - ✅ Islamic Developer Kit (একদম unique)
-- ✅ Cross-platform ecosystem — Android + Web PWA + iOS
+- ✅ Web PWA remote control panel
 - ✅ REST API — যেকোনো ক্লায়েন্ট বানানো যায়
 - ✅ ৫টা ভাষা native support
 - ✅ Zero external HTTP dependency — small APK
+
+> 🧪 **Beta phase note:** iOS companion app প্রজেক্টটি **archive** করা হয়েছে — INWEB এখন **Android-only**। সব focus এখন একটাই জায়গায়: Android app-কে rock-solid beta থেকে stable-এ নেওয়া! 🎯
 
 ---
 
