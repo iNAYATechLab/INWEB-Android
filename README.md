@@ -1,6 +1,6 @@
-# 🌐 INWEB
+# 🌐 iNWEB
 
-![INWEB logo](branding/inweb_logo.png)
+![iNWEB logo](branding/inweb_logo.png)
 
 **A Powerful Web Server that fits in your Pocket.**
 _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed / Caddy / Node + PHP + MariaDB সার্ভার_
@@ -25,7 +25,7 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 
 ## 🇬🇧 English
 
-### 💡 What is INWEB?
+### 💡 What is iNWEB?
 
 **INWEB** (from Arabic **إناية** *Inaya* — "care" — combined with *Web*) is a full-stack local web server that runs **natively on any Android phone**. No root, no VPS, no cloud bill. Spin up **Nginx + PHP-FPM + MariaDB + phpMyAdmin** in one tap and start building — anywhere, anytime, offline-first.
 
@@ -40,7 +40,7 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 | 🌍 | **Custom DNS system** | Virtual Hosts + Local Hosts VPN + LAN DNS (`mysite.local` works everywhere) |
 | 🔐 | **HTTPS + Security** | Self-signed SSL · HTTP Basic Auth · IP allow/deny · rate-limiting |
 | 🔥 | **Live Reload** | Pure-Kotlin WebSocket server (port 35729) + recursive file-watcher + auto script injection |
-| 🌐 | **Dynamic DNS** | DuckDNS · No-IP · Cloudflare · INAYA — auto-updated by WorkManager |
+| 🌐 | **Dynamic DNS** | DuckDNS · No-IP · Cloudflare · iNWEB — auto-updated by WorkManager |
 | 🕋 | **Islamic APIs** | Prayer times · Qibla direction · Hijri date · Zakat calc — all offline PHP endpoints |
 | 📝 | **Live code editor** | Split-view editor + preview, syntax highlighting, dirty-tracking |
 | 📊 | **Server cluster dashboard** | Per-engine sparklines (CPU/RAM), rich status cards, log preview |
@@ -53,7 +53,7 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                       INWEB Android App                          │
+│                       iNWEB Android App                          │
 │                                                                  │
 │  ┌────────────┐   ┌──────────────┐   ┌──────────────┐            │
 │  │  Nginx /   │   │  PHP-FPM     │   │  MariaDB     │            │
@@ -94,7 +94,7 @@ bash scripts/fetch_binaries.sh
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-**On the phone:** open **INWEB** → tap **START** → visit `http://localhost:8080` in Chrome. Done. 🎉
+**On the phone:** open **iNWEB** → tap **START** → visit `http://localhost:8080` in Chrome. Done. 🎉
 
 ### 📁 Project structure
 
@@ -218,7 +218,7 @@ bash scripts/fetch_binaries.sh
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-**ফোনে:** **INWEB** app খুলুন → **START** চাপুন → Chrome-এ `http://localhost:8080` লিখুন। শেষ! 🎉
+**ফোনে:** **iNWEB** app খুলুন → **START** চাপুন → Chrome-এ `http://localhost:8080` লিখুন। শেষ! 🎉
 
 ### 📱 কীভাবে ব্যবহার করবেন?
 
@@ -283,9 +283,9 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 
 ### 📞 Support
 
-কোনো সমস্যা? [Issues](https://github.com/your-org/INWEB-Android/issues) খুলুন অথবা email: **support@inweb.app**
+কোনো সমস্যা? [Issues](https://github.com/your-org/INWEB-Android/issues) খুলুন অথবা email: **support.inweb@InayaTechLab.com**
 
 ---
 
-Made with 💚 in Bangladesh · **INWEB** · *"A Powerful Web Server that fits in your Pocket."*
+Made with 💚 in Bangladesh · **iNWEB** · *"A Powerful Web Server that fits in your Pocket."*
 
