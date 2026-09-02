@@ -62,7 +62,7 @@ jobs:
         run: |
           # Install unpacking tools
           sudo apt-get update -qq
-          sudo apt-get install -y -qq dpkg xz-utils unzip curl
+          sudo apt-get install -y -qq dpkg xz-utils unzip curl patchelf
           # Run our fetcher (downloads ~150MB of .deb files from packages.termux.dev)
           chmod +x scripts/fetch_binaries.sh
           bash scripts/fetch_binaries.sh
@@ -150,7 +150,7 @@ jobs:
       - name: 📦 Fetch native binaries from Termux
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq dpkg xz-utils unzip curl
+          sudo apt-get install -y -qq dpkg xz-utils unzip curl patchelf
           chmod +x scripts/fetch_binaries.sh
           bash scripts/fetch_binaries.sh
 

@@ -111,7 +111,7 @@ class AboutActivity : AppCompatActivity() {
 
         fun binaryTest(name: String, args: List<String>) {
             // binaries live in the native lib dir (exec-allowed) as libexec_*.so
-            val bin = File(layout.libDir, "libexec_$name.so")
+            val bin = File(layout.libDir, "libexec_$name.so".replace("-", "_"))
             sb.appendLine("── $name ${args.joinToString(" ")} ──")
             when {
                 !bin.exists() -> sb.appendLine("   ❌ MISSING: ${bin.absolutePath}")

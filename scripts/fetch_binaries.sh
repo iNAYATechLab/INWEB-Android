@@ -154,6 +154,7 @@ LIB_PACKAGES=(
   libgcrypt libgpg-error liblzma libc++ libandroid-support libandroid-glob
   c-ares libresolv-wrapper apr apr-util libexpat libuuid libedit
   libngtcp2 libnghttp2 libnghttp3 libssh2 libandroid-posix-semaphore zstd
+  libcrypt
   ca-certificates
 )
 
@@ -187,9 +188,43 @@ if [ "${AUDIT_ONLY:-0}" != "1" ]; then
   echo "  ✓ phpMyAdmin $PMA_VERSION"
 fi
 
-# Dedupe identical files (hardlink aliases) to save APK space
-if command -v hardlink >/dev/null 2>&1; then hardlink -q "$JNI_DIR" 2>/dev/null || true; fi
-
+# ---------------------------------------------------------------------------
+# Phase 3.5 — SONAME normalization (AGP packaging rule workaround)
+#
+# Android Gradle Plugin only packages jniLibs files that END in ".so" —
+# versioned names like libssl.so.3 are silently DROPPED from the APK.
+# Meanwhile binaries carry DT_NEEDED=libssl.so.3 → linker can't find it.
+#
+# Fix: since we ship libssl.so (real content), rewrite every ELF's
+# DT_NEEDED from libX.so.N → libX.so using patchelf, then delete the
+# versioned leftovers.
+# ---------------------------------------------------------------------------
+echo ""
+echo "──────────────── 🔧 SONAME normalization ────────────────"
+if command -v patchelf >/dev/null 2>&1; then
+  patched=0
+  for f in "$JNI_DIR"/*.so; do
+    [ -f "$f" ] || continue
+    [ "$(head -c4 "$f" | tr -d '\0' | cut -c2-4)" = "ELF" ] || continue
+    while IFS= read -r soname; do
+      case "$soname" in
+        *.so.*)
+          base="${soname%%.so.*}.so"
+          if [ -f "$JNI_DIR/$base" ]; then
+            patchelf --replace-needed "$soname" "$base" "$f" 2>/dev/null && patched=$((patched+1))
+          fi
+          ;;
+      esac
+    done < <(readelf -d "$f" 2>/dev/null | grep NEEDED | sed -E 's/.*\[(.*)\].*/\1/')
+  done
+  echo "  ✏️  $patched DT_NEEDED entries rewritten (.so.N → .so)"
+  # versioned copies no longer referenced → drop them (saves ~60MB)
+  rm -f "$JNI_DIR"/*.so.*
+else
+  echo "  ⚠️ patchelf not found — INSTALL IT (apt install patchelf / pip install patchelf)"
+  echo "     Without normalization the APK will miss versioned SONAMEs!"
+  exit 1
+fi
 # --- Phase 4: LINKER CLOSURE AUDIT ---------------------------------------------
 echo ""
 echo "──────────────── 🔬 Linker closure audit ────────────────"
