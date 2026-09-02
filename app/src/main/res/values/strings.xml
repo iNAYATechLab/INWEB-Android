@@ -496,7 +496,7 @@
     <string name="update_failed">⚠️ Update check failed: %1$s</string>
     <string name="update_available_title">🎉 INWEB %1$s available!</string>
     <string name="update_available_msg">Current: %1$s · Size: %2$s MB\n\nWhat's new:</string>
-    <string name="update_download">⬇ Download & Install</string>
+    <string name="update_download">⬇ Download &amp; Install</string>
     <string name="update_later">Later</string>
     <string name="update_view_release">View on GitHub</string>
     <string name="update_download_started">⬇ Downloading update… You\'ll get an install prompt when it finishes.</string>
