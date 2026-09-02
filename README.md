@@ -8,16 +8,16 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 ![Platform](https://img.shields.io/badge/platform-Android%208.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/kotlin-1.9-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-14B8A6?style=flat-square)
-[![Latest Release](https://img.shields.io/github/v/release/InayaTechLabs/INWEB-Android?style=flat-square&color=14B8A6&label=release)](https://github.com/InayaTechLabs/INWEB-Android/releases/latest)
-[![Android CI](https://github.com/InayaTechLabs/INWEB-Android/actions/workflows/android-ci.yml/badge.svg)](https://github.com/InayaTechLabs/INWEB-Android/actions/workflows/android-ci.yml)
+[![Latest Release](https://img.shields.io/github/v/release/iNAYATechLab/INWEB-Android?style=flat-square&color=14B8A6&label=release)](https://github.com/iNAYATechLab/INWEB-Android/releases/latest)
+[![Android CI](https://github.com/iNAYATechLab/INWEB-Android/actions/workflows/android-ci.yml/badge.svg)](https://github.com/iNAYATechLab/INWEB-Android/actions/workflows/android-ci.yml)
 
-📖 [English](#-english) · [বাংলা](#-বাংলা) · [🍎 iOS Companion](https://github.com/InayaTechLabs/INWEB-iOS)
+📖 [English](#-english) · [বাংলা](#-বাংলা) · [🍎 iOS Companion](https://github.com/iNAYATechLab/INWEB-iOS)
 
 ### 🚀 Quick download
 
-📱 **[⬇ Download latest APK](https://github.com/InayaTechLabs/INWEB-Android/releases/latest)** — 91 MB · Full LAMP stack bundled · Android 8.0+
+📱 **[⬇ Download latest APK](https://github.com/iNAYATechLab/INWEB-Android/releases/latest)** — 91 MB · Full LAMP stack bundled · Android 8.0+
 
-🍎 **[⬇ Download iOS IPA](https://github.com/InayaTechLabs/INWEB-iOS/releases/latest)** — 273 KB unsigned · iOS 16+ (see [INSTALL-NO-MAC guide](https://github.com/InayaTechLabs/INWEB-iOS/blob/main/docs/INSTALL-NO-MAC.md))
+🍎 **[⬇ Download iOS IPA](https://github.com/iNAYATechLab/INWEB-iOS/releases/latest)** — 273 KB unsigned · iOS 16+ (see [INSTALL-NO-MAC guide](https://github.com/iNAYATechLab/INWEB-iOS/blob/main/docs/INSTALL-NO-MAC.md))
 
 ---
 
@@ -44,7 +44,7 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 | 📊 | **Server cluster dashboard** | Per-engine sparklines (CPU/RAM), rich status cards, log preview |
 | 🔌 | **REST Control API** | Token-authenticated `/api/inweb/*` on port 8181 (used by Web PWA + iOS) |
 | 📲 | **Web PWA dashboard** | Zero-dep vanilla HTML/CSS/JS control panel served from the app |
-| 🍎 | **iOS companion app** | Native SwiftUI remote — [InayaTechLabs/INWEB-iOS](https://github.com/InayaTechLabs/INWEB-iOS) |
+| 🍎 | **iOS companion app** | Native SwiftUI remote — [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) |
 | 🌐 | **5 languages** | English · বাংলা · العربية · हिन्दी · اردو |
 | ♿ | **Zero external HTTP deps** | Pure Java stdlib — no OkHttp, no Retrofit — minimal APK size |
 
@@ -153,7 +153,7 @@ INWEB-Android/
 | Client | Path | Stack |
 |---|---|---|
 | 📲 **Web PWA** | Installed to `www/inweb-dashboard/` on the phone | vanilla HTML/CSS/JS |
-| 🍎 **iOS app** | [InayaTechLabs/INWEB-iOS](https://github.com/InayaTechLabs/INWEB-iOS) | SwiftUI, iOS 16+ |
+| 🍎 **iOS app** | [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) | SwiftUI, iOS 16+ |
 
 Both talk to the Android app's REST API on port **8181** using a Bearer token you copy from **Settings → API Access**.
 
@@ -199,7 +199,7 @@ MIT © INWEB — see [`LICENSE`](LICENSE).
 | 📊 | **Server Cluster Dashboard** | প্রতিটা engine এর CPU/RAM sparkline, rich status card, log preview |
 | 🔌 | **REST Control API** | Token auth সহ `/api/inweb/*` port 8181-এ (Web PWA + iOS ব্যবহার করে) |
 | 📲 | **Web PWA dashboard** | Zero-dependency vanilla JS control panel — app এর ভেতর থেকেই serve হয় |
-| 🍎 | **iOS companion app** | Native SwiftUI remote — দেখুন [InayaTechLabs/INWEB-iOS](https://github.com/InayaTechLabs/INWEB-iOS) |
+| 🍎 | **iOS companion app** | Native SwiftUI remote — দেখুন [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) |
 | 🌐 | **৫টা ভাষা** | English · বাংলা · العربية · हिन्दी · اردو |
 | ♿ | **শূন্য external HTTP dependency** | শুধু Java stdlib — OkHttp/Retrofit নাই — APK size ছোট |
 

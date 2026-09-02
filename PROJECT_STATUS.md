@@ -51,7 +51,7 @@
 | 📊 **Server Cluster Dashboard** | প্রতিটা engine এর জন্য rich card — CPU/RAM sparkline, status, log preview |
 | 🔌 **REST Control API** | `/api/inweb/*` endpoints on port 8181, Bearer token authentication, CORS enabled |
 | 📲 **Web PWA Dashboard** | Zero-dependency vanilla HTML/CSS/JS — app-এর ভেতর থেকে serve হয় |
-| 🍎 **iOS Companion App** | Native SwiftUI (18 files, 1,627 lines), iOS 16+ — [InayaTechLabs/INWEB-iOS](https://github.com/InayaTechLabs/INWEB-iOS) **✅ v1.0.0 released** |
+| 🍎 **iOS Companion App** | Native SwiftUI (18 files, 1,627 lines), iOS 16+ — [iNAYATechLab/INWEB-iOS](https://github.com/iNAYATechLab/INWEB-iOS) **✅ v1.0.0 released** |
 | 🏗 **Site Templates** | ৫টা starter template — Blank, Static HTML, PHP Playground, JSON API, Islamic Starter |
 | 📤 **Import/Export** | Virtual host config JSON export/import |
 | 🎨 **নতুন Dashboard 2.0** | User mockup অনুযায়ী redesign — prayer strip, stat sparklines, active sites list |
@@ -303,7 +303,7 @@ Output: `app/build/outputs/bundle/release/app-release.aab`
 | বিষয় | বিবরণ |
 |---|---|
 | 📦 **Native binaries physical fetch হয়নি** | `fetch_binaries.sh` লেখা আছে কিন্তু আপনাকে নিজে run করতে হবে build এর আগে |
-| 🍎 **iOS Xcode project auto-generated** | ✅ Fixed — XcodeGen ব্যবহার করা হয়েছে, `project.yml` থেকে automatic Xcode project তৈরি হয়। CI-এ macOS runner-এ IPA build হয়। See [INWEB-iOS releases](https://github.com/InayaTechLabs/INWEB-iOS/releases/latest) |
+| 🍎 **iOS Xcode project auto-generated** | ✅ Fixed — XcodeGen ব্যবহার করা হয়েছে, `project.yml` থেকে automatic Xcode project তৈরি হয়। CI-এ macOS runner-এ IPA build হয়। See [INWEB-iOS releases](https://github.com/iNAYATechLab/INWEB-iOS/releases/latest) |
 | 🧪 **iOS app physically compile/test হয়নি** | কোড লেখা শেষ কিন্তু build test হয়নি |
 | 🔑 **App signing keystore বানানো হয়নি** | Play Store upload এর আগে release keystore বানাতে হবে |
 
