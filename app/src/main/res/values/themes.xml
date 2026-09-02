@@ -6,6 +6,10 @@
         <item name="colorAccent">@color/accent</item>
         <item name="android:statusBarColor">@color/bg</item>
         <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Android 15 (SDK 35) enforces edge-to-edge → header dives UNDER the
+             status bar. Opt out so our classic layouts keep proper insets. -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 
     <!--

@@ -254,11 +254,15 @@ class MysqlManager(
     }
 
     private fun drainToLog(tag: String, proc: Process) {
+        val logFile = File(layout.logsDir, "$tag.log").apply {
+            parentFile?.mkdirs(); writeText("")
+        }
         try {
             BufferedReader(InputStreamReader(proc.inputStream)).use { r ->
                 var line = r.readLine()
                 while (line != null) {
                     Log.i("$TAG/$tag", line!!)
+                    runCatching { logFile.appendText(line + "\n") }
                     line = r.readLine()
                 }
             }

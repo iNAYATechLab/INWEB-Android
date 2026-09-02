@@ -178,4 +178,19 @@
     <string name="update_permission_title">السماح بتثبيت التطبيقات</string>
     <string name="update_permission_msg">لتثبيت التحديثات مباشرة، اسمح للتطبيق بتثبيت التطبيقات مرة واحدة.</string>
     <string name="update_current_version">الإصدار المثبت</string>
+
+    <!-- About page -->
+    <string name="about_title">حول INWEB</string>
+    <string name="about_version_line">الإصدار %1$s (build %2$d)</string>
+    <string name="about_github">⭐ مستودع GitHub</string>
+    <string name="about_issues">🐞 الإبلاغ عن خطأ</string>
+    <string name="about_readme">📖 التوثيق</string>
+    <string name="about_footer">🇧🇩 صُنع بعناية في بنغلاديش — INWEB · InayaTechLab 💚</string>
+    <string name="diag_section">التشخيص 🩺</string>
+    <string name="diag_desc">إذا لم يعمل الخادم — اضغط تشغيل ثم انسخ التقرير وأرسله لنا.</string>
+    <string name="diag_run">▶ تشغيل التشخيص</string>
+    <string name="diag_copy">📋 نسخ التقرير</string>
+    <string name="diag_running">⏳ جارٍ الفحص…</string>
+    <string name="diag_copied">✅ تم النسخ!</string>
+    <string name="diag_empty">سيظهر تقرير التشخيص هنا.\nاضغط ▶ أعلاه.</string>
 </resources>

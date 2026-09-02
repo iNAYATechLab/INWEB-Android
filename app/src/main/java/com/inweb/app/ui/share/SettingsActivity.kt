@@ -61,6 +61,11 @@ class SettingsActivity : AppCompatActivity() {
         val value  = findViewById<TextView>(R.id.updateVersionValue)
         val autoSw = findViewById<android.widget.Switch>(R.id.autoUpdateSwitch)
 
+        // About page entry
+        findViewById<View>(R.id.aboutRow)?.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
+
         val current = try {
             packageManager.getPackageInfo(packageName, 0).versionName
         } catch (_: Throwable) { "?" }

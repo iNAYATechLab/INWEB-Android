@@ -39,6 +39,10 @@
 
         <!-- ============ Activities ============ -->
         <activity
+            android:name=".ui.share.AboutActivity"
+            android:exported="false"
+            android:label="@string/about_title" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop">

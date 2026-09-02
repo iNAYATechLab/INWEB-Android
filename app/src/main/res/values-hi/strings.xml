@@ -57,4 +57,19 @@
     <string name="update_permission_title">इंस्टॉल की अनुमति दें</string>
     <string name="update_permission_msg">सीधे अपडेट इंस्टॉल करने के लिए एक बार unknown sources की अनुमति दें।</string>
     <string name="update_current_version">इंस्टॉल्ड version</string>
+
+    <!-- About page -->
+    <string name="about_title">INWEB के बारे में</string>
+    <string name="about_version_line">Version %1$s (build %2$d)</string>
+    <string name="about_github">⭐ GitHub रिपॉज़िटरी</string>
+    <string name="about_issues">🐞 बग रिपोर्ट करें</string>
+    <string name="about_readme">📖 दस्तावेज़</string>
+    <string name="about_footer">🇧🇩 बांग्लादेश में ध्यान से निर्मित — INWEB · InayaTechLab 💚</string>
+    <string name="diag_section">डायग्नोस्टिक्स 🩺</string>
+    <string name="diag_desc">Server चालू न हो तो — Run दबाएँ, फिर Copy करके हमें भेजें।</string>
+    <string name="diag_run">▶ डायग्नोस्टिक्स चलाएँ</string>
+    <string name="diag_copy">📋 रिपोर्ट कॉपी</string>
+    <string name="diag_running">⏳ जाँच हो रही है…</string>
+    <string name="diag_copied">✅ कॉपी हो गया!</string>
+    <string name="diag_empty">यहाँ डायग्नोस्टिक्स रिपोर्ट दिखेगी।\nऊपर ▶ दबाएँ।</string>
 </resources>

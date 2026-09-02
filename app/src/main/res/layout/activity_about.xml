@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg">
+
+    <include android:id="@+id/header" layout="@layout/inweb_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Brand -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingVertical="20dp">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@mipmap/ic_launcher_foreground"
+                    android:background="@drawable/circle_accent_dark"
+                    android:padding="4dp"
+                    android:contentDescription="@null"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_tagline"
+                    android:textColor="@color/accent"
+                    android:textSize="13sp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/aboutVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:fontFamily="monospace"/>
+
+                <TextView
+                    android:id="@+id/aboutPackage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"/>
+            </LinearLayout>
+
+            <!-- Update -->
+            <Button
+                android:id="@+id/aboutUpdateBtn"
+                style="@style/INWEB.ButtonPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/update_check_title"/>
+
+            <!-- Links -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/aboutGithubRow"
+                        style="@style/INWEB.CardRow"
+                        android:layout_width="match_parent"
+                        android:text="@string/about_github"
+                        android:textColor="@color/text_primary"/>
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#22FFFFFF"/>
+                    <TextView
+                        android:id="@+id/aboutIssuesRow"
+                        style="@style/INWEB.CardRow"
+                        android:layout_width="match_parent"
+                        android:text="@string/about_issues"
+                        android:textColor="@color/text_primary"/>
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#22FFFFFF"/>
+                    <TextView
+                        android:id="@+id/aboutPrivacyRow"
+                        style="@style/INWEB.CardRow"
+                        android:layout_width="match_parent"
+                        android:text="@string/about_readme"
+                        android:textColor="@color/text_primary"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Diagnostics -->
+            <TextView
+                style="@style/INWEB.SectionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/diag_section"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/diag_desc"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/diagRunBtn"
+                    style="@style/INWEB.ButtonPrimary"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="44dp"
+                    android:text="@string/diag_run"/>
+                <Button
+                    android:id="@+id/diagCopyBtn"
+                    style="@style/INWEB.ButtonSecondary"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:layout_height="44dp"
+                    android:text="@string/diag_copy"/>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#0B1410"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp">
+                <TextView
+                    android:id="@+id/diagOutput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    android:text="@string/diag_empty"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"
+                    android:textIsSelectable="true"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@string/about_footer"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <include android:id="@+id/bottomNav" layout="@layout/inweb_bottom_nav" />
+</LinearLayout>

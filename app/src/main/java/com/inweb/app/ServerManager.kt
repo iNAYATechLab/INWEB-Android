@@ -348,11 +348,17 @@ class ServerManager(
     }
 
     private fun drainToLog(tag: String, proc: Process) {
+        // Also write to logs/<tag>.log so users can read/report real errors
+        // from the Logs screen — linker/startup failures otherwise vanish.
+        val logFile = java.io.File(layout.logsDir, "$tag.log").apply {
+            parentFile?.mkdirs(); writeText("")   // fresh per launch
+        }
         try {
             BufferedReader(InputStreamReader(proc.inputStream)).use { r ->
                 var line: String? = r.readLine()
                 while (line != null) {
                     Log.i("$TAG/$tag", line!!)
+                    runCatching { logFile.appendText(line + "\n") }
                     line = r.readLine()
                 }
             }

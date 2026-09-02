@@ -180,14 +180,18 @@ jobs:
           KEY_PASSWORD:      ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew assembleRelease --no-daemon --stacktrace
 
-      - name: 📊 Show APK signature status
+      - name: 📊 Show APK signature status + rename to branded filename
         run: |
+          TAG="${GITHUB_REF#refs/tags/}"
           APK=$(find app/build/outputs/apk/release -name "*.apk" | head -1)
+          # Branded name: package + version, e.g. INWEB-com.inweb.app-v1.0.0-beta.4.apk
+          FINAL="INWEB-com.inweb.app-${TAG}.apk"
+          mv "$APK" "app/build/outputs/apk/release/$FINAL"
+          APK="app/build/outputs/apk/release/$FINAL"
           echo "═══════════════════════════════════════════"
-          echo "  📦 Release APK: $APK"
+          echo "  📦 Release APK: $FINAL"
           echo "  📊 Size: $(du -h "$APK" | cut -f1)"
           echo "═══════════════════════════════════════════"
-          # Detect if signed
           if unzip -p "$APK" META-INF/MANIFEST.MF 2>/dev/null | grep -q "SHA"; then
             echo "  🔐 Signature: ✅ SIGNED"
           else

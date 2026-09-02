@@ -282,4 +282,19 @@
     <string name="update_permission_title">ইন্সটলের অনুমতি দিন</string>
     <string name="update_permission_msg">সরাসরি আপডেট ইন্সটল করতে একবার unknown sources অনুমতি দিন।</string>
     <string name="update_current_version">ইন্সটলড version</string>
+
+    <!-- About page -->
+    <string name="about_title">INWEB সম্পর্কে</string>
+    <string name="about_version_line">Version %1$s (build %2$d)</string>
+    <string name="about_github">⭐ GitHub রিপোজিটরি</string>
+    <string name="about_issues">🐞 বাগ রিপোর্ট করুন</string>
+    <string name="about_readme">📖 ডকুমেন্টেশন</string>
+    <string name="about_footer">🇧🇩 বাংলাদেশে যত্ন নিয়ে বানানো — INWEB · InayaTechLab Pvt. Ltd. 💚</string>
+    <string name="diag_section">ডায়াগনস্টিকস 🩺</string>
+    <string name="diag_desc">Server চালু না হলে — Run চাপুন, তারপর Copy করে আমাদের পাঠান। প্রতিটা binary-র আসল output এখানে দেখা যাবে।</string>
+    <string name="diag_run">▶ ডায়াগনস্টিকস চালান</string>
+    <string name="diag_copy">📋 রিপোর্ট কপি</string>
+    <string name="diag_running">⏳ চলছে… প্রতিটা binary টেস্ট হচ্ছে (১০-২০ সেকেন্ড)…</string>
+    <string name="diag_copied">✅ রিপোর্ট কপি হয়েছে! এখন পেস্ট করে পাঠিয়ে দিন।</string>
+    <string name="diag_empty">এখানে ডায়াগনস্টিকস রিপোর্ট দেখা যাবে।\nউপরে ▶ Run চাপুন।</string>
 </resources>

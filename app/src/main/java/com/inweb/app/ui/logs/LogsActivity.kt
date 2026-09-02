@@ -68,6 +68,11 @@ class LogsActivity : AppCompatActivity() {
         val logsDir = File(filesDir, "${Constants.ASSET_ROOT}/logs")
         logsDir.mkdirs()
 
+        // Service process logs (written by ServerManager/MysqlManager) FIRST —
+        // these carry the real reason a server fails to start.
+        tabs.addTab(tabs.newTab().setText("nginx").setTag(File(logsDir, "nginx.log")))
+        tabs.addTab(tabs.newTab().setText("php-fpm").setTag(File(logsDir, "php-fpm.log")))
+        tabs.addTab(tabs.newTab().setText("mariadbd").setTag(File(logsDir, "mariadbd.log")))
         tabs.addTab(tabs.newTab().setText("access.log").setTag(File(logsDir, "access.log")))
         tabs.addTab(tabs.newTab().setText("error.log").setTag(File(logsDir, "error.log")))
         tabs.addTab(tabs.newTab().setText("php-fpm.error.log").setTag(File(logsDir, "php-fpm.error.log")))

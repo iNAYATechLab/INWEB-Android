@@ -504,4 +504,19 @@
     <string name="update_permission_title">Allow app installs</string>
     <string name="update_permission_msg">To install updates directly, allow INWEB to install apps from unknown sources once.</string>
     <string name="update_current_version">Installed version</string>
+
+    <!-- About page -->
+    <string name="about_title">About INWEB</string>
+    <string name="about_version_line">Version %1$s (build %2$d)</string>
+    <string name="about_github">⭐ GitHub Repository</string>
+    <string name="about_issues">🐞 Report a bug / issue</string>
+    <string name="about_readme">📖 Documentation</string>
+    <string name="about_footer">🇧🇩 Crafted with care in Bangladesh — INWEB · InayaTechLab Pvt. Ltd. 💚</string>
+    <string name="diag_section">DIAGNOSTICS 🩺</string>
+    <string name="diag_desc">Server না চালু হলে / চালু হলে — Run চাপুন, তারপর Copy করে আমাদের পাঠান। প্রতিটা binary-র আসল output এখানে দেখা যাবে।</string>
+    <string name="diag_run">▶ Run Diagnostics</string>
+    <string name="diag_copy">📋 Copy report</string>
+    <string name="diag_running">⏳ চলছে… প্রতিটা binary test হচ্ছে (১০-২০ সেকেন্ড)…</string>
+    <string name="diag_copied">✅ Report copied! এখন যেকোনো জায়গায় paste করুন।</string>
+    <string name="diag_empty">এখানে diagnostics report দেখা যাবে।\nউপরে ▶ Run চাপুন।</string>
 </resources>
