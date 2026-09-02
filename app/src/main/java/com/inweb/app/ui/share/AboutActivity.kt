@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -34,44 +35,58 @@ class AboutActivity : AppCompatActivity() {
         }
         BottomNavHelper.attach(this, BottomNavHelper.Tab.MORE)
 
-        // ── Version card ─────────────────────────────────────
-        findViewById<TextView>(R.id.aboutVersion)?.text =
-            getString(R.string.about_version_line, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
-        findViewById<TextView>(R.id.aboutPackage)?.text = BuildConfig.APPLICATION_ID
+        // সব wiring runCatching-এ — কোনো একটা fail হলেও পেজ খোলা থাকবে,
+        // আর CrashLogger আসল কারণটা সংরক্ষণ করবে।
+        runCatching {
+            findViewById<TextView>(R.id.aboutVersion)?.text =
+                getString(R.string.about_version_line, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
+            findViewById<TextView>(R.id.aboutPackage)?.text = BuildConfig.APPLICATION_ID
+        }.onFailure { reportWiringFailure("version card", it) }
 
-        // ── Update button ────────────────────────────────────
-        findViewById<View>(R.id.aboutUpdateBtn)?.setOnClickListener {
-            UpdateChecker.manualCheck(this)
-        }
+        runCatching {
+            findViewById<View>(R.id.aboutUpdateBtn)?.setOnClickListener {
+                UpdateChecker.manualCheck(this)
+            }
+        }.onFailure { reportWiringFailure("update button", it) }
 
-        // ── External links ───────────────────────────────────
-        findViewById<View>(R.id.aboutGithubRow)?.setOnClickListener {
-            openUrl("https://github.com/${UpdateChecker.REPO}")
-        }
-        findViewById<View>(R.id.aboutIssuesRow)?.setOnClickListener {
-            openUrl("https://github.com/${UpdateChecker.REPO}/issues")
-        }
-        findViewById<View>(R.id.aboutPrivacyRow)?.setOnClickListener {
-            openUrl("https://github.com/${UpdateChecker.REPO}#readme")
-        }
+        runCatching {
+            findViewById<View>(R.id.aboutGithubRow)?.setOnClickListener {
+                openUrl("https://github.com/${UpdateChecker.REPO}")
+            }
+            findViewById<View>(R.id.aboutIssuesRow)?.setOnClickListener {
+                openUrl("https://github.com/${UpdateChecker.REPO}/issues")
+            }
+            findViewById<View>(R.id.aboutPrivacyRow)?.setOnClickListener {
+                openUrl("https://github.com/${UpdateChecker.REPO}#readme")
+            }
+        }.onFailure { reportWiringFailure("links", it) }
 
         // ── Diagnostics ──────────────────────────────────────
-        val diagOut = findViewById<TextView>(R.id.diagOutput)
-        findViewById<View>(R.id.diagRunBtn)?.setOnClickListener {
-            diagOut?.text = getString(R.string.diag_running)
-            Thread {
-                val report = runDiagnostics()
-                runOnUiThread { diagOut?.text = report }
-            }.start()
-        }
-        findViewById<View>(R.id.diagCopyBtn)?.setOnClickListener {
-            val txt = diagOut?.text?.toString().orEmpty()
-            if (txt.isBlank()) return@setOnClickListener
-            val cm = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            cm.setPrimaryClip(ClipData.newPlainText("INWEB diagnostics", txt))
-            Toast.makeText(this, getString(R.string.diag_copied), Toast.LENGTH_SHORT).show()
-        }
+        runCatching {
+            val diagOut = findViewById<TextView>(R.id.diagOutput)
+            findViewById<View>(R.id.diagRunBtn)?.setOnClickListener {
+                diagOut?.text = getString(R.string.diag_running)
+                Thread {
+                    val report = runDiagnostics()
+                    runOnUiThread { diagOut?.text = report }
+                }.start()
+            }
+            findViewById<View>(R.id.diagCopyBtn)?.setOnClickListener {
+                val txt = diagOut?.text?.toString().orEmpty()
+                if (txt.isBlank()) return@setOnClickListener
+                val cm = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                cm.setPrimaryClip(ClipData.newPlainText("INWEB diagnostics", txt))
+                Toast.makeText(this, getString(R.string.diag_copied), Toast.LENGTH_SHORT).show()
+            }
+        }.onFailure { reportWiringFailure("diagnostics", it) }
     }
+
+    private fun reportWiringFailure(section: String, t: Throwable) {
+        Log.e(TAG, "About wiring failed in '$section'", t)
+        Toast.makeText(this, "⚠️ $section: ${t.message}", Toast.LENGTH_LONG).show()
+    }
+
+    private companion object { const val TAG = "AboutActivity" }
 
     private fun openUrl(u: String) =
         runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(u))) }

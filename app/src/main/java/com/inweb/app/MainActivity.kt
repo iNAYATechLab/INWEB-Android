@@ -101,6 +101,9 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        // 🩺 আগের session-এ crash হয়ে থাকলে report দেখাও (একবার)
+        com.inweb.app.util.CrashLogger.showPendingIfAny(this)
+
         // === In-app updater: silent GitHub Releases check (12h throttle) ===
         com.inweb.app.util.UpdateChecker.autoCheck(this)
 

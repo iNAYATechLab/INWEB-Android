@@ -20,6 +20,9 @@ class ServerApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // 🩺 Crash logger first — everything afterwards is covered.
+        com.inweb.app.util.CrashLogger.install(this)
+
         // Apply the user's preferred theme *before* any UI is inflated.
         ThemeMode.apply(Prefs(this).themeMode)
 
