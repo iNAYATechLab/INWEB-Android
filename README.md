@@ -20,6 +20,8 @@ _আপনার Android ফোনটাই এখন Nginx / Apache / LiteSpeed
 
 > 🧪 **Beta notice:** INWEB এখন public beta পর্যায়ে। সব feature কাজ করে, কিন্তু সব device-এ test হয়নি। বাগ পেলে [Issue খুলুন](https://github.com/iNAYATechLab/INWEB-Android/issues) — আপনার report-ই আমাদের stable release-এর পথ! 💚
 > Versioning policy: [docs/VERSIONING.md](docs/VERSIONING.md)
+>
+> 🛡 **Install-এর সময় "Play Protect" warning আসলে:** এটা সম্পূর্ণ normal! আমরা নতুন developer, তাই Google বলে *"hasn't seen an app from this developer before"*। শুধু **"Install anyway"** চাপুন। Play Store release-এর পর এই warning আর আসবে না। ✅
 
 ---
 
