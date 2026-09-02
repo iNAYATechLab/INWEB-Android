@@ -94,6 +94,7 @@
                         android:id="@+id/aboutGithubRow"
                         style="@style/INWEB.CardRow"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/about_github"
                         android:textColor="@color/text_primary"/>
                     <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -102,6 +103,7 @@
                         android:id="@+id/aboutIssuesRow"
                         style="@style/INWEB.CardRow"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/about_issues"
                         android:textColor="@color/text_primary"/>
                     <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -110,6 +112,7 @@
                         android:id="@+id/aboutPrivacyRow"
                         style="@style/INWEB.CardRow"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/about_readme"
                         android:textColor="@color/text_primary"/>
                 </LinearLayout>
