@@ -158,4 +158,24 @@
     <string name="tunnel_running">النفق نشط — الرابط أدناه عام</string>
     <string name="tunnel_hint">💡 ضع cloudflared أو ngrok ARM64 في assets/server_env/tunnel/ قبل البناء.</string>
     <string name="tunnel_open_btn">🌐 عرض على الإنترنت (نفق)</string>
+
+    <!-- In-app updater -->
+    <string name="update_section">تحديث التطبيق</string>
+    <string name="update_check_title">التحقق من التحديثات</string>
+    <string name="update_check_desc">يتحدث INWEB من إصدارات GitHub مباشرة</string>
+    <string name="update_auto_title">فحص تلقائي عند التشغيل</string>
+    <string name="update_auto_desc">يفحص كل 12 ساعة بصمت ويُظهر نافذة عند وصول نسخة جديدة</string>
+    <string name="update_checking">🔍 جارٍ التحقق من التحديثات…</string>
+    <string name="update_up_to_date">✅ أنت على أحدث إصدار (%1$s)</string>
+    <string name="update_failed">⚠️ فشل التحقق: %1$s</string>
+    <string name="update_available_title">🎉 INWEB %1$s متاح!</string>
+    <string name="update_available_msg">الحالي: %1$s · الحجم: %2$s م.ب\n\nالجديد:</string>
+    <string name="update_download">⬇ تنزيل وتثبيت</string>
+    <string name="update_later">لاحقاً</string>
+    <string name="update_view_release">عرض على GitHub</string>
+    <string name="update_download_started">⬇ جارٍ تنزيل التحديث…</string>
+    <string name="update_downloading_desc">أحدث APK من إصدارات GitHub</string>
+    <string name="update_permission_title">السماح بتثبيت التطبيقات</string>
+    <string name="update_permission_msg">لتثبيت التحديثات مباشرة، اسمح للتطبيق بتثبيت التطبيقات مرة واحدة.</string>
+    <string name="update_current_version">الإصدار المثبت</string>
 </resources>

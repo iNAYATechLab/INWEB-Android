@@ -58,7 +58,7 @@
     <!-- Services -->
     <string name="services_title">সার্ভিসসমূহ</string>
     <string name="services_subtitle">প্রতিটি সার্ভিস আলাদাভাবে শুরু, বন্ধ ও মনিটর করুন।</string>
-    <string name="services_footer_hint">💡 টিপ: Nginx বন্ধ থাকলে PHP-FPM-ও চালু হয়। ডেটাবেস দরকার হলে MariaDB চালু করুন।</string>
+    <string name="services_footer_hint">💡 টিপ: Nginx বন্ধ থাকলে PHP-FPM-ও চালু হয়। ডেটাবেস দরকার হলে MySQL/MariaDB চালু করুন।</string>
     <string name="start_all">সব চালু করুন</string>
     <string name="stop_all">সব বন্ধ করুন</string>
     <string name="start">চালু</string>
@@ -72,20 +72,20 @@
 
     <!-- Database -->
     <string name="db_section">ডেটাবেস</string>
-    <string name="db_enable_title">MariaDB চালু রাখুন</string>
-    <string name="db_enable_desc">\"সব চালু করুন\" চাপলে MariaDB শুরু হবে। ডেটাবেস দরকার না হলে বন্ধ রাখুন।</string>
-    <string name="db_port_title">MariaDB পোর্ট</string>
-    <string name="db_port_desc">MariaDB যে পোর্টে listen করবে। ডিফল্ট 3306।</string>
+    <string name="db_enable_title">MySQL/MariaDB চালু রাখুন</string>
+    <string name="db_enable_desc">\"সব চালু করুন\" চাপলে MySQL/MariaDB শুরু হবে। ডেটাবেস দরকার না হলে বন্ধ রাখুন।</string>
+    <string name="db_port_title">MySQL/MariaDB পোর্ট</string>
+    <string name="db_port_desc">MySQL/MariaDB যে পোর্টে listen করবে। ডিফল্ট 3306।</string>
     <string name="db_root_title">MySQL root পাসওয়ার্ড</string>
     <string name="db_root_desc">প্রথম চালু হলে অটো-জেনারেট। দেখতে বা কপি করতে ট্যাপ করুন।</string>
     <string name="db_root_dialog_title">MySQL root পাসওয়ার্ড</string>
-    <string name="db_root_not_ready">এখনো সেট হয়নি — একবার MariaDB চালু করুন।</string>
+    <string name="db_root_not_ready">এখনো সেট হয়নি — একবার MySQL/MariaDB চালু করুন।</string>
     <string name="db_copy_pw">পাসওয়ার্ড কপি</string>
     <string name="db_password_copied">পাসওয়ার্ড কপি হয়েছে</string>
     <string name="db_regenerate">পুনরায় তৈরি করুন</string>
     <string name="db_regenerate_confirm_title">পাসওয়ার্ড রিসেট?</string>
     <string name="db_regenerate_confirm_msg">সংরক্ষিত পাসওয়ার্ড মুছে যাবে। MySQL client দিয়ে ম্যানুয়ালি রিসেট করতে হবে।</string>
-    <string name="db_regenerate_done">পাসওয়ার্ড পুনরায় তৈরি হয়েছে। MariaDB রিস্টার্ট করুন।</string>
+    <string name="db_regenerate_done">পাসওয়ার্ড পুনরায় তৈরি হয়েছে। MySQL/MariaDB রিস্টার্ট করুন।</string>
     <string name="db_open_pma">phpMyAdmin খুলুন</string>
     <string name="db_pma_not_running">phpMyAdmin খুলতে Nginx চালু করুন।</string>
 
@@ -115,11 +115,11 @@
     <string name="onboard_grant">অনুমতি দিন</string>
     <string name="onboard_finish">শুরু করি!</string>
     <string name="onboard_welcome_title">INWEB-এ স্বাগতম</string>
-    <string name="onboard_welcome_body">সম্পূর্ণ লোকাল ওয়েব স্ট্যাক — Nginx, PHP, MariaDB — আপনার Android ডিভাইসে চালু।\n\nচলার পথে PHP ডেভেলপমেন্টের জন্য পারফেক্ট।</string>
+    <string name="onboard_welcome_body">সম্পূর্ণ লোকাল ওয়েব স্ট্যাক — Nginx, PHP, MySQL/MariaDB — আপনার Android ডিভাইসে চালু।\n\nচলার পথে PHP ডেভেলপমেন্টের জন্য পারফেক্ট।</string>
     <string name="onboard_perm_title">চালু থাকা জানুন</string>
     <string name="onboard_perm_body">সার্ভার চলাকালীন একটা persistent notification দেখাতে INWEB-এর অনুমতি লাগবে।\n\nএটি silent এবং যেকোনো জায়গা থেকে এক ট্যাপে সার্ভার বন্ধ করা যাবে।</string>
     <string name="onboard_ready_title">সব প্রস্তুত</string>
-    <string name="onboard_ready_body">✓ Nginx + PHP চালু করতে START SERVER ট্যাপ করুন\n✓ MariaDB যোগ করতে Services ট্যাব ব্যবহার করুন\n✓ QR কোড দিয়ে URL শেয়ার করুন\n✓ ওয়েব রুটে PHP ফাইল রাখুন\n\nHappy hacking!</string>
+    <string name="onboard_ready_body">✓ Nginx + PHP চালু করতে START SERVER ট্যাপ করুন\n✓ MySQL/MariaDB যোগ করতে Services ট্যাব ব্যবহার করুন\n✓ QR কোড দিয়ে URL শেয়ার করুন\n✓ ওয়েব রুটে PHP ফাইল রাখুন\n\nHappy hacking!</string>
 
     <!-- Editor Pro -->
     <string name="editor_save">সেভ</string>
@@ -194,7 +194,7 @@
     <string name="site_www_title">ওয়েব রুট</string>
     <string name="site_www_meta">/ · পোর্ট 8080 · localhost</string>
     <string name="site_pma_title">phpMyAdmin</string>
-    <string name="site_pma_meta">/phpmyadmin/ · MariaDB প্রয়োজন</string>
+    <string name="site_pma_meta">/phpmyadmin/ · MySQL/MariaDB প্রয়োজন</string>
     <string name="site_api_title">ইসলামিক APIs</string>
     <string name="site_api_meta">/api/ · অফলাইন JSON</string>
     <string name="system_info">সিস্টেম তথ্য</string>
@@ -262,4 +262,24 @@
     <string name="ddns_push_enqueued">আপডেট queue হয়েছে — একটু পরে চেক হবে…</string>
     <string name="ddns_incomplete">আগে hostname ও credentials পূরণ করুন।</string>
     <string name="ddns_last_none">এখনো কোনো আপডেট হয়নি — ⚡ Update Now চাপুন।</string>
+
+    <!-- In-app updater -->
+    <string name="update_section">অ্যাপ আপডেট</string>
+    <string name="update_check_title">আপডেট চেক করুন</string>
+    <string name="update_check_desc">GitHub Releases থেকে সরাসরি অ্যাপ-এর ভেতরেই আপডেট</string>
+    <string name="update_auto_title">চালু হলে অটো-চেক</string>
+    <string name="update_auto_desc">প্রতি ১২ ঘণ্টায় সাইলেন্টলি চেক করে; নতুন beta এলে dialog দেখায়</string>
+    <string name="update_checking">🔍 আপডেট চেক হচ্ছে…</string>
+    <string name="update_up_to_date">✅ আপনি সর্বশেষ version-এ আছেন (%1$s)</string>
+    <string name="update_failed">⚠️ আপডেট চেক ব্যর্থ: %1$s</string>
+    <string name="update_available_title">🎉 INWEB %1$s পাওয়া গেছে!</string>
+    <string name="update_available_msg">বর্তমান: %1$s · সাইজ: %2$s MB\n\nনতুন যা আছে:</string>
+    <string name="update_download">⬇ ডাউনলোড ও ইন্সটল</string>
+    <string name="update_later">পরে</string>
+    <string name="update_view_release">GitHub-এ দেখুন</string>
+    <string name="update_download_started">⬇ আপডেট ডাউনলোড হচ্ছে… শেষ হলে install prompt আসবে।</string>
+    <string name="update_downloading_desc">GitHub Releases থেকে সর্বশেষ INWEB APK</string>
+    <string name="update_permission_title">ইন্সটলের অনুমতি দিন</string>
+    <string name="update_permission_msg">সরাসরি আপডেট ইন্সটল করতে একবার unknown sources অনুমতি দিন।</string>
+    <string name="update_current_version">ইন্সটলড version</string>
 </resources>

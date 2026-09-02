@@ -101,6 +101,9 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        // === In-app updater: silent GitHub Releases check (12h throttle) ===
+        com.inweb.app.util.UpdateChecker.autoCheck(this)
+
         // === Header ===============================================
         b.userGreeting.text = getString(R.string.assalamu_alaikum)
         b.userName.text     = getString(R.string.app_name)   // could be user name later

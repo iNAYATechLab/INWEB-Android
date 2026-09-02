@@ -326,12 +326,20 @@ class ServerManager(
         val pb = ProcessBuilder(command).directory(workingDir).redirectErrorStream(true)
 
         val env = pb.environment()
+        // ⚠️ CRITICAL: our libs live in lib/, binaries in bin/. Without lib/
+        // on LD_LIBRARY_PATH every Termux binary dies with "library not found".
         env["LD_LIBRARY_PATH"] = listOfNotNull(
-            layout.binDir.absolutePath, env["LD_LIBRARY_PATH"]
+            layout.libDir.absolutePath,
+            layout.binDir.absolutePath,
+            env["LD_LIBRARY_PATH"]
         ).joinToString(":")
         env["PATH"]   = layout.binDir.absolutePath + ":" + (env["PATH"] ?: "/system/bin")
+        env["PREFIX"] = layout.prefixDir.absolutePath
         env["TMPDIR"] = layout.tmpDir.absolutePath
         env["HOME"]   = layout.prefixDir.absolutePath
+        // CA bundle bundled from ca-certificates — needed by curl/cloudflared/openssl s_client
+        val caBundle = File(layout.prefixDir, "etc/tls/cert.pem")
+        if (caBundle.exists()) env["SSL_CERT_FILE"] = caBundle.absolutePath
         for ((k, v) in extraEnv) env[k] = v
 
         val proc = pb.start()

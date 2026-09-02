@@ -57,7 +57,7 @@
     <string name="btn_services">Services</string>
     <string name="services_title">Services</string>
     <string name="services_subtitle">Start, stop and monitor each service independently.</string>
-    <string name="services_footer_hint">💡 Tip: Nginx auto-starts PHP-FPM if it isn\'t already running. Toggle MariaDB when you need database support (phpMyAdmin, WordPress, etc.).</string>
+    <string name="services_footer_hint">💡 Tip: Nginx auto-starts PHP-FPM if it isn\'t already running. Toggle MySQL/MariaDB when you need database support (phpMyAdmin, WordPress, etc.).</string>
     <string name="start_all">START ALL</string>
     <string name="stop_all">STOP ALL</string>
     <string name="start">Start</string>
@@ -72,20 +72,20 @@
 
     <!-- Database section in Settings -->
     <string name="db_section">DATABASE</string>
-    <string name="db_enable_title">Enable MariaDB</string>
-    <string name="db_enable_desc">Start MariaDB when you press \"Start All\". Turn off if you don\'t need a database.</string>
-    <string name="db_port_title">MariaDB port</string>
-    <string name="db_port_desc">Port MariaDB listens on. Default is 3306.</string>
+    <string name="db_enable_title">Enable MySQL / MariaDB</string>
+    <string name="db_enable_desc">Start MySQL/MariaDB when you press \"Start All\". Turn off if you don\'t need a database.</string>
+    <string name="db_port_title">MySQL/MariaDB port</string>
+    <string name="db_port_desc">Port MySQL/MariaDB listens on. Default is 3306.</string>
     <string name="db_root_title">MySQL root password</string>
     <string name="db_root_desc">Auto-generated at first launch. Tap to view or copy.</string>
     <string name="db_root_dialog_title">MySQL root password</string>
-    <string name="db_root_not_ready">Not set yet — start MariaDB once to generate.</string>
+    <string name="db_root_not_ready">Not set yet — start MySQL/MariaDB once to generate.</string>
     <string name="db_copy_pw">Copy password</string>
     <string name="db_password_copied">Password copied</string>
     <string name="db_regenerate">Regenerate</string>
     <string name="db_regenerate_confirm_title">Regenerate password?</string>
     <string name="db_regenerate_confirm_msg">This clears the saved password. You\'ll need to reset it manually via mysql client or reinitialise the data directory.</string>
-    <string name="db_regenerate_done">Password regenerated. Restart MariaDB to apply.</string>
+    <string name="db_regenerate_done">Password regenerated. Restart MySQL/MariaDB to apply.</string>
     <string name="db_open_pma">Open phpMyAdmin</string>
     <string name="db_pma_not_running">Start Nginx first to open phpMyAdmin.</string>
 
@@ -484,4 +484,24 @@
     <string name="api_token_copied">Token copied</string>
     <string name="api_token_regen_confirm">Regenerate token? This will log out any connected clients.</string>
     <string name="api_regenerate">Regenerate</string>
+
+    <!-- In-app updater -->
+    <string name="update_section">APP UPDATE</string>
+    <string name="update_check_title">Check for updates</string>
+    <string name="update_check_desc">INWEB updates itself straight from GitHub Releases</string>
+    <string name="update_auto_title">Auto-check on startup</string>
+    <string name="update_auto_desc">Silently checks every 12 hours and shows a dialog when a new beta arrives</string>
+    <string name="update_checking">🔍 Checking for updates…</string>
+    <string name="update_up_to_date">✅ You\'re on the latest version (%1$s)</string>
+    <string name="update_failed">⚠️ Update check failed: %1$s</string>
+    <string name="update_available_title">🎉 INWEB %1$s available!</string>
+    <string name="update_available_msg">Current: %1$s · Size: %2$s MB\n\nWhat's new:</string>
+    <string name="update_download">⬇ Download & Install</string>
+    <string name="update_later">Later</string>
+    <string name="update_view_release">View on GitHub</string>
+    <string name="update_download_started">⬇ Downloading update… You\'ll get an install prompt when it finishes.</string>
+    <string name="update_downloading_desc">Latest INWEB APK from GitHub Releases</string>
+    <string name="update_permission_title">Allow app installs</string>
+    <string name="update_permission_msg">To install updates directly, allow INWEB to install apps from unknown sources once.</string>
+    <string name="update_current_version">Installed version</string>
 </resources>

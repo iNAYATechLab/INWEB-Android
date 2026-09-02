@@ -48,7 +48,34 @@ class SettingsActivity : AppCompatActivity() {
         setupNetworkSection()
         setupHttpsSection()
         setupDatabaseSection()
+        setupUpdateSection()
         setupGeneralSection()
+    }
+
+    /* ---------------------------------------------------------- */
+    /*  In-app updates (GitHub Releases)                           */
+    /* ---------------------------------------------------------- */
+
+    private fun setupUpdateSection() {
+        val row    = findViewById<View>(R.id.updateCheckRow) ?: return
+        val value  = findViewById<TextView>(R.id.updateVersionValue)
+        val autoSw = findViewById<android.widget.Switch>(R.id.autoUpdateSwitch)
+
+        val current = try {
+            packageManager.getPackageInfo(packageName, 0).versionName
+        } catch (_: Throwable) { "?" }
+
+        value?.text = "v$current"
+        row.setOnClickListener { com.inweb.app.util.UpdateChecker.manualCheck(this) }
+        row.setOnLongClickListener {
+            Toast.makeText(this, "GitHub: ${com.inweb.app.util.UpdateChecker.REPO}", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        autoSw?.let { sw ->
+            sw.isChecked = prefs.autoUpdateCheck
+            sw.setOnCheckedChangeListener { _, checked -> prefs.autoUpdateCheck = checked }
+        }
     }
 
     /* ---------------------------------------------------------- */

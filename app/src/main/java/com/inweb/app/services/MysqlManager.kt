@@ -238,13 +238,19 @@ class MysqlManager(
     /* ------------------------------------------------------------- */
 
     private fun buildEnv(env: MutableMap<String, String>) {
+        // ⚠️ lib/ FIRST — mariadbd/mysql link libssl/libcrypto/libpcre2/libc++_shared
         env["LD_LIBRARY_PATH"] = listOfNotNull(
+            layout.libDir.absolutePath,
+            File(layout.libDir, "plugin").absolutePath,
             layout.binDir.absolutePath,
             env["LD_LIBRARY_PATH"]
         ).joinToString(":")
         env["PATH"]   = layout.binDir.absolutePath + ":" + (env["PATH"] ?: "/system/bin")
+        env["PREFIX"] = layout.prefixDir.absolutePath
         env["TMPDIR"] = layout.tmpDir.absolutePath
         env["HOME"]   = layout.prefixDir.absolutePath
+        val caBundle = File(layout.prefixDir, "etc/tls/cert.pem")
+        if (caBundle.exists()) env["SSL_CERT_FILE"] = caBundle.absolutePath
     }
 
     private fun drainToLog(tag: String, proc: Process) {

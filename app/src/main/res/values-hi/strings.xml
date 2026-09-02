@@ -37,4 +37,24 @@
     <string name="save">सहेजें</string>
     <string name="onboard_welcome_title">INWEB में स्वागत है</string>
     <string name="onboard_finish">चलो शुरू करें</string>
+
+    <!-- In-app updater -->
+    <string name="update_section">ऐप अपडेट</string>
+    <string name="update_check_title">अपडेट जांचें</string>
+    <string name="update_check_desc">GitHub Releases से सीधे ऐप में अपडेट</string>
+    <string name="update_auto_title">स्टार्टअप पर ऑटो-चेक</string>
+    <string name="update_auto_desc">हर 12 घंटे में चुपचाप जांच; नया beta आने पर dialog दिखाता है</string>
+    <string name="update_checking">🔍 अपडेट जांचा जा रहा है…</string>
+    <string name="update_up_to_date">✅ आप नवीनतम version पर हैं (%1$s)</string>
+    <string name="update_failed">⚠️ अपडेट जांच विफल: %1$s</string>
+    <string name="update_available_title">🎉 INWEB %1$s उपलब्ध!</string>
+    <string name="update_available_msg">वर्तमान: %1$s · साइज़: %2$s MB\n\nनया क्या है:</string>
+    <string name="update_download">⬇ डाउनलोड और इंस्टॉल</string>
+    <string name="update_later">बाद में</string>
+    <string name="update_view_release">GitHub पर देखें</string>
+    <string name="update_download_started">⬇ अपडेट डाउनलोड हो रहा है… पूरा होने पर install prompt आएगा।</string>
+    <string name="update_downloading_desc">GitHub Releases से नवीनतम INWEB APK</string>
+    <string name="update_permission_title">इंस्टॉल की अनुमति दें</string>
+    <string name="update_permission_msg">सीधे अपडेट इंस्टॉल करने के लिए एक बार unknown sources की अनुमति दें।</string>
+    <string name="update_current_version">इंस्टॉल्ड version</string>
 </resources>

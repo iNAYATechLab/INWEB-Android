@@ -39,13 +39,15 @@ object AssetInstaller {
     private const val TAG = "AssetInstaller"
 
     /** Version stamp – bump when you ship a new binary bundle to force re-extract. */
-    private const val INSTALL_VERSION = 2
+    // v3: shared libraries bundled (lib/) + symlink restore + Termux prefix rewrite
+    private const val INSTALL_VERSION = 3
     private const val VERSION_FILE = ".installed_v"
 
     data class Layout(
         // core
         val prefixDir:  File,
         val binDir:     File,
+        val libDir:     File,
         val confDir:    File,
         val phpDir:     File,
         val logsDir:    File,
@@ -134,10 +136,14 @@ object AssetInstaller {
             ensureEngineDirs(layout)
 
             markExecutables(layout.binDir)
+            restoreSymlinks(layout)
+            rewriteTermuxScripts(layout)
             versionFile.writeText(INSTALL_VERSION.toString())
             Log.i(TAG, "Extraction complete.")
         } else {
             markExecutables(layout.binDir)
+            restoreSymlinks(layout)
+            rewriteTermuxScripts(layout)
             layout.logsDir.mkdirs()
             layout.tmpDir.mkdirs()
             layout.mysqlDataDir.mkdirs()
@@ -192,6 +198,7 @@ object AssetInstaller {
 
     private fun buildLayout(context: Context, prefix: File): Layout {
         val binDir     = File(prefix, Constants.ASSET_BIN_DIR)
+        val libDir     = File(prefix, "lib")
         val confDir    = File(prefix, Constants.ASSET_CONF_DIR)
         val phpDir     = File(prefix, Constants.ASSET_PHP_DIR)
         val logsDir    = File(prefix, "logs")
@@ -213,6 +220,7 @@ object AssetInstaller {
         return Layout(
             prefixDir       = prefix,
             binDir          = binDir,
+            libDir          = libDir,
             confDir         = confDir,
             phpDir          = phpDir,
             logsDir         = logsDir,
@@ -329,6 +337,74 @@ object AssetInstaller {
                 if (!ok) Log.w(TAG, "Failed to chmod +rx ${f.name}")
             }
         }
+        // Apache modules + bundled libs must be readable/executable too
+        arrayOf(
+            File(binDir.parentFile, "lib"),
+            File(binDir.parentFile, "apache/modules"),
+            File(binDir.parentFile, "tunnel")
+        ).forEach { dir ->
+            dir.listFiles()?.forEach { f ->
+                if (f.isFile) @Suppress("DEPRECATION") {
+                    f.setReadable(true, false)
+                    f.setExecutable(true, false)
+                }
+            }
+        }
+    }
+
+    /**
+     * APK assets cannot store symlinks — the fetch script records them in
+     * `lib/links.txt` ("reldir|name|target") and we recreate them here with
+     * [android.system.Os.symlink]. Without libicudata.so.78→… and friends,
+     * every php/node/nginx launch dies at the dynamic linker.
+     */
+    private fun restoreSymlinks(layout: Layout) {
+        val manifest = File(layout.libDir, "links.txt")
+        if (!manifest.exists()) return
+        manifest.readLines().forEach { line ->
+            val parts = line.split("|")
+            if (parts.size < 3) return@forEach
+            val link = File(File(layout.prefixDir, parts[0]), parts[1])
+            if (link.exists()) return@forEach
+            runCatching { android.system.Os.symlink(parts[2], link.absolutePath) }
+                .onFailure {
+                    // Fallback for exotic filesystems: hard-copy the target
+                    runCatching {
+                        File(link.parentFile, parts[2]).copyTo(link, overwrite = false)
+                    }
+                }
+        }
+    }
+
+    /**
+     * Every Termux shell script (apachectl, mariadb-install-db, mysqld_safe)
+     * carries hardcoded `/data/data/com.termux/files/usr` paths and a Termux
+     * shebang. Rewrite both to our runtime prefix + Android's system shell.
+     */
+    private fun rewriteTermuxScripts(layout: Layout) {
+        val termuxPrefix = "/data/data/com.termux/files/usr"
+        fun rewriteDir(dir: File) {
+            if (!dir.isDirectory) return
+            dir.listFiles()?.forEach { f ->
+                if (!f.isFile) return@forEach
+                val isScript = runCatching {
+                    f.inputStream().use { s ->
+                        val b = ByteArray(2); s.read(b); b[0].toInt().toChar() == '#'
+                    }
+                }.getOrDefault(false)
+                if (!isScript) return@forEach
+                runCatching {
+                    var txt = f.readText()
+                    if (txt.contains(termuxPrefix) || txt.contains("#!")) {
+                        txt = txt.replace(termuxPrefix, layout.prefixDir.absolutePath)
+                        txt = txt.replaceFirst(Regex("^#![^\n]*"), "#!/system/bin/sh")
+                        f.writeText(txt)
+                    }
+                }
+            }
+        }
+        rewriteDir(layout.binDir)
+        rewriteDir(layout.libDir)
     }
 
     /* ---------------------------------------------------------------- */

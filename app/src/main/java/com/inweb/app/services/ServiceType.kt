@@ -12,9 +12,9 @@ enum class ServiceType(
     val displayName: String,
     val defaultPort: Int
 ) {
-    NGINX   ("nginx",   "Nginx",    8080),
-    PHP_FPM ("php-fpm", "PHP-FPM",  9000),
-    MYSQL   ("mysql",   "MariaDB",  3306);
+    NGINX   ("nginx",   "Nginx",            8080),
+    PHP_FPM ("php-fpm", "PHP-FPM",          9000),
+    MYSQL   ("mysql",   "MySQL / MariaDB",  3306);
 
     companion object {
         fun fromId(id: String?): ServiceType? = entries.firstOrNull { it.id == id }

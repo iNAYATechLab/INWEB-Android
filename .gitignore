@@ -52,3 +52,10 @@ node_modules/
 # ─── Build outputs ────────────────────────
 app/release/
 app/debug/
+
+# Fetched server runtime (rebuilt by CI — never commit!)
+app/src/main/assets/server_env/lib/
+app/src/main/assets/server_env/etc/
+app/src/main/assets/server_env/apache/
+app/src/main/assets/server_env/mysql/share/
+app/src/main/assets/server_env/php/extensions/

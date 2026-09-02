@@ -56,8 +56,8 @@ android {
         // versionCode formula: MAJOR*10000 + MINOR*100 + PATCH (+ betaNo as offset of first beta)
         //   → 1.0.0-beta.1 = 10000 ... 1.0.0-beta.2 = 10001 ... 1.0.0 stable = 10100
         // See docs/VERSIONING.md for the full policy.
-        versionCode = 10001
-        versionName = "1.0.0-beta.2"
+        versionCode = 10002
+        versionName = "1.0.0-beta.3"
     }
 
     signingConfigs {
@@ -92,7 +92,10 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
 
-    buildFeatures { viewBinding = true }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true   // UpdateChecker reads BuildConfig.VERSION_NAME
+    }
 
     // Do NOT compress binary/config assets so they can be copied 1:1.
     androidResources {

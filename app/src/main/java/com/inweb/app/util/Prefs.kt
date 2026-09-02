@@ -197,6 +197,26 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(KEY_ONBOARDED, false)
         set(v) = sp.edit().putBoolean(KEY_ONBOARDED, v).apply()
 
+    /* ------------------------------------------------------- */
+    /*  In-app updates (GitHub Releases)                        */
+    /* ------------------------------------------------------- */
+
+    /** Auto-check for a new release every app start (throttled 12h). Default ON. */
+    var autoUpdateCheck: Boolean
+        get() = sp.getBoolean(KEY_AUTO_UPDATE, true)
+        set(v) = sp.edit().putBoolean(KEY_AUTO_UPDATE, v).apply()
+
+    /** Epoch ms of the last update check. */
+    var lastUpdateCheck: Long
+        get() = sp.getLong(KEY_UPDATE_LAST, 0L)
+        set(v) = sp.edit().putLong(KEY_UPDATE_LAST, v).apply()
+
+    /** Absolute path of the APK currently being downloaded ("" = none). */
+    var pendingApkPath: String
+        get() = sp.getString(KEY_PENDING_APK, "") ?: ""
+        set(v) = sp.edit().putString(KEY_PENDING_APK, v).apply()
+
+
     companion object {
         private const val FILE               = "inweb_prefs"
         private const val KEY_BIND_LAN       = "bind_lan"
@@ -245,5 +265,10 @@ class Prefs(context: Context) {
         private const val KEY_RL_BURST       = "sec_rl_burst"
 
         private const val KEY_ONBOARDED      = "onboarded"
+
+        // In-app updates
+        private const val KEY_AUTO_UPDATE    = "update_auto_check"
+        private const val KEY_UPDATE_LAST    = "update_last_check_ms"
+        private const val KEY_PENDING_APK    = "update_pending_apk"
     }
 }
