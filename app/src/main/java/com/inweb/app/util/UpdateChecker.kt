@@ -55,7 +55,7 @@ object UpdateChecker {
     /*  Version compare — supports "1.0.0-beta.2" style tags         */
     /* ------------------------------------------------------------ */
 
-    private data class V(val major: Int, val minor: Int, val patch: Int,
+    data class V(val major: Int, val minor: Int, val patch: Int,
                          val stage: Int, val stageNo: Int)
     // stage rank: beta=0 < rc=1 < stable=2
 
