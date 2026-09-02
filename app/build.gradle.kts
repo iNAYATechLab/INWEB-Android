@@ -56,8 +56,8 @@ android {
         // versionCode formula: MAJOR*10000 + MINOR*100 + PATCH (+ betaNo as offset of first beta)
         //   → 1.0.0-beta.1 = 10000 ... 1.0.0-beta.2 = 10001 ... 1.0.0 stable = 10100
         // See docs/VERSIONING.md for the full policy.
-        versionCode = 10005
-        versionName = "1.0.0-beta.6"
+        versionCode = 10006
+        versionName = "1.0.0-beta.7"
     }
 
     signingConfigs {

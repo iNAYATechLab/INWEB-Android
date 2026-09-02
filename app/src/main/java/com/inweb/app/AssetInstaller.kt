@@ -40,7 +40,7 @@ object AssetInstaller {
 
     /** Version stamp – bump when you ship a new binary bundle to force re-extract. */
     // v3: shared libraries bundled (lib/) + symlink restore + Termux prefix rewrite
-    private const val INSTALL_VERSION = 3
+    private const val INSTALL_VERSION = 4
     private const val VERSION_FILE = ".installed_v"
 
     data class Layout(
@@ -197,8 +197,14 @@ object AssetInstaller {
     /* ---------------------------------------------------------------- */
 
     private fun buildLayout(context: Context, prefix: File): Layout {
-        val binDir     = File(prefix, Constants.ASSET_BIN_DIR)
-        val libDir     = File(prefix, "lib")
+        // ═══════════════════════════════════════════════════════════════
+        // Android 10+ SELinux blocks exec() from the app home dir, so ALL
+        // executables live in the installer's native lib dir (extractNativeLibs=true),
+        // disguised as libexec_*.so.  Shell scripts still live under prefix/bin.
+        // ═══════════════════════════════════════════════════════════════
+        val nativeDir  = File(context.applicationInfo.nativeLibraryDir)
+        val binDir     = File(prefix, Constants.ASSET_BIN_DIR)   // scripts only
+        val libDir     = nativeDir
         val confDir    = File(prefix, Constants.ASSET_CONF_DIR)
         val phpDir     = File(prefix, Constants.ASSET_PHP_DIR)
         val logsDir    = File(prefix, "logs")
@@ -227,32 +233,32 @@ object AssetInstaller {
             tmpDir          = tmpDir,
             docRoot         = docRoot,
 
-            nginxBin        = File(binDir, "nginx"),
+            nginxBin        = File(libDir, "libexec_nginx.so"),
             nginxConf       = File(confDir, "nginx.conf"),
 
-            apacheBin         = File(binDir, "httpd"),
+            apacheBin         = File(libDir, "libexec_httpd.so"),
             apacheCtlBin      = File(binDir, "apachectl"),
             apacheConf        = File(confDir, "httpd.conf"),
             apacheServerRoot  = File(prefix, "apache"),
 
-            litespeedBin        = pickFirst(binDir, "lshttpd", "litespeed"),
+            litespeedBin        = pickFirst(libDir, "libexec_lshttpd.so", "libexec_litespeed.so"),
             litespeedConf       = File(confDir, "litespeed.conf"),
             litespeedServerRoot = File(prefix, "litespeed"),
 
-            caddyBin            = File(binDir, "caddy"),
+            caddyBin            = File(libDir, "libexec_caddy.so"),
             caddyfile           = File(confDir, "Caddyfile"),
 
-            nodeBin             = File(binDir, "node"),
+            nodeBin             = File(libDir, "libexec_node.so"),
             nodeServerScript    = File(prefix, "node/server.js"),
 
-            phpFpmBin       = File(binDir, "php-fpm"),
+            phpFpmBin       = File(libDir, "libexec_php_fpm.so"),
             phpFpmConf      = File(confDir, "php-fpm.conf"),
             phpIni          = File(phpDir, "php.ini"),
 
             // MariaDB and MySQL ship binaries with different names; support both.
-            mysqldBin       = pickFirst(binDir, "mariadbd", "mysqld"),
-            mysqlClientBin  = File(binDir, "mysql"),
-            mysqlInstallDb  = File(binDir, "mysql_install_db"),
+            mysqldBin       = pickFirst(libDir, "libexec_mariadbd.so", "libexec_mysqld.so"),
+            mysqlClientBin  = File(libDir, "libexec_mysql.so"),
+            mysqlInstallDb  = File(binDir, "mysql_install_db"),   // shell script — run via /system/bin/sh
             mysqlConf       = File(confDir, "my.cnf"),
             mysqlDir        = mysqlDir,
             mysqlDataDir    = mysqlDataDir,
@@ -339,9 +345,7 @@ object AssetInstaller {
         }
         // Apache modules + bundled libs must be readable/executable too
         arrayOf(
-            File(binDir.parentFile, "lib"),
-            File(binDir.parentFile, "apache/modules"),
-            File(binDir.parentFile, "tunnel")
+            File(binDir.parentFile, "apache")   // conf/mime.types only
         ).forEach { dir ->
             dir.listFiles()?.forEach { f ->
                 if (f.isFile) @Suppress("DEPRECATION") {
@@ -436,7 +440,7 @@ object AssetInstaller {
 
             // Apache
             "__APACHE_SERVERROOT__" to layout.apacheServerRoot.absolutePath,
-            "__APACHE_MODULES__"    to File(layout.apacheServerRoot, "modules").absolutePath,
+            "__APACHE_MODULES__"    to layout.libDir.absolutePath,   // mods live in native lib dir
             "__APACHE_LOGDIR__"     to File(layout.apacheServerRoot, "logs").absolutePath,
 
             // LiteSpeed

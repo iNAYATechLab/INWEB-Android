@@ -110,11 +110,11 @@ class AboutActivity : AppCompatActivity() {
         }
 
         fun binaryTest(name: String, args: List<String>) {
-            val bin = File(layout.binDir, name)
+            // binaries live in the native lib dir (exec-allowed) as libexec_*.so
+            val bin = File(layout.libDir, "libexec_$name.so")
             sb.appendLine("── $name ${args.joinToString(" ")} ──")
             when {
                 !bin.exists() -> sb.appendLine("   ❌ MISSING: ${bin.absolutePath}")
-                !bin.canExecute() -> sb.appendLine("   ❌ NOT EXECUTABLE")
                 else -> try {
                     val pb = ProcessBuilder(listOf(bin.absolutePath) + args)
                         .directory(layout.prefixDir)
@@ -152,10 +152,9 @@ class AboutActivity : AppCompatActivity() {
 
         // Filesystem sanity
         sb.appendLine("── Filesystem ──")
-        sb.appendLine("bin files : ${layout.binDir.listFiles()?.size ?: 0}")
-        sb.appendLine("lib files : ${layout.libDir.listFiles()?.size ?: 0}")
-        val links = File(layout.libDir, "links.txt")
-        sb.appendLine("symlinks  : ${if (links.exists()) links.readLines().size else 0} recorded")
+        sb.appendLine("nativeLibDir: ${layout.libDir.absolutePath}")
+        sb.appendLine("  .so files : ${layout.libDir.listFiles()?.size ?: 0}")
+        sb.appendLine("scripts dir : ${layout.binDir.absolutePath} (${layout.binDir.listFiles()?.size ?: 0} files)")
 
         return sb.toString()
     }

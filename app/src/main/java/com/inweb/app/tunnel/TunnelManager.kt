@@ -62,7 +62,7 @@ class TunnelManager(
         _state.value = State.Starting
 
         val bin = when (provider) {
-            Provider.CLOUDFLARE -> File(layout.prefixDir, "tunnel/cloudflared")
+            Provider.CLOUDFLARE -> File(layout.libDir, "libexec_cloudflared.so")
             Provider.NGROK      -> File(layout.prefixDir, "tunnel/ngrok")
         }
         if (!bin.exists() || !bin.canExecute()) {

@@ -59,3 +59,6 @@ app/src/main/assets/server_env/etc/
 app/src/main/assets/server_env/apache/
 app/src/main/assets/server_env/mysql/share/
 app/src/main/assets/server_env/php/extensions/
+
+# jniLibs — fetched by CI (never commit 280MB of binaries!)
+app/src/main/jniLibs/

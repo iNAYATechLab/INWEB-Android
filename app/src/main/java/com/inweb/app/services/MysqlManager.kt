@@ -114,7 +114,7 @@ class MysqlManager(
         // Prefer graceful shutdown via mysqladmin if available.
         val prefs = Prefs(context)
         val pw = prefs.mysqlRootPassword
-        val admin = File(layout.binDir, "mysqladmin")
+        val admin = File(layout.libDir, "libexec_mysqladmin.so")
         if (admin.exists() && admin.canExecute() && pw.isNotEmpty()) {
             runCatching {
                 val pb = ProcessBuilder(
@@ -168,8 +168,9 @@ class MysqlManager(
         }
 
         val cmd: List<String> = when {
-            layout.mysqlInstallDb.exists() && layout.mysqlInstallDb.canExecute() -> listOf(
-                layout.mysqlInstallDb.absolutePath,
+            layout.mysqlInstallDb.exists() -> listOf(
+                // shell script inside app home → run via system sh (exec() from home is SELinux-blocked)
+                "/system/bin/sh", layout.mysqlInstallDb.absolutePath,
                 "--basedir=${layout.prefixDir.absolutePath}",
                 "--datadir=${layout.mysqlDataDir.absolutePath}",
                 "--auth-root-authentication-method=normal"
