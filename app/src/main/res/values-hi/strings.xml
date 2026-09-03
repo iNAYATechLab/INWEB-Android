@@ -72,4 +72,8 @@
     <string name="diag_running">⏳ जाँच हो रही है…</string>
     <string name="diag_copied">✅ कॉपी हो गया!</string>
     <string name="diag_empty">यहाँ डायग्नोस्टिक्स रिपोर्ट दिखेगी।\nऊपर ▶ दबाएँ।</string>
+    <string name="module_asset_missing">हाल की GitHub रिलीज़ में अभी इस runtime module का APK नहीं है। रिलीज़ पेज खोलें?</string>
+    <string name="module_open_releases">रिलीज़ देखें</string>
+    <string name="module_permission_msg">runtime module APK इंस्टॉल करने के लिए INWEB को अनुमति चाहिए। Allow दबाएँ, फिर कोशिश करें।</string>
+    <string name="module_download_started">runtime module डाउनलोड हो रहा है… पूरा होते ही इंस्टॉलर खुलेगा</string>
 </resources>

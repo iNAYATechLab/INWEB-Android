@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.inweb.app.runtime.RuntimeModuleManager
 import com.inweb.app.AssetInstaller
 import com.inweb.app.BuildConfig
 import com.inweb.app.R
@@ -110,8 +111,11 @@ class AboutActivity : AppCompatActivity() {
         }
 
         fun binaryTest(name: String, args: List<String>) {
-            // binaries live in the native lib dir (exec-allowed) as libexec_*.so
-            val bin = File(layout.libDir, "libexec_$name.so".replace("-", "_"))
+            // binaries live in the native lib dir (exec-allowed) as libexec_*.so;
+            // না পেলে ঐ binary-র runtime module (আলাদা ইনস্টলড APK) থেকে খোঁজা হয়
+            val fileName = "libexec_$name.so".replace("-", "_")
+            val bin = RuntimeModuleManager.resolveExecutable(this, layout.libDir, fileName)
+                      ?: File(layout.libDir, fileName)
             sb.appendLine("── $name ${args.joinToString(" ")} ──")
             when {
                 !bin.exists() -> sb.appendLine("   ❌ MISSING: ${bin.absolutePath}")
@@ -149,6 +153,10 @@ class AboutActivity : AppCompatActivity() {
         binaryTest("mariadbd",  listOf("--version"))
         binaryTest("mysql",     listOf("--version"))
         binaryTest("node",      listOf("-v"))
+
+        // Runtime modules (optional downloads) — core ✅ / module ইনস্টলড কিনা
+        sb.append(RuntimeModuleManager.statusReport(this, layout.libDir))
+        sb.appendLine()
 
         // Filesystem sanity
         sb.appendLine("── Filesystem ──")

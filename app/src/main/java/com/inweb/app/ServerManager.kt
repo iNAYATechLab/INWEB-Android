@@ -2,6 +2,7 @@ package com.inweb.app
 
 import android.content.Context
 import android.util.Log
+import com.inweb.app.runtime.RuntimeModuleManager
 import com.inweb.app.services.MysqlManager
 import com.inweb.app.services.ServiceStatus
 import com.inweb.app.services.ServiceType
@@ -241,11 +242,14 @@ class ServerManager(
     /* ---------------------------------------------------------------- */
 
     private fun spawnCaddy() {
-        require(layout.caddyBin.exists() && layout.caddyBin.canExecute()) {
-            "Caddy binary not found or not executable at " +
-            "${layout.caddyBin.absolutePath}. Download the single-file " +
-            "Caddy binary for linux/arm64 from https://caddyserver.com/download " +
-            "and drop it into assets/server_env/bin/."
+        // core bundle → না পেলে caddy runtime module (আলাদা APK) → না পেলে বার্তা
+        val bin = moduleBin("libexec_caddy.so")
+        if (bin == null || !bin.canExecute()) {
+            throw IllegalStateException(
+                "Caddy binary not found in the app or in a runtime module. " +
+                "Install the 'Caddy server' module from Settings -> Modules " +
+                "(or drop libexec_caddy.so into jniLibs/arm64-v8a/)."
+            )
         }
         require(layout.caddyfile.exists()) {
             "Caddyfile missing at ${layout.caddyfile.absolutePath}"
@@ -254,7 +258,7 @@ class ServerManager(
         nginx = spawn(
             tag = "caddy",
             command = listOf(
-                layout.caddyBin.absolutePath,
+                bin.absolutePath,
                 "run",
                 "--config", layout.caddyfile.absolutePath,
                 "--adapter", "caddyfile"
@@ -268,12 +272,12 @@ class ServerManager(
     /* ---------------------------------------------------------------- */
 
     private fun spawnNode() {
-        require(layout.nodeBin.exists() && layout.nodeBin.canExecute()) {
-            "Node.js binary not found or not executable at " +
-            "${layout.nodeBin.absolutePath}. Drop a static ARM64 `node` " +
-            "binary into assets/server_env/bin/ — see " +
-            "https://unofficial-builds.nodejs.org/download/release/ for " +
-            "musl-linked builds that work on Android."
+        val bin = moduleBin("libexec_node.so")
+        if (bin == null || !bin.canExecute()) {
+            throw IllegalStateException(
+                "Node.js binary not found in the app or in a runtime module. " +
+                "Install the 'Node.js runtime' module from Settings -> Modules."
+            )
         }
         require(layout.nodeServerScript.exists()) {
             "server.js missing at ${layout.nodeServerScript.absolutePath}"
@@ -286,7 +290,7 @@ class ServerManager(
         nginx = spawn(
             tag = "node",
             command = listOf(
-                layout.nodeBin.absolutePath,
+                bin.absolutePath,
                 layout.nodeServerScript.absolutePath
             ),
             workingDir = layout.prefixDir,
@@ -316,6 +320,13 @@ class ServerManager(
     /*  Process helpers                                                 */
     /* ---------------------------------------------------------------- */
 
+    /**
+     * বাইনারি খোঁজে: প্রথমে অ্যাপের নিজস্ব native lib dir (সব core বান্ডলড থাকলে এখানেই
+     * পাবে), না পেলে ঐ module-এর runtime APK-র native lib dir থেকে — যেটা exec-legal।
+     */
+    private fun moduleBin(fileName: String): File? =
+        RuntimeModuleManager.resolveExecutable(context, layout.libDir, fileName)
+
     private fun spawn(
         tag: String,
         command: List<String>,
@@ -328,10 +339,12 @@ class ServerManager(
         val env = pb.environment()
         // ⚠️ CRITICAL: our libs live in lib/, binaries in bin/. Without lib/
         // on LD_LIBRARY_PATH every Termux binary dies with "library not found".
-        env["LD_LIBRARY_PATH"] = listOfNotNull(
-            layout.libDir.absolutePath,
-            layout.binDir.absolutePath,
-            env["LD_LIBRARY_PATH"]
+        // ইনস্টলড runtime module-এর lib ডিরও যোগ হয় — module APK-তে শুধু তার
+        // unique লাইব্রেরি থাকে, shared ones core থেকেই resolve হয়।
+        env["LD_LIBRARY_PATH"] = (
+            listOf(layout.libDir.absolutePath, layout.binDir.absolutePath) +
+            RuntimeModuleManager.installedLibDirs(context).map { it.absolutePath } +
+            listOfNotNull(env["LD_LIBRARY_PATH"])
         ).joinToString(":")
         env["PATH"]   = layout.binDir.absolutePath + ":" + (env["PATH"] ?: "/system/bin")
         env["PREFIX"] = layout.prefixDir.absolutePath

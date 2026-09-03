@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  INWEB runtime module · tunnel — pure native-code module (no UI, no launcher icon)।
+  মেইন অ্যাপ getPackageInfo(<applicationId>).applicationInfo.nativeLibraryDir
+  থেকে এই APK-র libexec_cloudflared.so exec করে।
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:label="INWEB Tunnel runtime"
+        android:allowBackup="false"
+        android:extractNativeLibs="true" />
+
+</manifest>

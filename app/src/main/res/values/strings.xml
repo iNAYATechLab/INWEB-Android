@@ -519,4 +519,8 @@
     <string name="diag_running">⏳ চলছে… প্রতিটা binary test হচ্ছে (১০-২০ সেকেন্ড)…</string>
     <string name="diag_copied">✅ Report copied! এখন যেকোনো জায়গায় paste করুন।</string>
     <string name="diag_empty">এখানে diagnostics report দেখা যাবে।\nউপরে ▶ Run চাপুন।</string>
+    <string name="module_asset_missing">No runtime module APK found in the latest GitHub releases yet. Open the releases page to check?</string>
+    <string name="module_open_releases">Open releases</string>
+    <string name="module_permission_msg">INWEB needs permission to install the runtime module APK. Tap Allow, then try again.</string>
+    <string name="module_download_started">Downloading runtime module… installer will open when it finishes</string>
 </resources>

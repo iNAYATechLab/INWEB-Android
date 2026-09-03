@@ -192,11 +192,15 @@ jobs:
           echo "  📦 Release APK: $FINAL"
           echo "  📊 Size: $(du -h "$APK" | cut -f1)"
           echo "═══════════════════════════════════════════"
-          if unzip -p "$APK" META-INF/MANIFEST.MF 2>/dev/null | grep -q "SHA"; then
-            echo "  🔐 Signature: ✅ SIGNED"
-          else
-            echo "  ⚠️ Signature: NOT SIGNED"
-          fi
+          # 🔐 পুরনো চেক (META-INF/MANIFEST.MF grep) ভুল ছিল: minSdk≥24 হলে AGP
+          # v1 JAR-signing বসায় না, v2/v3 বসে APK Signing Block-এ → সাইন্ডেড
+          # beta.9 APK-ও "NOT SIGNED" বলেছিল (মাপা)। এখন সঠিক চেক:
+          bash scripts/check_apk_sig.sh "$APK" || { echo "::error::release APK unsigned"; exit 1; }
+          # 📦 jniLibs compression গেট (324MB→110MB ফিক্স ভাঙলে ধরবে)
+          STORED_LIBS=$(unzip -v "$APK" | awk '$2=="Stored" && $NF ~ /^lib\// {c++} END{print c+0}')
+          echo "  🧬 uncompressed lib/ entries: $STORED_LIBS (expected 0)"
+          [ "$STORED_LIBS" -eq 0 ] || echo "::warning::jniLibs compress হয়নি — packaging.jniLibs.useLegacyPackaging চেক করো"
+          echo "  🗂  zip entries: $(unzip -l "$APK" | tail -1 | awk '{print $2}') · total size: $(du -m "$APK" | cut -f1) MB"
 
       - name: 📝 Write release notes
         run: |

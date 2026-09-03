@@ -193,4 +193,8 @@
     <string name="diag_running">⏳ جارٍ الفحص…</string>
     <string name="diag_copied">✅ تم النسخ!</string>
     <string name="diag_empty">سيظهر تقرير التشخيص هنا.\nاضغط ▶ أعلاه.</string>
+    <string name="module_asset_missing">لا يوجد APK لوحدة التشغيل في أحدث إصدارات GitHub بعد. فتح صفحة الإصدارات؟</string>
+    <string name="module_open_releases">فتح الإصدارات</string>
+    <string name="module_permission_msg">يحتاج INWEB إذنًا لتثبيت وحدة التشغيل. اضغط السماح ثم أعد المحاولة.</string>
+    <string name="module_download_started">جارٍ تنزيل وحدة التشغيل… سيفتح المثبّت بعد الانتهاء</string>
 </resources>

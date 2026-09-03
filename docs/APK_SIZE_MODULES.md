@@ -138,3 +138,16 @@ app open → PatchWorker (WorkManager, one-time, 6h throttle)
 | **5** | CI: module + patch bundle asset গুলো release-তে attach; core APK-র সাইজ গেট (`if size > 60MB fail`) | নিম্ন |
 
 **Version plan:** ফেজ 0 → `1.0.0-beta.9` (সাইজ + বিদ্যমান ফিক্স), ফেজ 1-2 → `beta.10`, ফেজ 3-4 → `beta.11`।
+
+---
+
+## ৬। স্ট্যাটাস (মাপা, ২০২৬-০৯-0৩)
+
+| ধাপ | কাজ | ফলাফল |
+|---|---|---|
+| **ফেজ ০** ✅ | `packaging.jniLibs.useLegacyPackaging = true` | beta.9 রিলিজে **110.6 MB** (প্রিডিক্ট 110.6 → হুবহু মিলেছে) · CI লগ: `📊 Size: 111M` · সব 179টা `lib/arm64-v8a` entry এখন `Defl:N` |
+| **ফেজ ০.৫** ✅ | CI সাইন চেক ফিক্স | পুরনো `META-INF/MANIFEST.MF` grep সাইন্ডেড beta.9-কে-ও "NOT SIGNED" বলেছিল → `scripts/check_apk_sig.sh` (v1 + Signing Block parse) যোগ, **পজিটিভ/নেগেটিভ দুই দিকে টেস্ট করা** |
+| **ফেজ ১** ✅ | `scripts/split_modules.sh` + `audit_closure.sh` + `test_module_split.sh` | সেলফ-টেস্ট: **PASS 8 · FAIL 0** |
+| **ফেজ ২** ✅ (কোড) | `RuntimeModule.kt` + `RuntimeModuleManager.kt` + `<queries>` + `settings.gradle.kts` + ৩টা module scaffold + ৪ লোকেল string | resolution core-first, module fallback → কোনো regression নেই (module ইনস্টল না থাকলে আগের আচরণ) |
+| ফেজ ২.৫ ⏭ | CI-তে `--split-modules` অন + module APK release asset + Settings → Modules UI | বাকি |
+| ফেজ ৩ ⏭ | Hotfix/patch channel (conf/script/JS/PHP/flags) | বাকি |

@@ -297,4 +297,8 @@
     <string name="diag_running">⏳ চলছে… প্রতিটা binary টেস্ট হচ্ছে (১০-২০ সেকেন্ড)…</string>
     <string name="diag_copied">✅ রিপোর্ট কপি হয়েছে! এখন পেস্ট করে পাঠিয়ে দিন।</string>
     <string name="diag_empty">এখানে ডায়াগনস্টিকস রিপোর্ট দেখা যাবে।\nউপরে ▶ Run চাপুন।</string>
+    <string name="module_asset_missing">সাম্প্রতিক GitHub রিলিজে এই runtime module-এর APK এখনো নেই। রিলিজ পেজে দেখতে চান?</string>
+    <string name="module_open_releases">রিলিজ দেখুন</string>
+    <string name="module_permission_msg">runtime module APK ইনস্টল করতে INWEB-এর অনুমতি লাগবে। Allow চাপুন, তারপর আবার চেষ্টা করুন।</string>
+    <string name="module_download_started">runtime module ডাউনলোড হচ্ছে… শেষ হলে ইনস্টলার খুলে যাবে</string>
 </resources>

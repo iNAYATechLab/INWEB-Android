@@ -3,6 +3,7 @@ package com.inweb.app.tunnel
 import android.content.Context
 import android.util.Log
 import com.inweb.app.AssetInstaller
+import com.inweb.app.runtime.RuntimeModuleManager
 import com.inweb.app.util.Prefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,12 +63,16 @@ class TunnelManager(
         _state.value = State.Starting
 
         val bin = when (provider) {
-            Provider.CLOUDFLARE -> File(layout.libDir, "libexec_cloudflared.so")
+            // core bundle; না পেলে 'tunnel' runtime module-এর APK native dir
+            Provider.CLOUDFLARE -> RuntimeModuleManager.resolveExecutable(
+                context, layout.libDir, "libexec_cloudflared.so")
+                              ?: File(layout.libDir, "libexec_cloudflared.so")
             Provider.NGROK      -> File(layout.prefixDir, "tunnel/ngrok")
         }
         if (!bin.exists() || !bin.canExecute()) {
             val msg = "${bin.name} not found or not executable at ${bin.absolutePath}. " +
-                      "Drop the binary into assets/server_env/tunnel/ before running."
+                      "Install the 'Cloudflare Tunnel' module from Settings -> Modules " +
+                      "(or drop the binary into assets/server_env/tunnel/)."
             _state.value = State.Error(msg)
             throw IllegalStateException(msg)
         }

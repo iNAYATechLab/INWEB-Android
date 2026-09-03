@@ -25,6 +25,14 @@
     <!-- Quick Settings tile binding -->
     <uses-permission android:name="android.permission.BIND_QUICK_SETTINGS_TILE" tools:ignore="ProtectedPermissions" />
 
+        <!-- 📦 Runtime module APKs (optional downloadable runtimes) — Android 11+
+         package visibility ছাড়া PackageManager আমাদের module গুলো দেখে না। -->
+    <queries>
+        <package android:name="com.inweb.app.runtime.node" />
+        <package android:name="com.inweb.app.runtime.caddy" />
+        <package android:name="com.inweb.app.runtime.tunnel" />
+    </queries>
+
     <application
         android:name=".ServerApp"
         android:allowBackup="false"

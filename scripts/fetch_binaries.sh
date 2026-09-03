@@ -45,6 +45,12 @@ DEST_MYSQL_SHARE="$ROOT/app/src/main/assets/server_env/mysql/share"
 
 mkdir -p "$JNI_DIR" "$DEST_BIN" "$DEST_ETC/tls" "$DEST_MYSQL_SHARE" "$DEST_PHP_EXT"
 
+# ── 📦 optional flags ───────────────────────────────────────────────
+#   --split-modules : ভারী optional বাইনারি (node/caddy/cloudflared) আলাদা
+#                     runtime module APK-র jniLibs-এ পাঠায় → core APK ছোট।
+SPLIT_MODULES=0
+for _a in "$@"; do [ "$_a" = "--split-modules" ] && SPLIT_MODULES=1; done
+
 TX="data/data/com.termux/files/usr"
 
 echo "───────────────────────────────────────────────────────"
@@ -225,32 +231,22 @@ else
   echo "     Without normalization the APK will miss versioned SONAMEs!"
   exit 1
 fi
-# --- Phase 4: LINKER CLOSURE AUDIT ---------------------------------------------
-echo ""
-echo "──────────────── 🔬 Linker closure audit ────────────────"
-SYSTEM_LIBS="^(libc\.so|libm\.so|libdl\.so|liblog\.so|libz\.so|libcrypt\.so|libandroid\.so|libmediandk\.so|libjnigraphics\.so|libnativewindow\.so|libEGL\.so|libGLES.*\.so|libOpenSLES\.so|libaaudio\.so|libcamera2ndk\.so|libneuralnetworks\.so|libvulkan\.so|libwebviewchromium_plat_support\.so|ld\.so)$"
-
-declare -A present=()
-for f in "$JNI_DIR"/*.so* "$JNI_DIR"/mod_*.so; do [ -e "$f" ] && present["$(basename "$f")"]=1; done
-
-declare -A missing=()
-for f in "$JNI_DIR"/*.so*; do
-  [ -f "$f" ] || continue
-  [ "$(head -c4 "$f" | tr -d '\0' | cut -c2-4)" = "ELF" ] || continue
-  while IFS= read -r soname; do
-    [ -z "$soname" ] && continue
-    echo "$soname" | grep -qE "$SYSTEM_LIBS" && continue
-    [ -n "${present[$soname]:-}" ] || missing["$soname"]="${missing[$soname]:-} $(basename "$f")"
-  done < <(readelf -d "$f" 2>/dev/null | grep NEEDED | sed -E 's/.*\[(.*)\].*/\1/')
-done
-
-if [ "${#missing[@]}" -gt 0 ]; then
-  echo "  ❌ UNRESOLVED LIBRARIES:"
-  for k in "${!missing[@]}"; do echo "     $k ← needed by:${missing[$k]}"; done
-  echo "  Add provider package(s) to LIB_PACKAGES and re-run."
-  exit 1
+# ---------------------------------------------------------------------------
+#  Phase 3.6: module split (opt-in) — core → runtime-modules/*/src/main/jniLibs
+# ---------------------------------------------------------------------------
+if [ "$SPLIT_MODULES" = 1 ]; then
+  echo ""
+  bash "$ROOT/scripts/split_modules.sh" || { echo "❌ module split failed"; exit 1; }
 fi
-echo "  ✅ All NEEDED libraries resolve — closure complete!"
+
+# --- Phase 4: LINKER CLOSURE AUDIT (union of core + module dirs) ------------
+AUDIT_DIRS=("$JNI_DIR")
+if [ "$SPLIT_MODULES" = 1 ]; then
+  for d in "$ROOT"/runtime-modules/*/src/main/jniLibs/arm64-v8a; do
+    [ -d "$d" ] && AUDIT_DIRS+=("$d")
+  done
+fi
+bash "$ROOT/scripts/audit_closure.sh" "${AUDIT_DIRS[@]}" || exit 1
 echo ""
 echo "  jniLibs: $(ls "$JNI_DIR" | wc -l) files · $(du -sh "$JNI_DIR" | cut -f1)"
 echo "  scripts: $(ls "$DEST_BIN" 2>/dev/null | wc -l)"
