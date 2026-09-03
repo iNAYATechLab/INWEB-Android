@@ -97,9 +97,25 @@ android {
         buildConfig = true   // UpdateChecker reads BuildConfig.VERSION_NAME
     }
 
-    // Do NOT compress binary/config assets so they can be copied 1:1.
+    // 📦 SIZE FIX — 324.2 MB → ~110 MB (measured on the real beta.8 APK)
+    // সমস্যা: AGP 8.5.2 + extractNativeLibs="true" হলেও jniLibs ডিফল্টভাবে
+    // STORED (uncompressed) প্যাকেজ হয় → আমাদের 179টা .so (302.6 MB) APK-তে
+    // খালি চোখেই 302.6 MB জায়গা নিচ্ছিল। useLegacyPackaging = true দিলে সেগুলো
+    // DEFLATE হয় (302.6 MB → 89.1 MB) এবং ইনস্টলে খুলে বসে, exec এখনও legal।
+    // বোনাস: compressed libs মানে 16 KB page-size alignment রিকোয়ারমেন্ট এড়ানো
+    // (Android 15/16 16KB-page ডিভাইসে uncompressed+unaligned .so ইনস্টল ফেল করে)।
+    // ট্রেডঅফ: ইনস্টলের পর ডিভাইসে ডিস্ক ~+303 MB লাগে (extracted কপি)।
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
+    // Text/config assets: compress করা যাবে, তবে 1:1 কপি করার সুবিধার জন্য
+    // কনফিগ এক্সটেনশনগুলো noCompress-এ রাখা হয়েছে। ".so" এখান থেকে সরানো
+    // হয়েছে — সেটা jniLibs compression ব্লক করে দিচ্ছিল না, শুধু কনফিউজিং।
     androidResources {
-        noCompress += listOf("conf", "template", "ini", "so")
+        noCompress += listOf("conf", "template", "ini")
     }
 
     // Per-app languages: keep only these locales in the APK.
