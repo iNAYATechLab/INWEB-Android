@@ -22,8 +22,12 @@
     <!-- Auto-start on boot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!-- Quick Settings tile binding -->
-    <uses-permission android:name="android.permission.BIND_QUICK_SETTINGS_TILE" tools:ignore="ProtectedPermissions" />
+    <!-- 🔧 FIX: BIND_QUICK_SETTINGS_TILE একটা *system* permission — সেটা tile
+         service-এর android:permission অ্যাট্রিবিউটেই বসে (नीচে দেখুন)। এখানে
+         <uses-permission> হিসেবে_declare_ করলে কিছুই গ্রান্ট হয় না, শুধু লজিক ভুল
+         বোঝায় → সরানো হলো। service-লাইনের android:permission অপরিবর্তিত। -->
+    <!-- 🔋 Doze/standby থেকে সার্ভার বাঁচাতে (Settings → পারমিশন থেকে এক্সেম্পশন চাওয়া হয়) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
         <!-- 📦 Runtime module APKs (optional downloadable runtimes) — Android 11+
          package visibility ছাড়া PackageManager আমাদের module গুলো দেখে না। -->

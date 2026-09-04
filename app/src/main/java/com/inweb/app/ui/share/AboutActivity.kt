@@ -158,6 +158,10 @@ class AboutActivity : AppCompatActivity() {
         sb.append(RuntimeModuleManager.statusReport(this, layout.libDir))
         sb.appendLine()
 
+        // 🔐 Permission status (notification / Doze exemption / unknown sources)
+        sb.append(com.inweb.app.util.PermissionCenter.statusReport(this))
+        sb.appendLine()
+
         // Filesystem sanity
         sb.appendLine("── Filesystem ──")
         sb.appendLine("nativeLibDir: ${layout.libDir.absolutePath}")

@@ -301,4 +301,22 @@
     <string name="module_open_releases">রিলিজ দেখুন</string>
     <string name="module_permission_msg">runtime module APK ইনস্টল করতে INWEB-এর অনুমতি লাগবে। Allow চাপুন, তারপর আবার চেষ্টা করুন।</string>
     <string name="module_download_started">runtime module ডাউনলোড হচ্ছে… শেষ হলে ইনস্টলার খুলে যাবে</string>
+    <string name="nav_browser">ব্রাউজার</string>
+    <string name="perm_title">পারমিশন ও ব্যাটারি</string>
+    <string name="perm_summary">সার্ভার নির্বিঘ্নে চলতে কয়েকটি অনুমতি দরকার। বিস্তারিত দেখতে যেকোনো আইটেমে ট্যাপ করুন।</string>
+    <string name="perm_notifications">নোটিফিকেশন</string>
+    <string name="perm_notifications_desc">"সার্ভার চলছে" নোটিফিকেশন ও আপডেটের সতর্কতা দেখায়। না থাকলে foreground service-এর নোটিফিকেশন লুকিয়ে যেতে পারে।</string>
+    <string name="perm_battery">ব্যাটারি অপ্টিমাইজেশন বাদ</string>
+    <string name="perm_battery_desc">স্ক্রিন অফ করলে Doze nginx / php-fpm / MariaDB ফ্রিজ করে দিতে পারে। অনুমতি দিলে সার্ভার সচল থাকে।</string>
+    <string name="perm_install">অজানা অ্যাপ ইনস্টল</string>
+    <string name="perm_install_desc">অ্যাপের ভেতর থেকে আপডেট ও runtime module ইনস্টলের জন্য দরকার। প্রতিবার ইনস্টলে আলাদা করে কনফার্ম করতে হবে।</string>
+    <string name="perm_normal">নেটওয়ার্ক / ফোরগ্রাউন্ড সার্ভিস</string>
+    <string name="perm_normal_desc">INTERNET, ACCESS_WIFI_STATE, WAKE_LOCK, FOREGROUND_SERVICE — এগুলো ইনস্টল-টাইম (normal) পারমিশন, অটো গ্রান্ট হয়, রানটাইমে জিজ্ঞেস করা হয় না।</string>
+    <string name="perm_granted">গ্রান্ট করা আছে</string>
+    <string name="perm_missing">গ্রান্ট করা নেই</string>
+    <string name="perm_auto">অটো (কিছু করা লাগবে না)</string>
+    <string name="perm_grant">এখনই দিন</string>
+    <string name="perm_settings">অ্যাপ সেটিংস খুলুন</string>
+    <string name="perm_settings_unavailable">এই ডিভাইস/রোমে সেটিংস স্ক্রিনটি নেই</string>
+    <string name="perm_missing_badge">%1$dটি বাকি</string>
 </resources>

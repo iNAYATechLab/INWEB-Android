@@ -11,7 +11,7 @@
     android:layout_height="64dp"
     android:orientation="horizontal"
     android:background="@color/surface"
-    android:weightSum="5"
+    android:weightSum="6"
     android:elevation="8dp">
 
     <LinearLayout
@@ -63,6 +63,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nav_services"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navBrowser"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+        <ImageView
+            android:id="@+id/navBrowserIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_browser"
+            android:contentDescription="@null"
+            app:tint="@color/text_secondary"/>
+        <TextView
+            android:id="@+id/navBrowserLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_browser"
             android:textColor="@color/text_secondary"
             android:textSize="11sp"
             android:layout_marginTop="2dp"/>

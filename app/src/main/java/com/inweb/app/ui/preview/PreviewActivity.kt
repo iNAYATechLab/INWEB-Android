@@ -65,7 +65,7 @@ class PreviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preview)
-        BottomNavHelper.attach(this, BottomNavHelper.Tab.MORE)
+        BottomNavHelper.attach(this, BottomNavHelper.Tab.BROWSER)
         prefs = Prefs(this)
 
         setupUrlBar()

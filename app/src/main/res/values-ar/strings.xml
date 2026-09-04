@@ -197,4 +197,23 @@
     <string name="module_open_releases">فتح الإصدارات</string>
     <string name="module_permission_msg">يحتاج INWEB إذنًا لتثبيت وحدة التشغيل. اضغط السماح ثم أعد المحاولة.</string>
     <string name="module_download_started">جارٍ تنزيل وحدة التشغيل… سيفتح المثبّت بعد الانتهاء</string>
+    <string name="nav_browser">المتصفح</string>
+    <string name="perm_title">الأذونات والبطارية</string>
+    <string name="perm_summary">يحتاج INWEB بعض الأذونات ليظل الخادم يعمل بثبات. اضغط على أي عنصر للتفاصيل.</string>
+    <string name="perm_notifications">الإشعارات</string>
+    <string name="perm_notifications_desc">تعرض إشعار «الخادم يعمل» وتنبيهات التحديث. بدونها قد يختفي إشعار الخدمة الأمامية.</string>
+    <string name="perm_battery">تجاهل تحسين البطارية</string>
+    <string name="perm_battery_desc">قد يجمّد Doze خدمة nginx / php-fpm / MariaDB عند إطفاء الشاشة. السماح يبقيها مستيقظة.</string>
+    <string name="perm_install">تثبيت تطبيقات غير معروفة</string>
+    <string name="perm_install_desc">مطلوب للتحديث من داخل التطبيق ووحدات التشغيل. ستؤكد كل تثبيت يدويًا.</string>
+    <string name="perm_normal">الشبكة / الخدمة الأمامية</string>
+    <string name="perm_normal_desc">أذونات INTERNET وACCESS_WIFI_STATE وWAKE_LOCK وFOREGROUND_SERVICE تُمنح عند التثبيت تلقائيًا ولا تُطلب وقت التشغيل.</string>
+    <string name="perm_granted">ممنوحة</string>
+    <string name="perm_missing">غير ممنوحة</string>
+    <string name="perm_auto">تلقائي (لا حاجة لإجراء)</string>
+    <string name="perm_grant">امنح الآن</string>
+    <string name="perm_settings">فتح إعدادات التطبيق</string>
+    <string name="perm_settings_unavailable">هذه الشاشة غير متوفرة على هذا الجهاز</string>
+    <string name="perm_missing_badge">%1$d مطلوبة</string>
+    <string name="perm_denied_notif">تم تعطيل الإشعارات. سيعمل الخادم لكن لن تظهر أيقونة شريط الحالة.</string>
 </resources>

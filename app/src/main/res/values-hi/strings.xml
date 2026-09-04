@@ -76,4 +76,23 @@
     <string name="module_open_releases">रिलीज़ देखें</string>
     <string name="module_permission_msg">runtime module APK इंस्टॉल करने के लिए INWEB को अनुमति चाहिए। Allow दबाएँ, फिर कोशिश करें।</string>
     <string name="module_download_started">runtime module डाउनलोड हो रहा है… पूरा होते ही इंस्टॉलर खुलेगा</string>
+    <string name="nav_browser">ब्राउज़र</string>
+    <string name="perm_title">अनुमतियाँ और बैटरी</string>
+    <string name="perm_summary">सर्वर निरंतर चलने के लिए कुछ अनुमतियाँ चाहिए। विवरण हेतु किसी आइटम पर टैप करें।</string>
+    <string name="perm_notifications">सूचनाएँ</string>
+    <string name="perm_notifications_desc">«सर्वर चल रहा है» सूचना और अपडेट अलर्ट दिखाती हैं। इसके बिना foreground service सूचना छिप सकती है।</string>
+    <string name="perm_battery">बैटरी ऑप्टिमाइज़ेशन छोड़ें</string>
+    <string name="perm_battery_desc">स्क्रीन बंद होने पर Doze nginx / php-fpm / MariaDB को फ्रीज़ कर सकता है। अनुमति से सर्वर जागता रहेगा।</string>
+    <string name="perm_install">अज्ञात ऐप्स इंस्टॉल</string>
+    <string name="perm_install_desc">इन-ऐप अपडेट और runtime modules के लिए ज़रूरी। हर इंस्टॉल पर फिर पुष्टि करनी होगी।</string>
+    <string name="perm_normal">नेटवर्क / फोरग्राउंड सर्विस</string>
+    <string name="perm_normal_desc">INTERNET, ACCESS_WIFI_STATE, WAKE_LOCK, FOREGROUND_SERVICE इंस्टॉल-टाइम (normal) अनुमतियाँ हैं — स्वतः grant होती हैं, रनटाइम पर नहीं पूछी जातीं।</string>
+    <string name="perm_granted">प्रदान</string>
+    <string name="perm_missing">प्रदान नहीं</string>
+    <string name="perm_auto">स्वचालित (करने की ज़रूरत नहीं)</string>
+    <string name="perm_grant">अभी दें</string>
+    <string name="perm_settings">ऐप सेटिंग्स खोलें</string>
+    <string name="perm_settings_unavailable">इस डिवाइस/रोम पर यह सेटिंग स्क्रीन उपलब्ध नहीं</string>
+    <string name="perm_missing_badge">%1$d शेष</string>
+    <string name="perm_denied_notif">सूचनाएँ बंद। सर्वर चलता रहेगा पर status bar आइकन नहीं दिखेगा।</string>
 </resources>

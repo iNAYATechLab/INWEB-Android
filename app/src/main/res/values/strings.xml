@@ -523,4 +523,22 @@
     <string name="module_open_releases">Open releases</string>
     <string name="module_permission_msg">INWEB needs permission to install the runtime module APK. Tap Allow, then try again.</string>
     <string name="module_download_started">Downloading runtime module… installer will open when it finishes</string>
+    <string name="nav_browser">Browser</string>
+    <string name="perm_title">Permissions &amp; battery</string>
+    <string name="perm_summary">INWEB needs a few grants to keep your server running reliably. Tap an item for details.</string>
+    <string name="perm_notifications">Notifications</string>
+    <string name="perm_notifications_desc">Shows the "server running" notification and update alerts. Without it Android may hide the foreground-service notice.</string>
+    <string name="perm_battery">Ignore battery optimization</string>
+    <string name="perm_battery_desc">Doze can freeze nginx / php-fpm / MariaDB when the screen turns off. Allowing this keeps the server awake.</string>
+    <string name="perm_install">Install unknown apps</string>
+    <string name="perm_install_desc">Needed for in-app updates and downloadable runtime modules. You will still confirm each install.</string>
+    <string name="perm_normal">Network / foreground service</string>
+    <string name="perm_normal_desc">INTERNET, ACCESS_WIFI_STATE, WAKE_LOCK, FOREGROUND_SERVICE are install-time (normal) permissions — granted automatically, never asked at runtime.</string>
+    <string name="perm_granted">Granted</string>
+    <string name="perm_missing">Not granted</string>
+    <string name="perm_auto">Automatic (no action needed)</string>
+    <string name="perm_grant">Grant now</string>
+    <string name="perm_settings">Open app settings</string>
+    <string name="perm_settings_unavailable">This settings screen is not available on this device/ROM</string>
+    <string name="perm_missing_badge">%1$d needed</string>
 </resources>

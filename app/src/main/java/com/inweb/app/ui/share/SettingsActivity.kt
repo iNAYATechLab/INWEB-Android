@@ -62,6 +62,17 @@ class SettingsActivity : AppCompatActivity() {
         val autoSw = findViewById<android.widget.Switch>(R.id.autoUpdateSwitch)
 
         // About page entry
+        // 🔐 Permissions & battery center (badge = কটা জিনিস এখনো নেই)
+        findViewById<View>(R.id.permsRow)?.setOnClickListener {
+            com.inweb.app.util.PermissionCenter.show(this)
+        }
+        run {
+            val badge = findViewById<TextView?>(R.id.permsBadge)
+            val missing = com.inweb.app.util.PermissionCenter.missingCount(this)
+            badge?.visibility = if (missing > 0) View.VISIBLE else View.GONE
+            badge?.text = getString(R.string.perm_missing_badge, missing)
+        }
+
         findViewById<View>(R.id.aboutRow)?.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }

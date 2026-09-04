@@ -19,6 +19,7 @@ import com.inweb.app.ui.dns.HostsActivity
 import com.inweb.app.ui.services.ServerClusterActivity
 import com.inweb.app.ui.services.ServicesActivity
 import com.inweb.app.ui.share.NetworkInfoActivity
+import com.inweb.app.ui.preview.PreviewActivity
 import com.inweb.app.ui.share.SettingsActivity
 import com.inweb.app.ui.vhost.SitesActivity
 
@@ -33,7 +34,7 @@ import com.inweb.app.ui.vhost.SitesActivity
  */
 object BottomNavHelper {
 
-    enum class Tab { HOME, SERVICES, LOGS, SHARE, MORE }
+    enum class Tab { HOME, SERVICES, BROWSER, LOGS, SHARE, MORE }
 
     fun attach(activity: Activity, active: Tab) {
         val root = activity.findViewById<View>(R.id.bottomNav) ?: return
@@ -41,6 +42,7 @@ object BottomNavHelper {
         val ids = mapOf(
             Tab.HOME     to listOf(R.id.navHome,     R.id.navHomeIcon,     R.id.navHomeLabel),
             Tab.SERVICES to listOf(R.id.navServices, R.id.navServicesIcon, R.id.navServicesLabel),
+            Tab.BROWSER  to listOf(R.id.navBrowser,  R.id.navBrowserIcon,  R.id.navBrowserLabel),
             Tab.LOGS     to listOf(R.id.navLogs,     R.id.navLogsIcon,     R.id.navLogsLabel),
             Tab.SHARE    to listOf(R.id.navShare,    R.id.navShareIcon,    R.id.navShareLabel),
             Tab.MORE     to listOf(R.id.navMore,     R.id.navMoreIcon,     R.id.navMoreLabel),
@@ -69,6 +71,8 @@ object BottomNavHelper {
             }
             // Services tab → rich cluster dashboard (matches user's design)
             Tab.SERVICES -> Intent(activity, ServerClusterActivity::class.java)
+            // Browser tab → built-in preview browser (always one tap away) 🌐
+            Tab.BROWSER  -> Intent(activity, PreviewActivity::class.java)
             Tab.LOGS     -> Intent(activity, LogsActivity::class.java)
             Tab.SHARE    -> Intent(activity, NetworkInfoActivity::class.java)
             Tab.MORE     -> { showMoreSheet(activity); return }
