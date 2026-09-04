@@ -265,8 +265,14 @@ class Prefs(context: Context) {
         private const val KEY_RL_BURST       = "sec_rl_burst"
 
         private const val KEY_ONBOARDED      = "onboarded"
+        private const val KEY_PERMS_ASKED_VC = "perms_asked_version_code"
 
-        // In-app updates
+        /** কোন versionCode-এর জন্য পারমিশন ফ্লো চালানো হয়েছে — প্রতি আপডেটে একবার নudge */
+    var permsAskedVersionCode: Int
+        get() = sp.getInt(KEY_PERMS_ASKED_VC, -1)
+        set(v) = sp.edit().putInt(KEY_PERMS_ASKED_VC, v).apply()
+
+    // In-app updates
         private const val KEY_AUTO_UPDATE    = "update_auto_check"
         private const val KEY_UPDATE_LAST    = "update_last_check_ms"
         private const val KEY_PENDING_APK    = "update_pending_apk"

@@ -366,12 +366,34 @@ class MainActivity : AppCompatActivity() {
         toast(getString(R.string.copied_generic, value))
     }
 
+    /**
+     * 🔐 ইনস্টল/আপডেটের পরের প্রথম ওপেনেই দরকারি পারমিশনগুলো চেয়ে নেওয়া হয়
+     * (Android platform ইনস্টল-টাইমে জিজ্ঞেস করে না — runtime-এই চাইতে হয়)।
+     * Onboarding-এর পারমিশন স্টেপটা রিইউজ হচ্ছে, তাই লজিক ডুপ্লিকেট নয়।
+     */
     private fun maybeRequestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                != PackageManager.PERMISSION_GRANTED) {
-            requestNotifPerm.launch(Manifest.permission.POST_NOTIFICATIONS)
+        if (prefs.permsAskedVersionCode == BuildConfig.VERSION_CODE) return
+        prefs.permsAskedVersionCode = BuildConfig.VERSION_CODE
+
+        val missing = com.inweb.app.util.PermissionCenter.missingCount(this)
+        if (missing == 0) {
+            // শুধু নোটিফিকেশন বাকি থাকলে সরাসরি রানটাইম ডায়ালগই যথেষ্ট
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestNotifPerm.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+            return
         }
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(R.string.perm_nudge_title)
+            .setMessage(getString(R.string.perm_nudge_body, missing))
+            .setPositiveButton(R.string.perm_allow_all) { _, _ ->
+                startActivity(android.content.Intent(this, com.inweb.app.ui.onboarding.OnboardingActivity::class.java)
+                    .putExtra(com.inweb.app.ui.onboarding.OnboardingActivity.EXTRA_PERMISSIONS_ONLY, true))
+            }
+            .setNegativeButton(R.string.perm_later, null)
+            .show()
     }
 
     private fun color(id: Int): Int = ContextCompat.getColor(this, id)

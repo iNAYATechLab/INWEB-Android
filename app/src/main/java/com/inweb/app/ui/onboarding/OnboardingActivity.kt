@@ -39,18 +39,66 @@ class OnboardingActivity : AppCompatActivity() {
     private lateinit var dot2: View
     private lateinit var dot3: View
 
+    /** MainActivity থেকে শুধু পারমিশন ফ্লোটা চালাতে চাইলে (অনবোর্ডিং স্কিপ) */
+    private var permissionsOnly: Boolean = false
+
     private var step: Int = 0
 
+    /* ── 🔐 Sequential grant chain ───────────────────────────────────────
+     * Android 6+ ইনস্টল-টাইমে কোনো পারমিশন জিজ্ঞেস করে না (platform rule) —
+     * তাই "ইনস্টলের সময়ই চাওয়া" মানে **প্রথম লঞ্চেই** সব দরকারি গ্রান্ট চাওয়া।
+     * ক্রম: notifications (runtime) → battery exemption (special access)
+     *        → unknown-sources (OTA/module ইনস্টলের জন্য)।
+     * deny করলেও অ্যাপ চলে; শুধু সংশ্লিষ্ট ফিচার সীমিত থাকে।
+     */
     private val requestNotificationPermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            // Regardless of grant/deny, advance to the final step.
-            step = 2; render()
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { nextPermission() }
+
+    private val batteryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { nextPermission() }
+
+    private val installSrcLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { nextPermission() }
+
+    /** 0 = notifications, 1 = battery, 2 = unknown sources, 3 = done */
+    private var permCursor = 0
+
+    private fun nextPermission() {
+        when (permCursor) {
+            0 -> {
+                permCursor = 1
+                if (needsNotificationPermission())
+                    requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                else nextPermission()
+            }
+            1 -> {
+                permCursor = 2
+                if (!com.inweb.app.util.PermissionCenter.ignoringBatteryOptimizations(this)) {
+                    val i = android.content.Intent(
+                        android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                        android.net.Uri.parse("package:" + packageName))
+                    try { batteryLauncher.launch(i) } catch (_: Exception) { nextPermission() }
+                } else nextPermission()
+            }
+            2 -> {
+                permCursor = 3
+                if (!com.inweb.app.util.PermissionCenter.canInstallPackages(this)) {
+                    val i = android.content.Intent(
+                        android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+                        android.net.Uri.parse("package:" + packageName))
+                    try { installSrcLauncher.launch(i) } catch (_: Exception) { nextPermission() }
+                } else nextPermission()
+            }
+            else -> if (permissionsOnly) finish() else { step = 2; render() }
         }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
         prefs = Prefs(this)
+        permissionsOnly = intent.getBooleanExtra(EXTRA_PERMISSIONS_ONLY, false)
+        if (permissionsOnly) { step = 1 }
 
         stepIcon  = findViewById(R.id.stepIcon)
         stepTitle = findViewById(R.id.stepTitle)
@@ -61,7 +109,7 @@ class OnboardingActivity : AppCompatActivity() {
         dot2      = findViewById(R.id.dot2)
         dot3      = findViewById(R.id.dot3)
 
-        skipBtn.setOnClickListener { finishOnboarding() }
+        skipBtn.setOnClickListener { finishOnboarding() }   // permsOnly হলে finish() করেই ফেরত যায়
         nextBtn.setOnClickListener { advance() }
         render()
     }
@@ -69,13 +117,9 @@ class OnboardingActivity : AppCompatActivity() {
     private fun advance() {
         when (step) {
             0 -> { step = 1; render() }
-            1 -> {
-                if (needsNotificationPermission()) {
-                    requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                } else {
-                    step = 2; render()
-                }
-            }
+            // 🔐 এক ট্যাপে বাকি সব গ্রান্ট: notifications → battery → unknown sources
+            //    (প্রতিটার ফলাফলের পর চেইন নিজেই পেছনে বাড়ায় — দেখুন nextPermission())
+            1 -> { permCursor = 0; nextPermission() }
             2 -> finishOnboarding()
         }
     }
@@ -100,8 +144,7 @@ class OnboardingActivity : AppCompatActivity() {
                 stepIcon.setImageResource(R.drawable.ic_notif_bell)
                 stepTitle.text = getString(R.string.onboard_perm_title)
                 stepBody.text  = getString(R.string.onboard_perm_body)
-                nextBtn.text   = if (needsNotificationPermission())
-                    getString(R.string.onboard_grant) else getString(R.string.onboard_next)
+                nextBtn.text   = getString(R.string.onboard_grant_all)
                 skipBtn.visibility = View.VISIBLE
             }
             2 -> {
@@ -122,9 +165,15 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun finishOnboarding() {
+        if (permissionsOnly) { prefs.permsAskedVersionCode = com.inweb.app.BuildConfig.VERSION_CODE; finish(); return }
         prefs.onboarded = true
         startActivity(Intent(this, MainActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
         finish()
+    }
+
+    companion object {
+        /** শুধু পারমিশন ফ্লো রান করবে (onboarding step 1) */
+        const val EXTRA_PERMISSIONS_ONLY = "perms_only"
     }
 }

@@ -319,4 +319,9 @@
     <string name="perm_settings">অ্যাপ সেটিংস খুলুন</string>
     <string name="perm_settings_unavailable">এই ডিভাইস/রোমে সেটিংস স্ক্রিনটি নেই</string>
     <string name="perm_missing_badge">%1$dটি বাকি</string>
+    <string name="onboard_grant_all">সব অনুমতি দিন</string>
+    <string name="perm_allow_all">এখনই দিন</string>
+    <string name="perm_later">পরে</string>
+    <string name="perm_nudge_title">INWEB নির্বিঘ্নে চলার জন্য অনুমতি দিন</string>
+    <string name="perm_nudge_body">%1$dটি পারমিশন এখনো বাকি — না দিলে স্ক্রিন অফ করলে Android সার্ভার ফ্রিজ করতে পারে, স্ট্যাটাস নোটিফিকেশন লুকাতে পারে, বা ইন-অ্যাপ আপডেট আটকাতে পারে।</string>
 </resources>

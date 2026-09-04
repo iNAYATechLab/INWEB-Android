@@ -216,4 +216,9 @@
     <string name="perm_settings_unavailable">هذه الشاشة غير متوفرة على هذا الجهاز</string>
     <string name="perm_missing_badge">%1$d مطلوبة</string>
     <string name="perm_denied_notif">تم تعطيل الإشعارات. سيعمل الخادم لكن لن تظهر أيقونة شريط الحالة.</string>
+    <string name="onboard_grant_all">امنح الكل</string>
+    <string name="perm_allow_all">امنح الآن</string>
+    <string name="perm_later">لاحقًا</string>
+    <string name="perm_nudge_title">السماح لـ INWEB بالعمل بثبات</string>
+    <string name="perm_nudge_body">ما زال هناك %1$d إذن مطلوب؛ بدونه قد يجمّد Android الخادم أو يخفي الإشعارات أو يمنع التحديث داخل التطبيق.</string>
 </resources>

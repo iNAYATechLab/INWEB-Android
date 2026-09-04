@@ -95,4 +95,16 @@
     <string name="perm_settings_unavailable">इस डिवाइस/रोम पर यह सेटिंग स्क्रीन उपलब्ध नहीं</string>
     <string name="perm_missing_badge">%1$d शेष</string>
     <string name="perm_denied_notif">सूचनाएँ बंद। सर्वर चलता रहेगा पर status bar आइकन नहीं दिखेगा।</string>
+    <string name="onboard_grant_all">सभी दें</string>
+    <string name="perm_allow_all">अभी दें</string>
+    <string name="perm_later">बाद में</string>
+    <string name="perm_nudge_title">INWEB को निर्बाध चलने दें</string>
+    <string name="perm_nudge_body">%1$d अनुमतियाँ बाकी हैं — इनके बिना Android स्क्रीन बंद पर सर्वर फ्रीज़ कर सकता है, सूचना छिपा सकता है या इन-ऐप अपडेट रोक सकता है।</string>
+    <string name="onboard_welcome_body">পকেটে থাকা একটি শক্তিশালী ওয়েब সার্ভার।</string>
+    <string name="onboard_next">आगे</string>
+    <string name="onboard_perm_title">अनुमतियाँ</string>
+    <string name="onboard_perm_body">सर्वर निर्बाध चलने के लिए सूचना, बैटरी-बहिष्कृति और अज्ञात स्रोतों की अनुमति सहायक है।</string>
+    <string name="onboard_grant">अनुमति दें</string>
+    <string name="onboard_ready_title">सब तैयार</string>
+    <string name="onboard_ready_body">START दबाएँ, फिर ब्राउज़र में http://&lt;फोन-IP&gt;:8080 खोलें।</string>
 </resources>

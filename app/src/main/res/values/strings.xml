@@ -541,4 +541,9 @@
     <string name="perm_settings">Open app settings</string>
     <string name="perm_settings_unavailable">This settings screen is not available on this device/ROM</string>
     <string name="perm_missing_badge">%1$d needed</string>
+    <string name="onboard_grant_all">Allow all</string>
+    <string name="perm_allow_all">Allow now</string>
+    <string name="perm_later">Later</string>
+    <string name="perm_nudge_title">Allow INWEB to run reliably</string>
+    <string name="perm_nudge_body">%1$d permission(s) still need your approval — without them Android may freeze the server when the screen is off, hide status notifications, or block in-app updates.</string>
 </resources>
