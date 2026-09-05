@@ -217,6 +217,11 @@ class Prefs(context: Context) {
         set(v) = sp.edit().putString(KEY_PENDING_APK, v).apply()
 
 
+    /** কোন versionCode-এর জন্য পারমিশন ফ্লো চালানো হয়েছে — প্রতি আপডেটে একবার নudge */
+    var permsAskedVersionCode: Int
+        get() = sp.getInt(KEY_PERMS_ASKED_VC, -1)
+        set(v) = sp.edit().putInt(KEY_PERMS_ASKED_VC, v).apply()
+
     companion object {
         private const val FILE               = "inweb_prefs"
         private const val KEY_BIND_LAN       = "bind_lan"
@@ -266,11 +271,6 @@ class Prefs(context: Context) {
 
         private const val KEY_ONBOARDED      = "onboarded"
         private const val KEY_PERMS_ASKED_VC = "perms_asked_version_code"
-
-        /** কোন versionCode-এর জন্য পারমিশন ফ্লো চালানো হয়েছে — প্রতি আপডেটে একবার নudge */
-    var permsAskedVersionCode: Int
-        get() = sp.getInt(KEY_PERMS_ASKED_VC, -1)
-        set(v) = sp.edit().putInt(KEY_PERMS_ASKED_VC, v).apply()
 
     // In-app updates
         private const val KEY_AUTO_UPDATE    = "update_auto_check"
