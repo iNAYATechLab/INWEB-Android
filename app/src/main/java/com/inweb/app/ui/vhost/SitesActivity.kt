@@ -173,6 +173,7 @@ class SitesActivity : AppCompatActivity() {
 
     private fun showOverflowMenu() {
         val items = arrayOf(
+            getString(R.string.sites_from_github),
             getString(R.string.vhost_export_file),
             getString(R.string.vhost_export_clip),
             getString(R.string.vhost_import_file)
@@ -180,9 +181,10 @@ class SitesActivity : AppCompatActivity() {
         AlertDialog.Builder(this).setTitle(R.string.vhost_menu_title)
             .setItems(items) { _, which ->
                 when (which) {
-                    0 -> exportPicker.launch("inweb-sites-${System.currentTimeMillis()}.json")
-                    1 -> copyExportToClipboard()
-                    2 -> importPicker.launch(arrayOf("application/json", "text/plain", "*/*"))
+                    0 -> startActivity(Intent(this, com.inweb.app.github.GitHubImportActivity::class.java))
+                    1 -> exportPicker.launch("inweb-sites-${System.currentTimeMillis()}.json")
+                    2 -> copyExportToClipboard()
+                    3 -> importPicker.launch(arrayOf("application/json", "text/plain", "*/*"))
                 }
             }.show()
     }

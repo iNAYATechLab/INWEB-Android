@@ -156,6 +156,14 @@
             android:label="@string/sites_title"
             android:parentActivityName=".MainActivity"/>
 
+        <!-- 🌐 GitHub থেকে প্রজেক্ট ইমপোর্ট -->
+        <activity
+            android:name=".github.GitHubImportActivity"
+            android:exported="false"
+            android:label="@string/gh_title"
+            android:parentActivityName=".ui.vhost.SitesActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".ui.vhost.VHostEditorActivity"
             android:exported="false"

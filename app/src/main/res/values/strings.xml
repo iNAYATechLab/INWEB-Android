@@ -547,4 +547,33 @@
     <string name="perm_nudge_title">Allow INWEB to run reliably</string>
     <string name="perm_nudge_body">%1$d permission(s) still need your approval — without them Android may freeze the server when the screen is off, hide status notifications, or block in-app updates.</string>
     <string name="preview_action_home_local">Back to local server</string>
+    <string name="gh_title">From GitHub</string>
+    <string name="sites_from_github">From GitHub (import a project)</string>
+    <string name="gh_input_hint">রেপো ঠিকানা দিন — owner/repo অথবা github.com/owner/repo</string>
+    <string name="gh_fetch">Fetch</string>
+    <string name="gh_import">Import into INWEB</string>
+    <string name="gh_fetching">repo তথ্য আনা হচ্ছে…</string>
+    <string name="gh_info">%1$s · default: %2$s · ~%3$d MB · %4$s · license %5$s</string>
+    <string name="gh_ref_label">ব্রাঞ্চ / ট্যাগ / রিলিজ</string>
+    <string name="gh_name_label">web root-এ ফোল্ডার নাম</string>
+    <string name="gh_target_label">কোথায় বসবে</string>
+    <string name="gh_target_root">INWEB web root (প্রস্তাবিত — nginx এখান থেকেই সার্ভ করে)</string>
+    <string name="gh_target_copy">web root + আপনার বাছা ফোল্ডারে এক কপি</string>
+    <string name="gh_ready">প্রস্তুত — repo ঠিকানা দিয়ে Fetch চাপুন</string>
+    <string name="gh_downloading">ডাউনলোড হচ্ছে… %1$d%%</string>
+    <string name="gh_done">✅ %1$d ফাইল · %2$s</string>
+    <string name="gh_done_title">সাইট ইমপোর্ট হয়েছে</string>
+    <string name="gh_done_body">ফ্রেমওয়ার্ক: %1$s
+সাইট: %2$s
+%3$s</string>
+    <string name="gh_open_preview">ব্রাউজারে খুলুন</string>
+    <string name="gh_copy_out">অন্য ফোল্ডারে কপি</string>
+    <string name="gh_copy_done">%1$dটা ফাইল কপি হয়েছে</string>
+    <string name="gh_bad_input">ঠিকানা বোঝা যায়নি — owner/repo লিখুন</string>
+    <string name="gh_bad_name">ফোল্ডার নাম বৈধ না (a–z, 0–9, -, _)</string>
+    <string name="gh_folder_exists">‘%1$s’ নামে ফোল্ডার আছে — অন্য নাম দিন</string>
+    <string name="gh_fetch_first">আগে Fetch চেপে repo তথ্য নিন</string>
+    <string name="gh_failed">ইমপোর্ট ব্যর্থ — উপরের বার্তাটা দেখুন</string>
+    <string name="gh_static_note">PHP ফাইল নেই → স্ট্যাটিক সাইট হিসেবে তৈরি হয়েছে</string>
+    <string name="gh_php_note">PHP মোড AUTO (php-fpm দিয়ে চলবে)</string>
 </resources>
