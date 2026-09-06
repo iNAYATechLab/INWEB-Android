@@ -224,6 +224,28 @@ if command -v patchelf >/dev/null 2>&1; then
     done < <(readelf -d "$f" 2>/dev/null | grep NEEDED | sed -E 's/.*\[(.*)\].*/\1/')
   done
   echo "  ✏️  $patched DT_NEEDED entries rewritten (.so.N → .so)"
+  # 🔗 Phase 3.5b — SONAME normalization (beta.10 ফিক্স)
+  #   DT_NEEDED আনভার্সন করলেও provider লাইব্রেরির নিজের SONAME ভার্সনড থাকলে
+  #   Android linker soinfo নাম SONAME থেকে নেয় → কনজিউমারের verneed
+  #   ("libssl.so") DT_NEEDED-এ খুঁজে পায় না →
+  #     CANNOT LINK EXECUTABLE: cannot find "libssl.so" from verneed[2] in DT_NEEDED list
+  #   (beta.10 ডায়াগনস্টিকে nginx/mariadbd/mysql/node এতেই মরছিল; মাপা: 22টা
+  #   লাইব্রেরির SONAME ≠ ফাইলনাম)। সেজন্য প্রতিটা .so-র SONAME ফাইলনের নামে সেট করি।
+  sonamed=0
+  for f in "$JNI_DIR"/*.so; do
+    [ -f "$f" ] || continue
+    base=$(basename "$f")
+    sn=$(readelf -d "$f" 2>/dev/null | sed -nE 's/.*SONAME.*\[(.*)\].*/\1/p' | head -1)
+    [ -n "$sn" ] || continue
+    [ "$sn" = "$base" ] && continue
+    if patchelf --set-soname "$base" "$f" 2>/dev/null; then
+      sonamed=$((sonamed+1))
+    else
+      echo "  ⚠️ patchelf --set-soname ব্যর্থ: $base (SONAME=$sn)"
+    fi
+  done
+  echo "  🔧 $sonamed লাইব্রেরির SONAME আনভার্সন করা হয়েছে (→ verneed resolve হবে)"
+
   # versioned copies no longer referenced → drop them (saves ~60MB)
   rm -f "$JNI_DIR"/*.so.*
 else

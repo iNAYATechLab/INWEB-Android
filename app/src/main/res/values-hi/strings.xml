@@ -107,4 +107,5 @@
     <string name="onboard_grant">अनुमति दें</string>
     <string name="onboard_ready_title">सब तैयार</string>
     <string name="onboard_ready_body">START दबाएँ, फिर ब्राउज़र में http://&lt;फोन-IP&gt;:8080 खोलें।</string>
+    <string name="preview_action_home_local">लोकल सर्वर पर लौटें</string>
 </resources>

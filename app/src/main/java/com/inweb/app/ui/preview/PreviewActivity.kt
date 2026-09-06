@@ -134,10 +134,16 @@ class PreviewActivity : AppCompatActivity() {
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 val url = request.url.toString()
-                // Local host → allow inline.
-                if (isLocalUrl(url)) { view.loadUrl(url); return true }
-                // External URL → confirm before leaving INWEB.
-                confirmExternalNavigation(url)
+                val scheme = request.url.scheme ?: ""
+                // 🌐 INWEB ব্রাউজার এখন আসল ব্রাউজার: যেকোনো http/https সাইট
+                //    (google.com, youtube.com, …) **ভেতরেই** লোড হবে।
+                //    আগের লজিকে external redirect-এ কনফার্ম ডায়ালগ দেখাত, ফলে
+                //    http→https redirect-এ (যেমন google.com) পেজ আটকে যেত।
+                if (scheme == "http" || scheme == "https") return false
+                // অন্যান্য scheme (intent://, market://, mailto:, whatsapp:, tbopen…)
+                // → সিস্টেমে হ্যান্ডওভার, WebView-তে ফাঁকা পেজ বানাবে না।
+                if (url.startsWith("file://") || url.startsWith("data:") || url.startsWith("about:")) return true
+                openExternally(url)
                 return true
             }
 
@@ -153,6 +159,9 @@ class PreviewActivity : AppCompatActivity() {
                 statusText.text = view?.title.orEmpty().take(80)
             }
         }
+
+        // ডাউনলোড লিংক WebView গিলে ফেলে না — সিস্টেমে পাঠায় ⬇️
+        webView.setDownloadListener { url, _, _, _, _ -> openExternally(url) }
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
@@ -179,10 +188,14 @@ class PreviewActivity : AppCompatActivity() {
     private fun normaliseUrl(input: String): String {
         val s = input.trim()
         if (s.isEmpty()) return homeUrl()
-        if (s.startsWith("http://") || s.startsWith("https://")) return s
+        if (s.contains("://")) return s
         if (s.startsWith("/")) return "http://localhost:${prefs.httpPort}$s"
-        // Bare hostname / path — assume http://
-        return "http://$s"
+        // "google.com" / "youtube.com" → https (অধিকাংশ সাইট এখন http → https
+        // রিডাইরেক্ট করে; http:// দিয়ে শুরু করলে প্রথম লোডেই redirect-এ আটকাত)
+        val looksLikeHost = !s.contains(' ') && (Regex("^[^/]+\.[a-zA-Z]{2,}").containsMatchIn(s))
+        if (looksLikeHost) return "https://$s"
+        // ফাঁকা/স্পেস-সহ ইনপুট = সার্চ কোয়েরি 🇧🇩🔎
+        return "https://www.google.com/search?q=" + android.net.Uri.encode(s)
     }
 
     private fun loadUrl(url: String) {
@@ -205,15 +218,10 @@ class PreviewActivity : AppCompatActivity() {
                host.startsWith("172.")
     }
 
-    private fun confirmExternalNavigation(url: String) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.preview_external_title)
-            .setMessage(getString(R.string.preview_external_msg, url))
-            .setPositiveButton(R.string.preview_external_open) { _, _ ->
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+    /** external intent-এ পাঠায়; ব্রাউজার না থাকলে টোস্ট (ক্র্যাশ নয়) */
+    private fun openExternally(url: String) {
+        try { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
+        catch (_: Throwable) { Toast.makeText(this, R.string.no_browser, Toast.LENGTH_SHORT).show() }
     }
 
     /* ---------------------------------------------------------------- */
@@ -229,6 +237,7 @@ class PreviewActivity : AppCompatActivity() {
                       else R.string.preview_action_desktop_ua),
             getString(R.string.preview_action_clear_cache),
             getString(R.string.preview_action_view_source),
+            getString(R.string.preview_action_home_local),
         )
         AlertDialog.Builder(this)
             .setTitle(webView.title ?: webView.url ?: getString(R.string.preview_title))
@@ -240,6 +249,7 @@ class PreviewActivity : AppCompatActivity() {
                     3 -> toggleDesktopUa()
                     4 -> clearCache()
                     5 -> viewSource()
+                    6 -> loadUrl(homeUrl())
                 }
             }.show()
     }

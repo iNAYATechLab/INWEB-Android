@@ -221,4 +221,5 @@
     <string name="perm_later">لاحقًا</string>
     <string name="perm_nudge_title">السماح لـ INWEB بالعمل بثبات</string>
     <string name="perm_nudge_body">ما زال هناك %1$d إذن مطلوب؛ بدونه قد يجمّد Android الخادم أو يخفي الإشعارات أو يمنع التحديث داخل التطبيق.</string>
+    <string name="preview_action_home_local">العودة إلى الخادم المحلي</string>
 </resources>

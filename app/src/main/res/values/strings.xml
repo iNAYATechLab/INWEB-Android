@@ -546,4 +546,5 @@
     <string name="perm_later">Later</string>
     <string name="perm_nudge_title">Allow INWEB to run reliably</string>
     <string name="perm_nudge_body">%1$d permission(s) still need your approval — without them Android may freeze the server when the screen is off, hide status notifications, or block in-app updates.</string>
+    <string name="preview_action_home_local">Back to local server</string>
 </resources>
