@@ -192,7 +192,7 @@ class PreviewActivity : AppCompatActivity() {
         if (s.startsWith("/")) return "http://localhost:${prefs.httpPort}$s"
         // "google.com" / "youtube.com" → https (অধিকাংশ সাইট এখন http → https
         // রিডাইরেক্ট করে; http:// দিয়ে শুরু করলে প্রথম লোডেই redirect-এ আটকাত)
-        val looksLikeHost = !s.contains(' ') && (Regex("^[^/]+\.[a-zA-Z]{2,}").containsMatchIn(s))
+        val looksLikeHost = !s.contains(' ') && Regex("^[^/]+\\.[a-zA-Z]{2,}").containsMatchIn(s)
         if (looksLikeHost) return "https://$s"
         // ফাঁকা/স্পেস-সহ ইনপুট = সার্চ কোয়েরি 🇧🇩🔎
         return "https://www.google.com/search?q=" + android.net.Uri.encode(s)
