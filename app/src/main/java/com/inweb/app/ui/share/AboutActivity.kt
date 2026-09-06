@@ -149,6 +149,8 @@ class AboutActivity : AppCompatActivity() {
         binaryTest("httpd",     listOf("-v"))
         binaryTest("caddy",     listOf("version"))
         binaryTest("php",       listOf("-v"))
+        // -n = php.ini + এক্সটেনশন স্কিপ → ক্র্যাশ কি কনফিগ থেকে নাকি বাইনারি/লিঙ্কিং
+        binaryTest("php",      listOf("-n", "-v"))
         binaryTest("php-fpm",   listOf("-v"))
         binaryTest("mariadbd",  listOf("--version"))
         binaryTest("mysql",     listOf("--version"))

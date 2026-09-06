@@ -195,71 +195,32 @@ if [ "${AUDIT_ONLY:-0}" != "1" ]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Phase 3.5 — SONAME normalization (AGP packaging rule workaround)
-#
-# Android Gradle Plugin only packages jniLibs files that END in ".so" —
-# versioned names like libssl.so.3 are silently DROPPED from the APK.
-# Meanwhile binaries carry DT_NEEDED=libssl.so.3 → linker can't find it.
-#
-# Fix: since we ship libssl.so (real content), rewrite every ELF's
-# DT_NEEDED from libX.so.N → libX.so using patchelf, then delete the
-# versioned leftovers.
-# ---------------------------------------------------------------------------
 echo ""
-echo "──────────────── 🔧 SONAME normalization ────────────────"
-if command -v patchelf >/dev/null 2>&1; then
-  patched=0
+echo "──────────────── 🔧 SONAME / DT_NEEDED normalization ────────────────"
+# ✅ প্রথাগত পদ্ধতি (patchelf --replace-needed / --set-soname) ভাঙা প্রমাণিত:
+#   patchelf dynamic সেকশন রিলোকেট করে → php-র ৩টা PT_LOAD-এর জায়গায় ৫টা,
+#   নতুন সেগমেন্ট incongruent ((vaddr-offset)%align≠0) → Android linker-এ
+#   ম্যাপিং ভাঙে → `php -v` exit 139 (SIGSEGV)। মাপা প্রমাণ: beta.12।
+#   তাই এখন scripts/elf_unversion.py — strtab-এ ভেতরেই shrink-only overwrite,
+#   ফাইল সাইজ ও segment layout একেবারেই বদলায় না (প্রমাণ: সাইজ identical,
+#   readelf -lW identical, elf_congruence 0 সমস্যা)।
+if [ "${INWEB_USE_PATCHELF:-0}" = "1" ]; then
+  echo "  ⚠️ patchelf ফলব্যাক মোড (ইনভিজ্ঞ ট্রাই-এর জন্য মাত্র)"
+  command -v patchelf >/dev/null 2>&1 || { echo "❌ patchelf নেই"; exit 1; }
   for f in "$JNI_DIR"/*.so; do
     [ -f "$f" ] || continue
-    [ "$(head -c4 "$f" | tr -d '\0' | cut -c2-4)" = "ELF" ] || continue
     while IFS= read -r soname; do
-      case "$soname" in
-        *.so.*)
-          base="${soname%%.so.*}.so"
-          if [ -f "$JNI_DIR/$base" ]; then
-            patchelf --replace-needed "$soname" "$base" "$f" 2>/dev/null && patched=$((patched+1))
-          fi
-          ;;
+      case "$soname" in *.so.*)
+        base="${soname%%.so.*}.so"
+        [ -f "$JNI_DIR/$base" ] && patchelf --replace-needed "$soname" "$base" "$f" 2>/dev/null ;;
       esac
     done < <(readelf -d "$f" 2>/dev/null | grep NEEDED | sed -E 's/.*\[(.*)\].*/\1/')
   done
-  echo "  ✏️  $patched DT_NEEDED entries rewritten (.so.N → .so)"
-  # 🔗 Phase 3.5b — SONAME normalization (beta.10 ফিক্স)
-  #   DT_NEEDED আনভার্সন করলেও provider লাইব্রেরির নিজের SONAME ভার্সনড থাকলে
-  #   Android linker soinfo নাম SONAME থেকে নেয় → কনজিউমারের verneed
-  #   ("libssl.so") DT_NEEDED-এ খুঁজে পায় না →
-  #     CANNOT LINK EXECUTABLE: cannot find "libssl.so" from verneed[2] in DT_NEEDED list
-  #   (beta.10 ডায়াগনস্টিকে nginx/mariadbd/mysql/node এতেই মরছিল; মাপা: 22টা
-  #   লাইব্রেরির SONAME ≠ ফাইলনাম)। সেজন্য প্রতিটা .so-র SONAME ফাইলনের নামে সেট করি।
-  sonamed=0
-  for f in "$JNI_DIR"/*.so; do
-    [ -f "$f" ] || continue
-    base=$(basename "$f")
-    sn=$(readelf -d "$f" 2>/dev/null | sed -nE 's/.*SONAME.*\[(.*)\].*/\1/p' | head -1)
-    [ -n "$sn" ] || continue
-    [ "$sn" = "$base" ] && continue
-    if patchelf --set-soname "$base" "$f" 2>/dev/null; then
-      sonamed=$((sonamed+1))
-    else
-      echo "  ⚠️ patchelf --set-soname ব্যর্থ: $base (SONAME=$sn)"
-    fi
-  done
-  echo "  🔧 $sonamed লাইব্রেরির SONAME আনভার্সন করা হয়েছে (→ verneed resolve হবে)"
-
-  # versioned copies no longer referenced → drop them (saves ~60MB)
-  rm -f "$JNI_DIR"/*.so.*
 else
-  echo "  ⚠️ patchelf not found — INSTALL IT (apt install patchelf / pip install patchelf)"
-  echo "     Without normalization the APK will miss versioned SONAMEs!"
-  exit 1
+  python3 "$ROOT/scripts/elf_unversion.py" "$JNI_DIR" || { echo "❌ elf_unversion ব্যর্থ"; exit 1; }
 fi
-# ---------------------------------------------------------------------------
-#  Phase 3.6: module split (opt-in) — core → runtime-modules/*/src/main/jniLibs
-# ---------------------------------------------------------------------------
-if [ "$SPLIT_MODULES" = 1 ]; then
-  echo ""
-  bash "$ROOT/scripts/split_modules.sh" || { echo "❌ module split failed"; exit 1; }
-fi
+# ভার্সনড কপি (যেগুলো আর কেউ চায় না) ফেলে দাও
+find "$JNI_DIR" -maxdepth 1 -name '*.so.*' -delete 2>/dev/null || true
 
 # --- Phase 4: LINKER CLOSURE AUDIT (union of core + module dirs) ------------
 AUDIT_DIRS=("$JNI_DIR")
@@ -269,6 +230,9 @@ if [ "$SPLIT_MODULES" = 1 ]; then
   done
 fi
 bash "$ROOT/scripts/audit_closure.sh" "${AUDIT_DIRS[@]}" || exit 1
+# 🔒 ELF লেআউট গেট — patchelf-জাতীয় ররাইটার যদি কখনো সেগমেন্ট নষ্ট করে,
+#    বিল্ড এখানেই থামবে (রানটাইম SIGSEGV এর চেয়ে CI ফেল অনেক সস্তা)
+python3 "$ROOT/scripts/elf_congruence.py" "${AUDIT_DIRS[@]}" || exit 1
 echo ""
 echo "  jniLibs: $(ls "$JNI_DIR" | wc -l) files · $(du -sh "$JNI_DIR" | cut -f1)"
 echo "  scripts: $(ls "$DEST_BIN" 2>/dev/null | wc -l)"
