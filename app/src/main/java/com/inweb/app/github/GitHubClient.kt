@@ -202,11 +202,11 @@ object GitHubClient {
                     out += Asset("release: $tag", zipballUrl(repo, tag), 0)
                 rel.optJSONArray("assets")?.let { arr ->
                     for (j in 0 until arr.length()) {
-                        val as = arr.getJSONObject(j)
-                        val name = as.optString("name")
-                        val url = as.optString("browser_download_url")
+                        val aobj = arr.getJSONObject(j)
+                        val name = aobj.optString("name")
+                        val url = aobj.optString("browser_download_url")
                         if (url.isNotBlank() && name.endsWith(".zip", ignoreCase = true))
-                            out += Asset(name, url, as.optLong("size"))
+                            out += Asset(name, url, aobj.optLong("size"))
                     }
                 }
             }
