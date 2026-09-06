@@ -78,6 +78,10 @@ jobs:
           echo "  phpMyAdmin size:"
           du -sh app/src/main/assets/server_env/phpmyadmin/ 2>/dev/null || echo "  (missing)"
 
+      # 5️⃣5️⃣ Gradle-এর আগে সস্তা টেক্সট-চেক (escape / keyword / res-ref)
+      - name: 🧪 Kotlin sanity check
+        run: bash scripts/kotlin_sanity.sh
+
       # 6️⃣ Lint check
       - name: 🔍 Run Lint
         run: ./gradlew lint --no-daemon --stacktrace
