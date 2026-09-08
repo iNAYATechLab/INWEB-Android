@@ -323,33 +323,6 @@ class MainActivity : AppCompatActivity() {
     /*  Menu sheet + helpers                                             */
     /* ---------------------------------------------------------------- */
 
-    private fun showMoreSheet() {
-        val items = arrayOf(
-            getString(R.string.btn_sites),
-            getString(R.string.btn_hosts),
-            getString(R.string.btn_files),
-            getString(R.string.btn_frameworks),
-            getString(R.string.btn_islamic),
-            getString(R.string.btn_security),
-            getString(R.string.btn_ddns),
-            getString(R.string.btn_settings)
-        )
-        androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle(R.string.more_title)
-            .setItems(items) { _, which ->
-                startActivity(Intent(this, when (which) {
-                    0 -> com.inweb.app.ui.vhost.SitesActivity::class.java
-                    1 -> com.inweb.app.ui.dns.HostsActivity::class.java
-                    2 -> FilesActivity::class.java
-                    3 -> FrameworksActivity::class.java
-                    4 -> IslamicApisActivity::class.java
-                    5 -> com.inweb.app.ui.security.SecurityActivity::class.java
-                    6 -> com.inweb.app.ui.ddns.DdnsActivity::class.java
-                    else -> SettingsActivity::class.java
-                }))
-            }.show()
-    }
-
     private fun openBestUrl() {
         if (!running) { toast(getString(R.string.tap_start_first)); return }
         openInPreview("http://localhost:${prefs.httpPort}")
