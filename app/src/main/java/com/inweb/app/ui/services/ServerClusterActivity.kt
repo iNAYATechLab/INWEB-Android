@@ -137,7 +137,7 @@ class ServerClusterActivity : AppCompatActivity() {
     }
 
     private fun engineDisplayTitle(engine: WebServerEngine): String = when (engine) {
-        WebServerEngine.NGINX     -> "Nginx v1.24 (Reverse Proxy)"
+        WebServerEngine.NGINX     -> (com.inweb.app.util.Prefs(this).engineVersionTag.ifBlank { "Nginx" } + " (Reverse Proxy)")
         WebServerEngine.APACHE    -> "Apache HTTPd v2.4"
         WebServerEngine.LITESPEED -> "LSWS Enterprise"
         WebServerEngine.CADDY     -> "Caddy v2.6.2 (Proxy)"

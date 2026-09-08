@@ -217,6 +217,11 @@ class Prefs(context: Context) {
         set(v) = sp.edit().putString(KEY_PENDING_APK, v).apply()
 
 
+    /** `nginx -v` থেকে একবার পাওয়া লেবেল (যেমন "Nginx v1.31.5") — হোম/সার্ভিসে দেখানো হয় */
+    var engineVersionTag: String
+        get() = sp.getString(KEY_ENGINE_TAG, "") ?: ""
+        set(v) = sp.edit().putString(KEY_ENGINE_TAG, v).apply()
+
     /** কোন versionCode-এর জন্য পারমিশন ফ্লো চালানো হয়েছে — প্রতি আপডেটে একবার নudge */
     var permsAskedVersionCode: Int
         get() = sp.getInt(KEY_PERMS_ASKED_VC, -1)
@@ -271,6 +276,7 @@ class Prefs(context: Context) {
 
         private const val KEY_ONBOARDED      = "onboarded"
         private const val KEY_PERMS_ASKED_VC = "perms_asked_version_code"
+        private const val KEY_ENGINE_TAG     = "engine_version_tag"
 
     // In-app updates
         private const val KEY_AUTO_UPDATE    = "update_auto_check"

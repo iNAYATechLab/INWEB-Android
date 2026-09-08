@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,7 @@ import com.inweb.app.data.SystemStats
 import com.inweb.app.databinding.ActivityMainBinding
 import com.inweb.app.net.NetworkUtils
 import com.inweb.app.tile.ServerTileService
+import com.inweb.app.ui.common.BottomNavHelper
 import com.inweb.app.ui.files.FilesActivity
 import com.inweb.app.ui.framework.FrameworksActivity
 import com.inweb.app.ui.islamic.IslamicApisActivity
@@ -37,8 +39,11 @@ import com.inweb.app.ui.services.ServicesActivity
 import com.inweb.app.ui.share.NetworkInfoActivity
 import com.inweb.app.ui.share.SettingsActivity
 import com.inweb.app.util.Prefs
+import com.inweb.app.vhost.VirtualHost
+import com.inweb.app.vhost.VirtualHostStore
 import com.inweb.app.widget.ServerWidgetProvider
 import kotlinx.coroutines.delay
+import java.io.File
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -153,12 +158,14 @@ class MainActivity : AppCompatActivity() {
         b.copyLocalIp.setOnClickListener  { copy("local IP",  b.localIpText.text.toString()) }
         b.copyPublicIp.setOnClickListener { copy("public IP", b.publicIpText.text.toString()) }
 
-        // === Bottom nav ===========================================
-        b.navHome.setOnClickListener      { /* already here */ }
-        b.navServices.setOnClickListener  { startActivity(Intent(this, ServerClusterActivity::class.java)) }
-        b.navLogs.setOnClickListener      { startActivity(Intent(this, LogsActivity::class.java)) }
-        b.navShare.setOnClickListener     { startActivity(Intent(this, NetworkInfoActivity::class.java)) }
-        b.navMore.setOnClickListener      { showMoreSheet() }
+        // === Bottom nav — শেয়ার্ড ৬-ট্যাব বার (Browser ট্যাবসহ) ======
+        // আগে এখানে নিজস্ব ইনলাইন ৫-ট্যাব নেভ হার্ডকোডড ছিল, তাই হোম
+        // স্ক্রিন থেকে ব্রাউজারে যাওয়ার উপায় ছিল না।
+        BottomNavHelper.attach(this, BottomNavHelper.Tab.HOME)
+
+        // 🌐 VirtualHostStore-এর সাইটগুলো (ইমপোর্ট করা WordPress/Node/static সহ)
+        renderVhostSites()
+        probeEngineVersion()
 
         // Initial render — will be overwritten as soon as the first stats
         // tick fires (see startPolling below).
@@ -278,7 +285,7 @@ class MainActivity : AppCompatActivity() {
             b.statusDot.setImageResource(R.drawable.dot_green)
             b.statusSubtitle.text = getString(
                 R.string.status_subtitle_running,
-                "NGINX v1.24", "localhost:${prefs.httpPort}"
+                engineTag(), "localhost:${prefs.httpPort}"
             )
             b.serverToggle.text = getString(R.string.stop_server_short)
             b.serverToggle.setBackgroundColor(color(R.color.btn_stop))
@@ -398,4 +405,68 @@ class MainActivity : AppCompatActivity() {
 
     private fun color(id: Int): Int = ContextCompat.getColor(this, id)
     private fun toast(s: String) = Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+
+    /* ---------------------------------------------------------------- */
+    /*  Home → সব সাইট (VirtualHostStore)                                */
+    /* ---------------------------------------------------------------- */
+
+    /**
+     * হোমের "সক্রিয় সাইট" সেকশনে শুধু ৩টা হার্ডকোডড রো ছিল → From GitHub
+     * দিয়ে ইমপোর্ট করা সাইটে (বা Sites-এ ম্যানুয়ালি বানানো vhost-এ) হোম থেকে
+     * ঢোকা যেত না। এখন store-এর প্রতিটি enabled সাইট রো হয়; ট্যাপ → ইন-অ্যাপ
+     * ব্রাউজার, লং-প্রেস → সিস্টেম ব্রাউজার।
+     */
+    private fun renderVhostSites() {
+        val box = b.homeVhostSites
+        box.removeAllViews()
+        val hosts = runCatching { VirtualHostStore(this).all().filter { it.enabled } }.getOrDefault(emptyList())
+        if (hosts.isEmpty()) { box.visibility = View.GONE; return }
+        box.visibility = View.VISIBLE
+        for (vh in hosts) {
+            val row = layoutInflater.inflate(R.layout.item_home_site, box, false)
+            row.findViewById<TextView>(R.id.siteRowTitle).text = vh.displayLabel
+            row.findViewById<TextView>(R.id.siteRowSub).text =
+                "${vh.documentRoot.substringAfterLast('/')} · :${prefs.httpPort} · ${vh.serverName}"
+            val url = "http://${vh.serverName}:${prefs.httpPort}/"
+            row.setOnClickListener { openInPreview(url) }
+            row.setOnLongClickListener { openInBrowser(url); true }
+            box.addView(row)
+        }
+    }
+
+    /* ---------------------------------------------------------------- */
+    /*  ইঞ্জিনের আসল ভার্সন (একবার প্রোব করে ক্যাশ)                      */
+    /* ---------------------------------------------------------------- */
+
+    private fun engineTag(): String = prefs.engineVersionTag.ifBlank { "Nginx" }
+
+    /** আগে হার্ডকোডড "NGINX v1.24" দেখাত — আসলে 1.31.x; মিথ্যা তথ্য বন্ধ। */
+    private fun probeEngineVersion() {
+        if (prefs.engineVersionTag.isNotBlank()) return
+        Thread {
+            val tag = runCatching {
+                val lib = File(applicationInfo.nativeLibraryDir)
+                val bin = com.inweb.app.runtime.RuntimeModuleManager
+                    .resolveExecutable(this, lib, "libexec_nginx.so") ?: File(lib, "libexec_nginx.so")
+                if (!bin.canExecute()) return@runCatching null
+                val pb = ProcessBuilder(bin.absolutePath, "-v").redirectErrorStream(true)
+                pb.environment()["LD_LIBRARY_PATH"] = lib.absolutePath
+                val p = pb.start()
+                val out = p.inputStream.bufferedReader().readText()
+                p.waitFor(6, java.util.concurrent.TimeUnit.SECONDS)
+                Regex("""nginx/(\d[^\s]*)""").find(out)?.groupValues?.get(1)?.let { "Nginx v$it" }
+            }.getOrNull()
+            if (tag != null) {
+                prefs.engineVersionTag = tag
+                runOnUiThread { renderServerState(running) }
+            }
+        }.start()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        renderVhostSites()   // Sites/Import থেকে ফেরার পর লিস্ট আপডেট
+    }
+
 }

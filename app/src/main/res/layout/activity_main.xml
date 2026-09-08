@@ -641,6 +641,14 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 🌐 VirtualHostStore-এর সব সাইট (ইমপোর্ট/ম্যানুয়ালি তৈরি) — আগে
+                 হোমে শুধু ৩টা হারডকোডড রো ছিল, নতুন সাইটে ঢোকা যেত না -->
+            <LinearLayout
+                android:id="@+id/homeVhostSites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"/>
             <!-- ============ SYSTEM INFO (IP chips) ================ -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -747,145 +755,17 @@
     </ScrollView>
 
     <!-- ============================================================ -->
-    <!--  Bottom nav bar                                              -->
+    <!--  Bottom nav — শেয়ার্ড ৬-ট্যাব বার। আগে এই স্ক্রিনে নিজস্ব        -->
+    <!--  ইনলাইন ৫-ট্যাব নেভ হার্ডকোডড ছিল → হোমে Browser ট্যাব        -->
+    <!--  দেখাত না (বাকি সব পেজ inweb_bottom_nav.xml ইনক্লুড করত)।      -->
     <!-- ============================================================ -->
-    <LinearLayout
+    <include
         android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:orientation="horizontal"
-        android:background="@color/surface"
-        android:weightSum="5"
-        android:elevation="8dp"
+        layout="@layout/inweb_bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:id="@+id/navHome"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_home"
-                android:contentDescription="@null"
-                app:tint="@color/accent"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_home"
-                android:textColor="@color/accent"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navServices"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_services"
-                android:contentDescription="@null"
-                app:tint="@color/text_secondary"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_services"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navLogs"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_logs"
-                android:contentDescription="@null"
-                app:tint="@color/text_secondary"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_logs"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navShare"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_qr"
-                android:contentDescription="@null"
-                app:tint="@color/text_secondary"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_share"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navMore"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_more"
-                android:contentDescription="@null"
-                app:tint="@color/text_secondary"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_more"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
