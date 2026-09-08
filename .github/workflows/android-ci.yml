@@ -151,12 +151,24 @@ jobs:
       - name: 🔧 Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: 📦 Fetch native binaries from Termux
+      - name: 📦 Fetch native binaries (core + runtime module split)
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq dpkg xz-utils unzip curl patchelf
           chmod +x scripts/fetch_binaries.sh
-          bash scripts/fetch_binaries.sh
+          # 🧩 release বিল্ডে ভারী optional ইঞ্জিন আলাদা module APK-তে যায়
+          bash scripts/fetch_binaries.sh --split-modules
+          echo "── split ফলাফল ──"
+          core=$(ls -1 app/src/main/jniLibs/arm64-v8a 2>/dev/null | wc -l)
+          echo "  core jniLibs : $core ফাইল · $(du -sh app/src/main/jniLibs/arm64-v8a | cut -f1)"
+          find runtime-modules -type d -name arm64-v8a 2>/dev/null | sort | while read -r d; do
+            echo "  $(basename "$(dirname "$(dirname "$(dirname "$d")")")") : $(ls -1 "$d" | wc -l) ফাইল · $(du -sh "$d" | cut -f1)"
+          done
+          if [ "$core" -gt 175 ]; then
+            echo "::warning::module split কাজ করেনি মনে হচ্ছে (core-এ $core ফাইল) — split_modules.sh লগ দেখুন"
+          fi
+          # ⚠️ শেষ কমান্ডের exit code পুরো স্টেপ ফেল করাতে পারে (bash -e) → true দিয়ে নরমালাইজ
+          true
 
       # 🔐 Decode the release keystore from base64 secret
       # If no secret is set, the release build will be unsigned (still works,
@@ -179,15 +191,6 @@ jobs:
 
       # 🧩 release builds-এ ভারী optional বাইনারি আলাদা runtime module APK-তে
       #    যায় → core APK ছোট থাকে (মাপা প্রত্যাশা: ~110 MB → ~68 MB)
-      - name: 📦 Re-fetch binaries with module split (core ↔ modules)
-        run: |
-          chmod +x scripts/fetch_binaries.sh
-          bash scripts/fetch_binaries.sh --split-modules
-          echo "── module jniLibs ──"
-          for d in runtime-modules/*/src/main/jniLibs/arm64-v8a; do
-            [ -d "$d" ] && echo "  $d: $(ls "$d" | wc -l) ফাইল · $(du -sh "$d" | cut -f1)"
-          done
-
       - name: 🔨 Assemble Release APK ${{ steps.keystore.outputs.signed == 'true' && '(SIGNED)' || '(unsigned)' }}
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
