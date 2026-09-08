@@ -151,3 +151,13 @@ app open → PatchWorker (WorkManager, one-time, 6h throttle)
 | **ফেজ ২** ✅ (কোড) | `RuntimeModule.kt` + `RuntimeModuleManager.kt` + `<queries>` + `settings.gradle.kts` + ৩টা module scaffold + ৪ লোকেল string | resolution core-first, module fallback → কোনো regression নেই (module ইনস্টল না থাকলে আগের আচরণ) |
 | ফেজ ২.৫ ⏭ | CI-তে `--split-modules` অন + module APK release asset + Settings → Modules UI | বাকি |
 | ফেজ ৩ ⏭ | Hotfix/patch channel (conf/script/JS/PHP/flags) | বাকি |
+
+### ফেজ ২.৫ ✅ (beta.16) — split-modules CI-তে চালু + Modules UI
+
+| জিনিস | কী |
+|---|---|
+| CI | release job-এ `fetch_binaries.sh --split-modules` → node/caddy/cloudflared core থেকে আলাদা হয় · তারপর ৩টা **signed** module APK বিল্ড (`MODULE_VERSION`/`MODULE_VERSION_CODE` env) · `INWEB-runtime-<id>-<tag>.apk` নামে রিলিজে attach |
+| গেট | core > 90 MB হলে `::warning::` (split অফ হয়ে গেলে ধরা পড়ে) · closure + congruence audit আগেই আছে |
+| UI | Settings → **রানটাইম মডিউল** (`ModulesActivity`): প্রতি module-এ স্ট্যাটাস (core-এ বান্ডলড ✅ / মডিউল ইনস্টলড v… / ইনস্টল নেই · ~N MB) · ট্যাপ = ডাউনলোড+ইনস্টল · লং-প্রেস = অ্যাপ ইনফো |
+| debug বিল্ড | স্প্লিট **অফ** — QA-তে সব ফিচার সাথে সাথে চলে |
+| ইনস্টলের পর | সার্ভার STOP → START (toast এটা মনে করায়) |

@@ -177,12 +177,45 @@ jobs:
             echo "KEYSTORE_PATH=$RUNNER_TEMP/inweb-release.jks" >> $GITHUB_ENV
           fi
 
+      # 🧩 release builds-এ ভারী optional বাইনারি আলাদা runtime module APK-তে
+      #    যায় → core APK ছোট থাকে (মাপা প্রত্যাশা: ~110 MB → ~68 MB)
+      - name: 📦 Re-fetch binaries with module split (core ↔ modules)
+        run: |
+          chmod +x scripts/fetch_binaries.sh
+          bash scripts/fetch_binaries.sh --split-modules
+          echo "── module jniLibs ──"
+          for d in runtime-modules/*/src/main/jniLibs/arm64-v8a; do
+            [ -d "$d" ] && echo "  $d: $(ls "$d" | wc -l) ফাইল · $(du -sh "$d" | cut -f1)"
+          done
+
       - name: 🔨 Assemble Release APK ${{ steps.keystore.outputs.signed == 'true' && '(SIGNED)' || '(unsigned)' }}
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS:         ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD:      ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: 🧩 Build runtime module APKs (signed)
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS:         ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD:      ${{ secrets.KEY_PASSWORD }}
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          VC=$(grep -oE 'versionCode = [0-9]+' app/build.gradle.kts | head -1 | grep -oE '[0-9]+')
+          echo "  🏷 module version: ${TAG} (versionCode ${VC})"
+          MODULE_VERSION="${TAG}" MODULE_VERSION_CODE="${VC}" \
+            ./gradlew :runtime-modules:node:assembleRelease \
+                      :runtime-modules:caddy:assembleRelease \
+                      :runtime-modules:tunnel:assembleRelease \
+                      --no-daemon --stacktrace
+          for m in node caddy tunnel; do
+            SRC=$(find "runtime-modules/$m/build/outputs/apk/release" -name "*.apk" 2>/dev/null | head -1)
+            [ -n "${SRC:-}" ] || { echo "  ⚠️ $m module APK নেই — স্কিপ"; continue; }
+            NAME="INWEB-runtime-${m}-${TAG}.apk"
+            cp "$SRC" "app/build/outputs/apk/release/$NAME"
+            echo "  📦 $NAME ($(du -h "$SRC" | cut -f1))"
+          done
 
       - name: 📊 Show APK signature status + rename to branded filename
         run: |
@@ -205,6 +238,14 @@ jobs:
           echo "  🧬 uncompressed lib/ entries: $STORED_LIBS (expected 0)"
           [ "$STORED_LIBS" -eq 0 ] || echo "::warning::jniLibs compress হয়নি — packaging.jniLibs.useLegacyPackaging চেক করো"
           echo "  🗂  zip entries: $(unzip -l "$APK" | tail -1 | awk '{print $2}') · total size: $(du -m "$APK" | cut -f1) MB"
+          # 📏 split-modules গেট: core ছোট না হলে ফ্ল্যাগ অফ হয়ে গেছে ধরা পড়বে
+          CORE_MB=$(du -m "$APK" | cut -f1)
+          if [ "${CORE_MB}" -gt 90 ]; then
+            echo "::warning::core APK ${CORE_MB} MB — split-modules চালু আছে কিনা চেক করো (লক্ষ্য ≤ 70 MB)"
+          else
+            echo "  ✅ core APK ${CORE_MB} MB (module split সক্রিয়)"
+          fi
+          echo "  🧩 release assets: $(ls app/build/outputs/apk/release/*.apk | wc -l)টা APK"
 
       - name: 📝 Write release notes
         run: |

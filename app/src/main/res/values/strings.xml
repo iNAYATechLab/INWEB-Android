@@ -576,4 +576,12 @@
     <string name="gh_failed">ইমপোর্ট ব্যর্থ — উপরের বার্তাটা দেখুন</string>
     <string name="gh_static_note">PHP ফাইল নেই → স্ট্যাটিক সাইট হিসেবে তৈরি হয়েছে</string>
     <string name="gh_php_note">PHP মোড AUTO (php-fpm দিয়ে চলবে)</string>
+    <string name="modules_title">Runtime modules</string>
+    <string name="modules_section">Available modules</string>
+    <string name="modules_note">Heavy optional engines (Node.js, Caddy, Cloudflare Tunnel) are not bundled in the app — download them here. Each module is a small signed APK, because Android 10+ only allows executing binaries from an installed app’s native lib dir. Tap a module to download; long-press to open its app info.</string>
+    <string name="modules_state_bundled">Bundled in the app ✅ — nothing to download</string>
+    <string name="modules_state_installed">Installed as module · v%1$s</string>
+    <string name="modules_state_missing">Not installed · ~%1$d MB download</string>
+    <string name="modules_nothing_needed">Already bundled in the core app</string>
+    <string name="modules_restart_hint">Module installed — restart the server (STOP → START) to pick it up</string>
 </resources>

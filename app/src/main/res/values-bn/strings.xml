@@ -354,4 +354,12 @@
     <string name="gh_failed">ইমপোর্ট ব্যর্থ — উপরের বার্তাটা দেখুন</string>
     <string name="gh_static_note">PHP ফাইল নেই → স্ট্যাটিক সাইট হিসেবে তৈরি হয়েছে</string>
     <string name="gh_php_note">PHP মোড AUTO (php-fpm দিয়ে চলবে)</string>
+    <string name="modules_title">রানটাইম মডিউল</string>
+    <string name="modules_section">যে মডিউলগুলো পাওয়া যাচ্ছে</string>
+    <string name="modules_note">ভারী ঐচ্ছিক ইঞ্জিন (Node.js, Caddy, Cloudflare Tunnel) অ্যাপে বান্ডল করা থাকে না — এখান থেকে নামান। প্রতিটা মডিউল একটা ছোট সাইন্ডেড APK, কারণ Android 10+ ইনস্টলড অ্যাপের native lib dir-এর বাইরে বাইনারি চালাতে দেয় না। ট্যাপ = ডাউনলোড, লং-প্রেস = অ্যাপের তথ্য।</string>
+    <string name="modules_state_bundled">অ্যাপেই বান্ডলড ✅ — ডাউনলোড লাগবে না</string>
+    <string name="modules_state_installed">মডিউল হিসেবে ইনস্টলড · v%1$s</string>
+    <string name="modules_state_missing">ইনস্টল করা নেই · ~%1$d MB ডাউনলোড</string>
+    <string name="modules_nothing_needed">কোর অ্যাপেই আছে, কিছু করা লাগবে না</string>
+    <string name="modules_restart_hint">মডিউল ইনস্টল হয়েছে — সার্ভার একবার STOP → START করুন</string>
 </resources>

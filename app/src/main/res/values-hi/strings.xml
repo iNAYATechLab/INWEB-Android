@@ -137,4 +137,12 @@
     <string name="gh_failed">ইমপোর্ট ব্যর্থ — উপরের বার্তাটা দেখুন</string>
     <string name="gh_static_note">PHP ফাইল নেই → স্ট্যাটিক সাইট হিসেবে তৈরি হয়েছে</string>
     <string name="gh_php_note">PHP মোড AUTO (php-fpm দিয়ে চলবে)</string>
+    <string name="modules_title">रनटाइम मॉड्यूल</string>
+    <string name="modules_section">उपलब्ध मॉड्यूल</string>
+    <string name="modules_note">भारी वैकल्पिक इंजन (Node.js, Caddy, Cloudflare Tunnel) ऐप में बंडल नहीं हैं — यहाँ से डाउनलोड करें। हर मॉड्यूल एक छोटा साइन्ड APK है।</string>
+    <string name="modules_state_bundled">ऐप में ही बंडल ✅</string>
+    <string name="modules_state_installed">मॉड्यूल के रूप में इंस्टॉल · v%1$s</string>
+    <string name="modules_state_missing">इंस्टॉल नहीं · ~%1$d MB डाउनलोड</string>
+    <string name="modules_nothing_needed">कोर ऐप में ही मौजूद</string>
+    <string name="modules_restart_hint">मॉड्यूल इंस्टॉल हुआ — सर्वर एक बार STOP → START करें</string>
 </resources>

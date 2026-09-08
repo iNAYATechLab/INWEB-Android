@@ -62,6 +62,11 @@ class SettingsActivity : AppCompatActivity() {
         val autoSw = findViewById<android.widget.Switch>(R.id.autoUpdateSwitch)
 
         // About page entry
+        // 🧩 Runtime modules (Node/Caddy/Tunnel ডাউনলোড)
+        findViewById<View>(R.id.modulesRow)?.setOnClickListener {
+            startActivity(Intent(this, com.inweb.app.ui.modules.ModulesActivity::class.java))
+        }
+
         // 🔐 Permissions & battery center (badge = কটা জিনিস এখনো নেই)
         findViewById<View>(R.id.permsRow)?.setOnClickListener {
             com.inweb.app.util.PermissionCenter.show(this)

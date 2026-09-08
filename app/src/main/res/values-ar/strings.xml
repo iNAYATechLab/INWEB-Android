@@ -251,4 +251,12 @@
     <string name="gh_failed">ইমপোর্ট ব্যর্থ — উপরের বার্তাটা দেখুন</string>
     <string name="gh_static_note">PHP ফাইল নেই → স্ট্যাটিক সাইট হিসেবে তৈরি হয়েছে</string>
     <string name="gh_php_note">PHP মোড AUTO (php-fpm দিয়ে চলবে)</string>
+    <string name="modules_title">وحدات التشغيل</string>
+    <string name="modules_section">الوحدات المتاحة</string>
+    <string name="modules_note">المحركات الثقيلة الاختيارية (Node.js وCaddy وCloudflare Tunnel) غير مضمّنة في التطبيق؛ نزّلها من هنا. كل وحدة APK موقّع صغير.</string>
+    <string name="modules_state_bundled">مضمّنة في التطبيق ✅</string>
+    <string name="modules_state_installed">مثبّتة كوحدة · v%1$s</string>
+    <string name="modules_state_missing">غير مثبّتة · تنزيل ~%1$d ميغابايت</string>
+    <string name="modules_nothing_needed">موجودة بالفعل في التطبيق</string>
+    <string name="modules_restart_hint">تم تثبيت الوحدة — أعد تشغيل الخادم (إيقاف ثم تشغيل)</string>
 </resources>

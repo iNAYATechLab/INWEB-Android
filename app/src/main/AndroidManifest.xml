@@ -156,6 +156,13 @@
             android:label="@string/sites_title"
             android:parentActivityName=".MainActivity"/>
 
+        <!-- 🧩 Runtime module ডাউনলোড/ইনস্টল স্ক্রিন -->
+        <activity
+            android:name=".ui.modules.ModulesActivity"
+            android:exported="false"
+            android:label="@string/modules_title"
+            android:parentActivityName=".ui.share.SettingsActivity"/>
+
         <!-- 🌐 GitHub থেকে প্রজেক্ট ইমপোর্ট -->
         <activity
             android:name=".github.GitHubImportActivity"
