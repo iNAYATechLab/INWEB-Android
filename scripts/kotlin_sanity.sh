@@ -65,6 +65,11 @@ for p in kt:
             if m.group(1) in HARD and not (m.group(1) == 'interface' and 'fun interface' in wline):
                 add(rel, i, f"'{m.group(1)}' হার্ড কীওয়ার্ড — নাম হিসেবে ব্যবহার করা যাবে না", line)
 
+        # ৩) ৬+ কম্পোনেন্ট destructuring — Kotlin List শুধু component1..5 দেয়
+        md = re.match(r'\s*val\s*\(([^)]*)\)\s*=', wline)
+        if md and len([x for x in md.group(1).split(',') if x.strip()]) >= 6:
+            add(rel, i, "destructuring-এ ৬+ ভ্যারিয়েবল (List হলে component6() নেই → কম্পাইল ফেল)", line)
+
         # (কোট-ব্যালান্স চেক এখানে নেই: regex/raw-স্ট্রিংভরা ফাইলে এটা প্রায়ই
         #  ফলস পজিটিভ দেয় — ভুল ধরার চেয়ে ভুল না বলা জরুরি, তাই বাদ)
 

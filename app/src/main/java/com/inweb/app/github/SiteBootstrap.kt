@@ -86,8 +86,9 @@ object SiteBootstrap {
     /* ───────────────────────── wp-config.php ───────────────────────── */
 
     private fun wpConfig(db: String, password: String, socket: String): String {
-        val salts = (1..8).map { randomKey() }
-        val (t1, t2, t3, t4, t5, t6, a1, a2) = salts
+        // নোট: Kotlin List-এ destructuring শুধু component1..component5 দেয়,
+        // তাই ৮টা সল্ট ইনডেক্স দিয়ে পড়া হয় (CI-তে এটাই ফেল করিয়েছিল)
+        val salts = List(8) { randomKey() }
         return """
 <?php
 /** INWEB-এর GitHub ইমপোর্ট স্বয়ংক্রিয়ভাবে তৈরি করা wp-config.php */
@@ -99,14 +100,14 @@ define('DB_HOST', 'localhost:$socket');
 define('DB_CHARSET', 'utf8mb4');
 define('DB_COLLATE', '');
 
-define('AUTH_KEY',         '$t1');
-define('SECURE_AUTH_KEY',  '$t2');
-define('LOGGED_IN_KEY',    '$t3');
-define('NONCE_KEY',        '$t4');
-define('AUTH_SALT',        '$t5');
-define('SECURE_AUTH_SALT', '$t6');
-define('LOGGED_IN_SALT',   '${randomKey()}');
-define('NONCE_SALT',       '${randomKey()}');
+define('AUTH_KEY',         '${salts[0]}');
+define('SECURE_AUTH_KEY',  '${salts[1]}');
+define('LOGGED_IN_KEY',    '${salts[2]}');
+define('NONCE_KEY',        '${salts[3]}');
+define('AUTH_SALT',        '${salts[4]}');
+define('SECURE_AUTH_SALT', '${salts[5]}');
+define('LOGGED_IN_SALT',   '${salts[6]}');
+define('NONCE_SALT',       '${salts[7]}');
 
 ${'$'}table_prefix = 'wp_';
 
