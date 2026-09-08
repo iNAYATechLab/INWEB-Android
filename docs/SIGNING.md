@@ -201,7 +201,8 @@ Once you have a signed AAB:
    - Free / Paid
 3. **Fill store listing** — use content from [`play_store/listing.md`](../play_store/listing.md)
 4. **Upload feature graphic:** [`branding/play_store_feature_v2.png`](../branding/play_store_feature_v2.png)
-5. **Upload screenshots** from [`screenshots/`](../screenshots/) folder
+5. **Upload screenshots** — ফোন/এমুলেটরে বিল্ড চালিয়ে ২-৩টা স্ক্রিনশট তুলে আপলোড করুন
+   (repo-তে `screenshots/` ফোল্ডার আর রাখা হয় না — শুধু APK সাইজ/রিপো ফুটপ্রিন্ট কমাতে)
 6. **Privacy policy:** Host [`play_store/privacy_policy.md`](../play_store/privacy_policy.md) and provide URL
 7. **Content rating:** Answer questionnaire → likely "Everyone"
 8. **Upload signed AAB:** From `app/build/outputs/bundle/release/app-release.aab`

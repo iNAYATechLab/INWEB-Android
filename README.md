@@ -130,12 +130,11 @@ INWEB-Android/
 │           ├── layout/                      30 XML layouts (shared includes)
 │           ├── values/, values-bn/,
 │           ├── values-ar/, values-hi/,
-│           ├── values-ur/                   5 locales
-│           └── xml/locales_config.xml
+│           └── values-night/                4 লোকেল + ডার্ক থিম
+            └── xml/locales_config.xml
 ├── branding/                                logos + wordmark + Play Store assets
 ├── play_store/                              store listing metadata
 ├── scripts/fetch_binaries.sh                Termux .deb fetcher
-├── screenshots/                             18 in-app previews
 └── PROJECT_STATUS.md                        detailed feature-by-feature log
 ```
 
