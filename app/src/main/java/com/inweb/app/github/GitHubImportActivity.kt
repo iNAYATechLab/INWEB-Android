@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.DocumentsContract
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -63,6 +64,7 @@ class GitHubImportActivity : AppCompatActivity() {
     private var refs: List<GitHubClient.Ref> = emptyList()
     private var assets: List<GitHubClient.Asset> = emptyList()
     private var pendingTarget: File? = null
+    private var bootstrapNote: String? = null
 
     private val treePicker =
         registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
@@ -197,7 +199,12 @@ class GitHubImportActivity : AppCompatActivity() {
                         label = "${i0.repo.name} · GitHub"
                     )
                     store.upsert(vh)
+                    // 🌱 WordPress হলে DB + wp-config.php তৈরি করে দিই
+                    val extra = runCatching { SiteBootstrap.prepare(o.target, layout, prefs) }
+                        .onFailure { Log.w("GitHubImport", "bootstrap failed", it) }
+                        .getOrNull()
                     status.text = getString(R.string.gh_done, o.fileCount, human(o.bytes), o.framework)
+                    if (!extra.isNullOrBlank()) bootstrapNote = extra
                     pendingTarget = o.target
                     if (copyOut) treePicker.launch(null) else showResult(o, name)
                 }.onFailure {
@@ -212,8 +219,10 @@ class GitHubImportActivity : AppCompatActivity() {
         val url = "http://$host:${prefs.httpPort}/"
         androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle(R.string.gh_done_title)
-            .setMessage(getString(R.string.gh_done_body, o.framework, host, if (o.isStatic)
-                getString(R.string.gh_static_note) else getString(R.string.gh_php_note)))
+            .setMessage(
+                getString(R.string.gh_done_body, o.framework, host, if (o.isStatic)
+                    getString(R.string.gh_static_note) else getString(R.string.gh_php_note))
+                + (bootstrapNote?.let { "\n\n" + it } ?: ""))
             .setPositiveButton(R.string.gh_open_preview) { _, _ -> PreviewActivity.open(this, url) }
             .setNeutralButton(R.string.gh_copy_out) { _, _ -> treePicker.launch(null) }
             .setNegativeButton(android.R.string.ok, null)
