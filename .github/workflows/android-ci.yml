@@ -312,4 +312,10 @@ jobs:
           else
             echo "🟢 Stable release ($TAG)"
           fi
-          gh release create "$TAG" --title "INWEB $TAG" --notes-file release_notes.md $PRE_FLAG app/build/outputs/apk/release/*.apk
+          # ⚠️ ক্রম গুরুত্বপূর্ণ: পুরনো ইনস্টলড ভার্সনের UpdateChecker "প্রথম
+          # .apk" অ্যাসেটটা নেয় → core APK-ই প্রথমে থাকতে হবে, নইলে ইউজার
+          # আপডেটের বদলে runtime module নামিয়ে ইনস্টল করতে যাবে।
+          REL_DIR=app/build/outputs/apk/release
+          CORE=$(ls "$REL_DIR"/INWEB-com.inweb.app-*.apk 2>/dev/null | head -1)
+          MODULES=$(ls "$REL_DIR"/INWEB-runtime-*.apk 2>/dev/null | tr '\n' ' ')
+          gh release create "$TAG" --title "INWEB $TAG" --notes-file release_notes.md $PRE_FLAG "$CORE" $MODULES

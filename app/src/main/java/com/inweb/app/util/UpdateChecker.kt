@@ -113,11 +113,15 @@ object UpdateChecker {
                 for (j in 0 until assets.length()) {
                     val a = assets.getJSONObject(j)
                     val n = a.optString("name")
-                    if (n.endsWith(".apk")) {
-                        apkUrl = a.optString("browser_download_url")
-                        size = a.optLong("size")
-                        break
-                    }
+                    if (!n.endsWith(".apk")) continue
+                    // 🧩 module APK কখনো অ্যাপ-আপডেট হিসেবে নােমবে না — release-এ
+                    //    এখন ৪টা .apk অ্যাসেট থাকে (core + node/caddy/tunnel)।
+                    //    পুরনো ইনস্টলড ভার্সন "প্রথম .apk" নেয়, তাই CI-তে core-ই
+                    //    প্রথমে আপলোড করা হয় — এটা সেই অনুমানের নিরাপদ প্রতিস্থাপন।
+                    if (n.contains("-runtime-")) continue
+                    apkUrl = a.optString("browser_download_url")
+                    size = a.optLong("size")
+                    break
                 }
                 if (apkUrl != null) {
                     return Result.UpdateAvailable(Release(
