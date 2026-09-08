@@ -159,14 +159,24 @@ jobs:
           # 🧩 release বিল্ডে ভারী optional ইঞ্জিন আলাদা module APK-তে যায়
           bash scripts/fetch_binaries.sh --split-modules
           echo "── split ফলাফল ──"
-          core=$(ls -1 app/src/main/jniLibs/arm64-v8a 2>/dev/null | wc -l)
-          echo "  core jniLibs : $core ফাইল · $(du -sh app/src/main/jniLibs/arm64-v8a | cut -f1)"
-          find runtime-modules -type d -name arm64-v8a 2>/dev/null | sort | while read -r d; do
-            echo "  $(basename "$(dirname "$(dirname "$(dirname "$d")")")") : $(ls -1 "$d" | wc -l) ফাইল · $(du -sh "$d" | cut -f1)"
+          CORE=app/src/main/jniLibs/arm64-v8a
+          echo "  core jniLibs : $(ls -1 $CORE | wc -l) ফাইল · $(du -sh $CORE | cut -f1)"
+          for m in node caddy tunnel; do
+            d=runtime-modules/$m/src/main/jniLibs/arm64-v8a
+            if [ -d "$d" ]; then
+              echo "  $m : $(ls -1 "$d" | wc -l) ফাইল · $(du -sh "$d" | cut -f1)"
+            else
+              echo "  $m : ❌ ডির নেই"
+            fi
           done
-          if [ "$core" -gt 175 ]; then
-            echo "::warning::module split কাজ করেনি মনে হচ্ছে (core-এ $core ফাইল) — split_modules.sh লগ দেখুন"
+          # ✅ নিখুঁত গেট: split সত্যিই হয়েছে কিনা (সাইজ হ্যাকসন না)
+          LEFT=$(ls $CORE/libexec_node.so $CORE/libexec_caddy.so $CORE/libexec_cloudflared.so 2>/dev/null | wc -l)
+          MOVED=$(find runtime-modules -path '*jniLibs/arm64-v8a/*' -name 'libexec_*' 2>/dev/null | wc -l)
+          if [ "$LEFT" -ne 0 ] || [ "$MOVED" -lt 3 ]; then
+            echo "::error::module split চালু হয়নি (core-তে $LEFTটা বাইনারি পড়ে আছে, module-এ গেছে $MOVEDটা)"
+            exit 1
           fi
+          echo "  ✅ split OK: ৩টা বাইনারি module-এ গেছে, core থেকে মুক্ত"
           # ⚠️ শেষ কমান্ডের exit code পুরো স্টেপ ফেল করাতে পারে (bash -e) → true দিয়ে নরমালাইজ
           true
 

@@ -222,6 +222,16 @@ fi
 # ভার্সনড কপি (যেগুলো আর কেউ চায় না) ফেলে দাও
 find "$JNI_DIR" -maxdepth 1 -name '*.so.*' -delete 2>/dev/null || true
 
+# ---------------------------------------------------------------------------
+#  Phase 3.6: core → runtime module split (ইনভোকেশন; `--split-modules` অন হলে)
+#  (এই কলটা একবার এডিটে হারিয়ে গিয়েছিল → ফ্ল্যাগ থাকা সত্ত্বেও split চলে নি;
+#   CI-তে এখন স্পষ্ট গেট আছে, তাই নীরবে ভাঙবে না)
+# ---------------------------------------------------------------------------
+if [ "$SPLIT_MODULES" = 1 ]; then
+  echo ""
+  bash "$ROOT/scripts/split_modules.sh" || { echo "❌ module split failed"; exit 1; }
+fi
+
 # --- Phase 4: LINKER CLOSURE AUDIT (union of core + module dirs) ------------
 AUDIT_DIRS=("$JNI_DIR")
 if [ "$SPLIT_MODULES" = 1 ]; then
